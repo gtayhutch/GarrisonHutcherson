@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "attribution": {
+    "commit": "",
+    "pr": "",
+    "sessionUrl": false
+  },
+  "permissions": {
+    "deny": [
+      "Bash(wrangler deploy *)",
+      "Bash(wrangler rollback *)",
+      "Bash(wrangler versions deploy *)",
+      "Bash(pnpm exec wrangler deploy *)",
+      "Bash(pnpm exec wrangler rollback *)",
+      "Bash(pnpm exec wrangler versions deploy *)",
+      "Bash(pnpm dlx wrangler deploy *)",
+      "Bash(pnpm dlx wrangler rollback *)",
+      "Bash(pnpm dlx wrangler versions deploy *)",
+      "Bash(pnpm wrangler deploy *)",
+      "Bash(pnpm wrangler rollback *)",
+      "Bash(pnpm wrangler versions deploy *)",
+      "Bash(npx wrangler deploy *)",
+      "Bash(npx wrangler rollback *)",
+      "Bash(npx wrangler versions deploy *)",
+      "Bash(git push *staging*)",
+      "Bash(git push *production*)",
+      "Bash(gh pr merge *)",
+      "PowerShell(wrangler deploy *)",
+      "PowerShell(wrangler rollback *)",
+      "PowerShell(wrangler versions deploy *)",
+      "PowerShell(pnpm exec wrangler deploy *)",
+      "PowerShell(pnpm exec wrangler rollback *)",
+      "PowerShell(pnpm exec wrangler versions deploy *)",
+      "PowerShell(pnpm dlx wrangler deploy *)",
+      "PowerShell(pnpm dlx wrangler rollback *)",
+      "PowerShell(pnpm dlx wrangler versions deploy *)",
+      "PowerShell(pnpm wrangler deploy *)",
+      "PowerShell(pnpm wrangler rollback *)",
+      "PowerShell(pnpm wrangler versions deploy *)",
+      "PowerShell(npx wrangler deploy *)",
+      "PowerShell(npx wrangler rollback *)",
+      "PowerShell(npx wrangler versions deploy *)",
+      "PowerShell(git push *staging*)",
+      "PowerShell(git push *production*)",
+      "PowerShell(gh pr merge *)"
+    ]
+  }
+}
