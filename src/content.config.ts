@@ -1,7 +1,7 @@
 /**
  * @fileoverview Content collection schemas (ACF-03, DB-08). Every content
  * file is validated here at build time; a bad entry fails the build. The
- * collections are documented in docs/project/data-model.md.
+ * collections are summarized in the README.
  */
 import {defineCollection} from 'astro:content';
 import {file, glob} from 'astro/loaders';

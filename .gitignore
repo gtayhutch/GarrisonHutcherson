@@ -10,9 +10,7 @@
 *credentials*.json
 service-account*.json
 
-# Agent and editor personal files
-CLAUDE.local.md
-.claude/settings.local.json
+# Editor and local files
 .vscode/*
 !.vscode/extensions.json
 .idea/

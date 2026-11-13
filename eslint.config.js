@@ -1,4 +1,4 @@
-// ESLint flat config (STY-01, docs/standards/code-style/typescript.md):
+// ESLint flat config (STY-01, Google TypeScript style):
 // typescript-eslint strict-type-checked for TypeScript, eslint-plugin-astro
 // for components, plus rules for TS-03, TS-07, TS-09, TS-14, and TS-18.
 import js from '@eslint/js';

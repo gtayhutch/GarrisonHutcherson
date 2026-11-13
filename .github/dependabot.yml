@@ -13,7 +13,7 @@ updates:
         update-types: [minor, patch]
     ignore:
       # TypeScript 7 is not yet supported by typescript-eslint or
-      # @astrojs/check; see docs/project/stack.md.
+      # @astrojs/check.
       - dependency-name: typescript
         versions: ['>=6.1.0']
 

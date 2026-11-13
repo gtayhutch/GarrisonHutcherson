@@ -7,16 +7,7 @@ playwright-report/
 test-results/
 pnpm-lock.yaml
 
-# Shared template docs are maintained in the template repo, not here
-docs/standards/
-docs/checklists/
-docs/stacks/README.md
-docs/stacks/_profile-template/
-docs/README.md
-
-# Docs and agent-rule Markdown: markdownlint is the checker. Prettier would pad
-# every table to full width, which bloats always-loaded agent context
-# (AGENTS.md) and diverges from the template. Site content in src/content/
-# is still formatted by Prettier.
+# Markdown outside the site content is checked by markdownlint, not Prettier
+# (Prettier pads tables to full width).
 *.md
 !src/content/**/*.md
