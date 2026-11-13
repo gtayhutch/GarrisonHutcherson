@@ -1,6 +1,6 @@
 ---
 id: project/status
-version: 0.4.0
+version: 0.5.0
 load_when: Start of every coding session (with codemap.md), and end of every session to leave a handoff.
 ---
 
@@ -14,22 +14,25 @@ Short-lived state for continuity between sessions and agents. Keep it under
 ## Current focus
 
 - New-project setup (`docs/checklists/new-project-setup.md`). §0 (stack) and
-  §1 (repository, local part) are done.
+  §1 (repository) are done; §4 and §6 are partly done.
 
 ## In progress
 
-- Nothing on a feature branch. Local repo exists with branches `test`
-  (default), `staging`, and `production` at the same commit; no remote yet.
+- Public repo `gtayhutch/GarrisonHutcherson`; `test` is the default branch.
+  Rulesets make `test`/`staging`/`production` PR-only (no deletion or
+  force-push); secret scanning, push protection, and Dependabot alerts are on.
+- `.claude/settings.json` denies deploys, rollbacks, pushes to `staging` or
+  `production`, and `gh pr merge` for agents; Claude attribution is off.
 
 ## Next up
 
 1. Define the site's scope and sections with the owner (`overview.md`), then
    the content collections (`data-model.md`).
-2. 👤 Create the GitHub repository, push the three branches, make `test` the
-   default (new-project-setup §1 and §4).
+2. Add `verify` as a required status check once `ci.yml` exists; enable
+   CodeQL and `dependabot.yml` with the scaffold (§4).
 3. §2 Scaffold per `docs/stacks/astro-cloudflare/setup.md` on `feat/scaffold`.
-4. §6 `.claude/settings.json` deny rules for deploys and pushes to
-   `staging`/`production`.
+4. Decide whether to rewrite the 3 initial commits to drop the Claude
+   co-author trailer (needs the rulesets briefly disabled).
 
 ## Blockers and open questions
 
