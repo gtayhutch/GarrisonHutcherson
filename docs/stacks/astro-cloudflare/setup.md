@@ -121,7 +121,7 @@ The steps that `docs/checklists/new-project-setup.md` §2 delegates here.
    bundles Corepack, so run `npm install -g corepack` and then
    `corepack enable pnpm`.
 2. Scaffold Astro (minimal template, TypeScript `strictest`) into the repo
-   root. Set `output: 'static'` and `site` in `astro.config.ts`.
+   root. Set `output: 'static'` and `site` in `astro.config.mjs`.
 3. Add dev dependencies: `wrangler`, `@playwright/test`,
    `@axe-core/playwright`, `prettier`, `prettier-plugin-astro`, `gts`
    (config only), `eslint`, `typescript-eslint`, `eslint-plugin-astro`,
@@ -132,8 +132,14 @@ The steps that `docs/checklists/new-project-setup.md` §2 delegates here.
 5. Add `wrangler.jsonc` (above), `public/_headers`, `public/robots.txt`,
    `src/pages/404.astro`, `src/styles/tokens.css`, `src/content.config.ts`,
    and `src/lib/content.ts`.
-6. Add `playwright.config.ts` with `webServer: pnpm build && pnpm preview` and
-   the header, axe, and no-script specs. Run `pnpm verify` until it is green.
+6. Add `playwright.config.ts` with a `webServer` that runs `wrangler dev` on
+   the built `dist/`, and the header, axe, and no-script specs. Run
+   `pnpm verify` until it is green.
+   - TypeScript must be a version `typescript-eslint` and `@astrojs/check`
+     support (6.0.x at the time of writing), plus `@types/node`.
+   - Approve install scripts only for `esbuild` and `workerd`
+     (`pnpm approve-builds esbuild workerd`).
+   - Set `ASTRO_TELEMETRY_DISABLED=1` and `WRANGLER_SEND_METRICS=false` in CI.
 7. 👤 In Cloudflare: work through the hardening checklist, create both Workers
    through Workers Builds (the first deploy creates them), attach the custom
    domains, then the Access application, then Web Analytics.

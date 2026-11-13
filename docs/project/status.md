@@ -1,6 +1,6 @@
 ---
 id: project/status
-version: 0.5.0
+version: 0.6.0
 load_when: Start of every coding session (with codemap.md), and end of every session to leave a handoff.
 ---
 
@@ -13,36 +13,33 @@ Short-lived state for continuity between sessions and agents. Keep it under
 
 ## Current focus
 
-- New-project setup (`docs/checklists/new-project-setup.md`). §0 (stack) and
-  §1 (repository) are done; §4 and §6 are partly done.
+- Scaffold PR (`feat/scaffold`): Astro, tooling, `_headers`, Playwright, CI.
+  `pnpm verify` passes locally. Next: the design and pages PR.
 
 ## In progress
 
-- Public repo `gtayhutch/GarrisonHutcherson`; `test` is the default branch.
-  Rulesets make `test`/`staging`/`production` PR-only (no deletion or
-  force-push); secret scanning, push protection, and Dependabot alerts are on.
-- `.claude/settings.json` denies deploys, rollbacks, pushes to `staging` or
-  `production`, and `gh pr merge` for agents; Claude attribution is off.
+- `feat/scaffold` → `test`. After its CI run, add `verify` as a required
+  status check on all three rulesets and enable CodeQL default setup.
 
 ## Next up
 
-1. Define the site's scope and sections with the owner (`overview.md`), then
-   the content collections (`data-model.md`).
-2. Add `verify` as a required status check once `ci.yml` exists; enable
-   CodeQL and `dependabot.yml` with the scaffold (§4).
-3. §2 Scaffold per `docs/stacks/astro-cloudflare/setup.md` on `feat/scaffold`.
-4. Decide whether to rewrite the 3 initial commits to drop the Claude
-   co-author trailer (needs the rulesets briefly disabled).
+1. Owner sends real content: profile, experience, skills, strengths,
+   projects, contact email, LinkedIn and GitHub URLs.
+2. Design PR (`feat/site-design`): tokens from the mock-up, header nav,
+   contact band, SVG hero, content collections, and pages Home, About,
+   Experience, Skills, Projects, Contact, and `/resume` (HTML).
+3. 👤 Cloudflare: hardening checklist, Workers Builds for both Workers,
+   custom domains, Access on staging, Web Analytics (`setup.md` step 7).
 
 ## Blockers and open questions
 
-- None.
+- The design PR waits on the owner's real content (no placeholders on the
+  live site).
 
 ## Handoff notes
 
-- Overrides OVR-001..003 are active until 2027-11-12.
-- The `astro-cloudflare` profile is Draft. Check its config snippets against
-  current Astro and Wrangler docs while scaffolding.
-- `codemap.md` lists the planned layout as "planned"; update it as paths are
-  created.
+- Overrides OVR-001..004 are active (OVR-004: Prettier skips docs Markdown).
+- TypeScript is pinned to 6.0.x until `typescript-eslint` and
+  `@astrojs/check` support 7; Dependabot ignores `>=6.1.0`.
+- `.astro` components use PascalCase names (ACF-08).
 - Local Node.js is 26.13.1 LTS; pnpm runs through a global Corepack install.

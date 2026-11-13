@@ -2,7 +2,7 @@
 paths:
   - "public/_headers"
   - "wrangler.jsonc"
-  - "astro.config.ts"
+  - "astro.config.mjs"
   - ".github/workflows/**"
 ---
 # Headers and deploy config
