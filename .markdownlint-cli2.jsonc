@@ -1,0 +1,19 @@
+// markdownlint for project-owned Markdown. Shared template docs
+// (docs/standards, docs/checklists) are linted in the template repo.
+{
+  "config": {
+    "default": true,
+    "MD013": false,
+    "MD033": false,
+    "MD041": false,
+  },
+  "globs": [
+    "README.md",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "docs/project/**/*.md",
+    "docs/stacks/astro-cloudflare/**/*.md",
+    "src/content/**/*.md",
+  ],
+  "ignores": ["node_modules/**", "dist/**"],
+}

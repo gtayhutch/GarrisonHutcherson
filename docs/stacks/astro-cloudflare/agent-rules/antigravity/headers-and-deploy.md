@@ -1,6 +1,6 @@
 ---
 trigger: glob
-globs: "public/_headers, wrangler.jsonc, astro.config.ts, .github/workflows/**"
+globs: "public/_headers, wrangler.jsonc, astro.config.mjs, .github/workflows/**"
 description: "Security headers, Wrangler, Astro config, and CI workflows."
 ---
 # Headers and deploy config

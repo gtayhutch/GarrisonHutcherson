@@ -13,7 +13,7 @@ this folder.
 
 ## Rules
 
-- **ACF-01 Static output only.** `astro.config.ts` sets `output: 'static'`
+- **ACF-01 Static output only.** `astro.config.mjs` sets `output: 'static'`
   with no server adapter. No on-demand routes (`prerender = false`), no API
   endpoints, no Worker script (`main`) in `wrangler.jsonc`. Adding any of these
   is a stack change (SEL-10).
@@ -38,9 +38,11 @@ this folder.
 - **ACF-07 One home for headers.** Response headers live only in
   `public/_headers`, and an e2e test asserts them (SEC-WEB-01..06).
 - **ACF-08 Framework-reserved names.** File names in `src/pages/` become URLs
-  (kebab-case). `astro.config.ts`, `src/content.config.ts`, and
-  `src/env.d.ts` are framework-required and exempt from file-naming rules.
-  Page components default-export implicitly, which is also exempt.
+  (kebab-case). `.astro` components and layouts use PascalCase
+  (`BaseLayout.astro`), as Astro and its tooling expect; TypeScript modules
+  keep TS-08 snake_case. `astro.config.mjs`, `src/content.config.ts`, and
+  tool configs (`playwright.config.ts`, `eslint.config.js`) are
+  framework-required names and may default-export (TS-03 exception).
 - **ACF-09 No Cloudflare bindings.** No KV, D1, R2, Durable Objects, or
   secrets. Adding one ends OVR-001 and needs SEL-10.
 
@@ -61,7 +63,7 @@ server runtime instead.
 
 | Component | Choice | Version policy |
 | --- | --- | --- |
-| Languages | TypeScript (strict), CSS, Markdown/YAML | Latest stable |
+| Languages | TypeScript (`astro/tsconfigs/strictest`), CSS, Markdown/YAML | Latest stable that `typescript-eslint` and `@astrojs/check` support |
 | Framework(s) | Astro, static output | Latest stable major; upgrade within 3 months of a new major |
 | Database | None | — |
 | Authentication | None for the site; Cloudflare Access gates staging | — |
@@ -86,7 +88,7 @@ src/
   assets/         images processed by astro:assets
 public/           copied as-is: _headers, robots.txt, fonts/, favicon
 tests/e2e/        Playwright specs
-astro.config.ts · wrangler.jsonc · playwright.config.ts
+astro.config.mjs · wrangler.jsonc · playwright.config.ts
 ```
 
 | Universal concept | In this stack |
@@ -95,7 +97,7 @@ astro.config.ts · wrangler.jsonc · playwright.config.ts
 | Server-only boundary and how it's enforced (ARCH-03) | No runtime server code. Build-time code runs only in frontmatter and `src/lib/` |
 | Entry points: UI mutations, HTTP routes, RPC, jobs (ARCH-04) | `src/pages/` static routes only |
 | Repositories (ARCH-06) | `src/lib/content.ts` over `astro:content` |
-| Config module (ARCH-07) | `astro.config.ts` (`site`) and `src/lib/config.ts`; any build-time variables are declared with `astro:env` schemas |
+| Config module (ARCH-07) | `astro.config.mjs` (`site`) and `src/lib/config.ts`; any build-time variables are declared with `astro:env` schemas |
 | Errors / logger modules (OBS-02, OBS-06) | None at runtime. Build fails loudly; `src/pages/404.astro` |
 | Security headers (SEC-WEB-01..06) | `public/_headers` |
 | Database access policies, if any (SEC-AZ-01) | n/a |
@@ -112,6 +114,10 @@ Defined as `package.json` scripts.
 | `build` / `verify` | `pnpm build` (`astro build`) · `pnpm verify` (format:check → lint → typecheck → build → test:e2e) |
 | Local run | `pnpm dev` (`astro dev`) · `pnpm preview` (`wrangler dev`, serves `dist/` with `_headers` applied) |
 
+Playwright starts `wrangler dev` itself (`webServer` in `playwright.config.ts`)
+against the already-built `dist/`, so `pnpm build` must run first;
+`pnpm verify` does.
+
 ## Security implementation
 
 - **Authentication and sessions:** none on the site. Staging uses a
@@ -125,9 +131,8 @@ Defined as `package.json` scripts.
   `Referrer-Policy: strict-origin-when-cross-origin` ·
   `Permissions-Policy: camera=(), microphone=(), geolocation=()` ·
   `Cross-Origin-Opener-Policy: same-origin`.
-  Check whether Astro inlines small stylesheets (`build.inlineStylesheets`).
-  If it does, set it to `'never'` or add style hashes, so `style-src 'self'`
-  holds.
+  `astro.config.mjs` sets `build.inlineStylesheets: 'never'` so
+  `style-src 'self'` holds; the dev toolbar is disabled.
 - **Secrets:** none exist. Wrangler and Workers Builds credentials stay in
   Cloudflare. `.dev.vars` and `.env*` are gitignored anyway.
 - **Client storage:** none. Web Analytics is cookieless.

@@ -1,0 +1,24 @@
+# Weekly dependency and action updates, opened as PRs into `test` (DEP-*,
+# CI-07). Grouped to keep the PR count small for a solo maintainer.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    target-branch: test
+    schedule:
+      interval: weekly
+    groups:
+      dev-tooling:
+        dependency-type: development
+        update-types: [minor, patch]
+    ignore:
+      # TypeScript 7 is not yet supported by typescript-eslint or
+      # @astrojs/check; see docs/project/stack.md.
+      - dependency-name: typescript
+        versions: ['>=6.1.0']
+
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: test
+    schedule:
+      interval: weekly

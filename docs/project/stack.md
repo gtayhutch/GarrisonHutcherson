@@ -1,6 +1,6 @@
 ---
 id: project/stack
-version: 1.0.0
+version: 1.1.0
 load_when: Start of every session (with status.md and codemap.md). Before using any language, framework, library, service, or tool.
 ---
 
@@ -27,11 +27,12 @@ Anything not listed below is not part of the stack: ask before adding it
 
 ## Decisions
 
-Versions are the latest stable on 2026-11-12; re-check when scaffolding.
+Versions were checked again at scaffold time (2026-11-13). Exact versions are
+in `package.json` and `pnpm-lock.yaml`.
 
 | Category | Choice | Version policy | Alternatives considered | Why |
 | --- | --- | --- | --- | --- |
-| Languages | TypeScript (strict) | Latest stable (7.0.x) | JavaScript; no code language | Type errors caught before shipping, little overhead |
+| Languages | TypeScript (strict) | 6.0.x until typescript-eslint and @astrojs/check support 7 (see Differences) | JavaScript; no code language | Type errors caught before shipping, little overhead |
 | Web frontend | Astro, static output (`output: 'static'`) | Latest stable (7.x) | Eleventy, Hugo, plain HTML/CSS | Built for content sites, zero JS by default, typed content collections, image optimization |
 | Mobile / desktop clients | Not needed | — | — | Responsive web covers mobile |
 | Backend and API style | Not needed | — | — | Static pages only |
@@ -55,7 +56,7 @@ Versions are the latest stable on 2026-11-12; re-check when scaffolding.
 ## Commands
 
 The standard tasks (CI-01). Every agent uses these exact commands. They are
-defined in `package.json` when the project is scaffolded.
+defined in `package.json`; CI runs `pnpm verify` (`.github/workflows/ci.yml`).
 
 | Task | Command |
 | --- | --- |
@@ -85,11 +86,15 @@ defined in `package.json` when the project is scaffolded.
 | Entry points: UI mutations, HTTP routes, jobs (ARCH-04) | `src/pages/` (static routes only; no mutations, endpoints, or jobs) |
 | Data access layer and authorization helpers (ARCH-06, SEC-AZ-01) | `src/lib/content.ts` wraps `astro:content`; no authorization (public content) |
 | Database access policies, if any (SEC-AZ-01) | n/a |
-| Configuration module (ARCH-07) | `astro.config.ts` (`site`, build options) and `src/lib/config.ts` |
+| Configuration module (ARCH-07) | `astro.config.mjs` (`site`, build options) and `src/lib/config.ts` |
 | Errors and logger modules (OBS-02, OBS-06) | n/a at runtime (no server code); build errors fail the build. `src/pages/404.astro` |
 | Security headers (SEC-WEB-01..06) | `public/_headers` (served by Workers static assets), asserted by an e2e test |
 | Schema / migration / index files (DB-08) | `src/content.config.ts` (content collection schemas) |
 
 ## Differences from the stack profile
 
-None. `docs/stacks/astro-cloudflare/` was written for this project.
+| Profile rule or default | What this project does instead | Why |
+| --- | --- | --- |
+| Latest stable TypeScript (SEL-11) | TypeScript 6.0.x; Dependabot ignores `>=6.1.0` | TypeScript 7 (native) isn't supported yet by `typescript-eslint` (needs `<6.1`) or `@astrojs/check` (needs `<7`). Revisit when both support it |
+| Prettier formats Markdown (STY-01 tooling table) | Prettier skips docs and agent-rule Markdown; markdownlint checks it (OVR-004). Site content in `src/content/` is still formatted | Prettier pads every table to full width, bloating always-loaded agent context and diverging from template docs |
+| `pnpm` install scripts | Only `esbuild` and `workerd` may run install scripts (`pnpm-workspace.yaml` `allowBuilds`) | pnpm blocks dependency install scripts by default; these two need native binaries |

@@ -1,6 +1,6 @@
 ---
 id: project/overview
-version: 1.0.0
+version: 1.1.0
 load_when: A task needs product context — scope, users, roles, critical journeys, stack versions, environment URLs.
 ---
 
@@ -22,9 +22,12 @@ loads almost instantly on any device.
 
 ## Scope
 
-**In scope for the current milestone:** to be defined with the owner before
-scaffolding. Candidates: home/intro, experience, skills, projects, contact
-links.
+**In scope for the current milestone** (from the owner's mock-up,
+2026-11-13), one page each:
+
+- Home: hero, experience and skills summaries, key strengths, contact band
+- About, Experience, Skills, Projects, Contact
+- Résumé: a printable HTML page generated from the same content
 
 **Non-goals** (things we are deliberately not building):
 

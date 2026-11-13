@@ -1,0 +1,34 @@
+---
+/**
+ * Document shell for every page: `<html>`, `<head>` metadata, and the
+ * `<main>` landmark. Ships no client JavaScript (ACF-02).
+ */
+import {SITE, pageTitle} from '../lib/config';
+
+interface Props {
+  /** Page title; omit on the home page. */
+  title?: string;
+  /** Meta description; defaults to the site description. */
+  description?: string;
+}
+
+const {title, description = SITE.description} = Astro.props;
+const canonical = new URL(Astro.url.pathname, SITE.url);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle(title)}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <main id="main">
+      <slot />
+    </main>
+  </body>
+</html>
