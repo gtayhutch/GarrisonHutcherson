@@ -1,0 +1,15 @@
+# Store and check out text as LF on every OS (STY-10).
+* text=auto eol=lf
+*.{cmd,bat,ps1} text eol=crlf
+
+# Binary assets
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.pdf binary
