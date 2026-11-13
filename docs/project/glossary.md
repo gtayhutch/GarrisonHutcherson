@@ -1,6 +1,6 @@
 ---
 id: project/glossary
-version: 0.2.0
+version: 1.0.0
 load_when: A domain term in a task, ticket, or the code is unclear; naming new types, collections, or functions.
 ---
 
@@ -12,5 +12,8 @@ list the other as "not".
 
 | Term | Meaning | In code | Not to be confused with |
 | --- | --- | --- | --- |
-| {{Workspace}} | {{A team's shared space; the tenant boundary}} | {{`Workspace`, `workspaces/{workspaceId}`}} | {{"Organization", "Team" — not used}} |
-| {{Member}} | {{A user who belongs to a workspace}} | {{`Member`, `members` table}} | {{User (the account itself)}} |
+| Visitor | Anyone viewing the public site | — | "User": the site has no accounts |
+| Owner | Garrison Hutcherson, who edits content and runs the hosting | — | — |
+| Section | One part of the site (for example experience or skills), built as a component folder | `src/components/<section>/` | "Page": a route in `src/pages/` that may contain several sections |
+| Collection | A typed set of content entries with one schema | `defineCollection` in `src/content.config.ts` | "Table": there is no database |
+| Entry | One Markdown or YAML file in a collection | `CollectionEntry<'…'>` | "Post": not every entry is an article |
