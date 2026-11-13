@@ -45,7 +45,8 @@ No site sessions or cookies. The Cloudflare Access session on staging lasts
 
 ## 5. Input rules and business limits `[ASVS 2.1.1, 2.1.2, 2.1.3]`
 
-The site accepts no visitor input. The only input is repository content, and
+The site accepts no visitor input (no forms; contact is a `mailto:` link). The
+only input is repository content, and
 the collection schemas in `src/content.config.ts` validate it at build time
 (ACF-03).
 
@@ -74,6 +75,7 @@ nothing to block.
 | --- | --- | --- | --- |
 | Cloudflare | DNS, hosting (Workers), Access, Web Analytics | Visitor request metadata (IP, user agent) to the edge; cookieless analytics beacon | Cloudflare Self-Serve Subscription Agreement and DPA |
 | GitHub | Source hosting, CI | Repository contents (Public) | GitHub Terms of Service |
+| Cloudflare Email Routing | Forwards `garrison@garrisonhutcherson.com` to the owner's inbox (ADR 0003) | Messages that senders choose to send | Cloudflare terms and DPA |
 
 ## 10. Cryptographic inventory `[ASVS 11.1.1, 11.1.2]`
 
@@ -117,4 +119,5 @@ checklist). Fill in "Last verified" when each setting is applied.
 | Cloudflare Access on staging hostname | on | n/a | — |
 | `www` → apex 301 redirect rule | n/a | on | — |
 | Web Analytics | off | on | — |
+| Email Routing: `garrison@` rule, verified destination, MX and SPF records (ADR 0003) | zone-wide | zone-wide | — |
 | Budget alerts | n/a (free plan, static assets) | n/a | — |

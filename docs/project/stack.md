@@ -43,14 +43,14 @@ in `package.json` and `pnpm-lock.yaml`.
 | Hosting (staging, production) | Cloudflare Workers static assets: Worker `garrisonhutcherson-staging` and Worker `garrisonhutcherson`, one Cloudflare account | Wrangler latest stable (4.x) | Cloudflare Pages; two Cloudflare accounts | Cloudflare's current recommendation for new projects; one account accepted under OVR-001 |
 | Local `test` environment | `astro dev` for authoring; `wrangler dev` serving the built `dist/` for tests | — | — | Fully offline; no hosted data exists |
 | Background jobs / scheduling | Not needed | — | — | |
-| Styling / UI kit | Hand-written CSS: design tokens (custom properties) in `src/styles/`, component-scoped `<style>` in `.astro` files | — | Tailwind CSS; component library | No dependency, smallest output, a distinct personal look |
+| Styling / UI kit | Hand-written CSS: design tokens (custom properties) in `src/styles/`, component-scoped `<style>` in `.astro` files; Outfit variable font (`@fontsource-variable/outfit`, OFL) and Lucide icons (`@lucide/astro`, ISC, inline SVG at build) | Latest stable | Tailwind CSS; component library | No dependency for styling, smallest output, a distinct personal look |
 | Secrets manager | Not needed for the app (no secrets). Cloudflare Workers secrets if one is ever added | — | — | |
 | Observability | Cloudflare Web Analytics (cookieless) plus Cloudflare's built-in request metrics | — | None; GA4 | Free, no consent banner, reports Core Web Vitals |
 | Package manager / task runner | pnpm, via `package.json` scripts; Node.js LTS pinned in `.nvmrc` and `packageManager` | pnpm latest (12.x); Node active LTS (26.x) | npm; Bun | Strict about undeclared dependencies, reviewable lockfile |
 | Format / lint | Prettier with `gts` settings + `prettier-plugin-astro`; ESLint (`typescript-eslint` strict-type-checked + `eslint-plugin-astro`); Stylelint; markdownlint; `astro check` | Latest stable | — | Required by `docs/standards/code-style/README.md` |
 | Testing tools | Playwright (end-to-end) with `@axe-core/playwright` (accessibility) | Latest stable (1.6x) | Vitest + Playwright (+ Lighthouse CI) | User's choice; no unit layer while there is no logic (OVR-002) |
 | CI/CD | GitHub Actions runs `verify` on pull requests; Cloudflare Workers Builds deploys the `staging` and `production` branches | Actions pinned to SHAs (CI-07) | GitHub Actions deploying with a Cloudflare API token | No Cloudflare credential stored in GitHub (CI-05) |
-| Third-party services | Cloudflare (DNS, Workers, Access, Web Analytics); GitHub (repo, Actions) | — | — | |
+| Third-party services | Cloudflare (DNS, Workers, Access, Web Analytics, Email Routing); GitHub (repo, Actions) | — | Publishing a personal email; LinkedIn only (ADR 0003) | Email Routing keeps personal contact details off the public site (ADR 0003) |
 | Not needed (deliberately) | Backend/API, database, user auth, file storage, background jobs, app secrets, error tracker | — | — | Static, public-content site |
 
 ## Commands

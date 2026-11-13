@@ -1,0 +1,118 @@
+---
+/**
+ * Contact page: the public email and GitHub link. No form, so the site
+ * still accepts no visitor input (security-decisions.md §5).
+ */
+import PageHeader from '../components/site/PageHeader.astro';
+import GitHubIcon from '../components/ui/GitHubIcon.astro';
+import Icon from '../components/ui/Icon.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import {CONTACT, RESUME_PATH} from '../lib/config';
+---
+
+<BaseLayout
+  title="Contact"
+  description="Get in touch with Garrison Hutcherson about technical support, client success, and support engineering roles."
+  showContactBand={false}
+>
+  <PageHeader
+    eyebrow="Contact"
+    title="Let's work together"
+    intro="I'm looking for my next role in technical support, client success, or support engineering. Email is the best way to reach me, and I'll reply as soon as I can."
+  />
+  <div class="container body">
+    <ul class="channels" role="list">
+      <li>
+        <a class="channel" href={`mailto:${CONTACT.email}`}>
+          <span class="channel-icon">
+            <Icon name="mail" size={24} />
+          </span>
+          <span>
+            <span class="label">Email</span>
+            <span class="value">{CONTACT.email}</span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="channel" href={CONTACT.github}>
+          <span class="channel-icon">
+            <GitHubIcon size={24} />
+          </span>
+          <span>
+            <span class="label">GitHub</span>
+            <span class="value">{CONTACT.github.replace('https://', '')}</span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="channel" href={RESUME_PATH}>
+          <span class="channel-icon">
+            <Icon name="file-text" size={24} />
+          </span>
+          <span>
+            <span class="label">Résumé</span>
+            <span class="value">View or print my résumé</span>
+          </span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</BaseLayout>
+
+<style>
+  .body {
+    padding-bottom: var(--space-9);
+  }
+
+  .channels {
+    display: grid;
+    gap: var(--space-4);
+    max-width: 40rem;
+    margin: 0;
+  }
+
+  .channel {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    color: var(--color-text);
+    text-decoration: none;
+    transition:
+      border-color 0.15s ease,
+      background-color 0.15s ease;
+  }
+
+  .channel:hover {
+    border-color: var(--color-accent-border);
+    background: var(--color-surface-hover);
+    color: var(--color-text);
+  }
+
+  .channel-icon {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--radius-md);
+    background: var(--color-tile);
+    color: var(--color-tile-icon);
+  }
+
+  .label {
+    display: block;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .value {
+    display: block;
+    font-size: var(--text-md);
+    font-weight: 550;
+    overflow-wrap: anywhere;
+  }
+</style>

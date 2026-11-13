@@ -32,9 +32,11 @@ this folder.
   `loading="eager"` and `fetchpriority="high"`; all others lazy-load.
 - **ACF-05 No raw HTML injection.** `set:html` is allowed only for Markdown
   that Astro rendered at build time from repository content (SEC-IO-01).
-- **ACF-06 Self-hosted fonts.** No font or asset CDNs. Fonts are subset WOFF2
-  files in `public/fonts/`, use `font-display: swap`, and the primary face is
-  preloaded. This keeps the CSP to `'self'` and avoids extra connections.
+- **ACF-06 Self-hosted fonts.** No font or asset CDNs. Import a Fontsource
+  package's CSS from the global stylesheet (Vite emits the WOFF2 files to
+  `/_astro/`), use `font-display: swap`, and preload the Latin face via a
+  `?url` import. Don't use Astro's `<Font>` component: it emits an inline
+  `<style>`, which the static CSP (`style-src 'self'`) blocks.
 - **ACF-07 One home for headers.** Response headers live only in
   `public/_headers`, and an e2e test asserts them (SEC-WEB-01..06).
 - **ACF-08 Framework-reserved names.** File names in `src/pages/` become URLs

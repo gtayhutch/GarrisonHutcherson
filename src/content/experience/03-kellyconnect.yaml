@@ -1,0 +1,24 @@
+company: KellyConnect (AppleCare)
+location: Remote
+period: Mar 2020 – Oct 2021
+order: 3
+icon: headphones
+summary: >-
+  AppleCare support from consumer to enterprise level, promoted to Senior
+  Advisor after consistently exceeding KPIs.
+roles:
+  - title: Senior Advisor
+    team: Multiple departments, AppleCare program
+    period: Sep 2020 – Oct 2021
+    highlights:
+      - Supported consumer, enterprise, and institutional customers across iOS, macOS, watchOS, and wireless multimedia devices.
+      - Guided enterprise and institutional customers through Mobile Device Management issues.
+      - Filed detailed bug reports to help engineering spot widespread issues and outages, and owned follow-ups until fixes landed.
+  - title: At-Home Advisor (iOS, Mac, Wireless Multimedia)
+    period: Jun 2020 – Sep 2020
+    highlights:
+      - Cross-trained across multiple departments after consistently exceeding KPI standards.
+  - title: At-Home Advisor (iOS)
+    period: Mar 2020 – Jun 2020
+    highlights:
+      - Provided consumer technical support for iPhone and iPad, meeting all KPI standards.

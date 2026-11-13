@@ -1,0 +1,74 @@
+---
+/**
+ * A link styled as a button. Navigation stays a real `<a>` (WEB-01); this
+ * site has no actions that need `<button>`.
+ */
+import Icon, {type IconName} from './Icon.astro';
+
+interface Props {
+  /** Link target. */
+  href: string;
+  /** `primary` is the filled mint button; `secondary` is outlined. */
+  variant?: 'primary' | 'secondary';
+  /** Smaller padding for the header. */
+  size?: 'md' | 'sm';
+  /** Optional leading icon. */
+  icon?: IconName;
+}
+
+const {href, variant = 'primary', size = 'md', icon} = Astro.props;
+---
+
+<a class:list={['button', `button-${variant}`, `button-${size}`]} href={href}>
+  {icon && <Icon name={icon} size={size === 'sm' ? 16 : 18} />}
+  <slot />
+</a>
+
+<style>
+  .button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    font-weight: 550;
+    line-height: 1;
+    text-decoration: none;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .button-md {
+    padding: 0.85rem 1.4rem;
+    font-size: var(--text-base);
+  }
+
+  .button-sm {
+    padding: 0.6rem 0.95rem;
+    font-size: var(--text-sm);
+  }
+
+  .button-primary {
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+
+  .button-primary:hover {
+    background: var(--color-accent-strong);
+    color: var(--color-on-accent);
+  }
+
+  .button-secondary {
+    border-color: var(--color-border-strong);
+    background: rgb(255 255 255 / 3%);
+    color: var(--color-text);
+  }
+
+  .button-secondary:hover {
+    border-color: var(--color-accent-border);
+    background: var(--color-accent-soft);
+    color: var(--color-text);
+  }
+</style>

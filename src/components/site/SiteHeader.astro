@@ -1,0 +1,200 @@
+---
+/**
+ * Site header: monogram and name, main navigation, and the résumé button.
+ * On narrow screens the navigation folds into a native `<details>`
+ * disclosure, so the menu works without JavaScript (ACF-02, FE-06).
+ */
+import {NAV, RESUME_PATH, SITE} from '../../lib/config';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+
+const current = Astro.url.pathname;
+
+function isCurrent(href: string): boolean {
+  return current === href || current === href.replace(/\/$/, '');
+}
+---
+
+<header class="site-header">
+  <div class="container bar">
+    <a class="brand" href="/">
+      <span class="monogram" aria-hidden="true">
+        {SITE.initials}
+      </span>
+      <span class="divider" aria-hidden="true"></span>
+      <span class="name">{SITE.name}</span>
+    </a>
+
+    <nav class="nav-desktop" aria-label="Main">
+      <ul role="list">
+        {NAV.map(item => (
+          <li>
+            <a
+              href={item.href}
+              aria-current={isCurrent(item.href) ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="actions">
+      <Button href={RESUME_PATH} variant="secondary" size="sm" icon="file-text">
+        View Résumé
+      </Button>
+    </div>
+
+    <details class="nav-mobile">
+      <summary aria-label="Menu">
+        <Icon name="menu" size={22} />
+      </summary>
+      <nav aria-label="Main (mobile)">
+        <ul role="list">
+          {NAV.map(item => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isCurrent(item.href) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+          <li>
+            <a href={RESUME_PATH}>View Résumé</a>
+          </li>
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: relative;
+    z-index: 10;
+    border-bottom: 1px solid var(--color-border);
+    background: rgb(11 23 25 / 92%);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    min-height: var(--header-height);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .monogram {
+    color: var(--color-accent);
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.06em;
+  }
+
+  .divider {
+    width: 1px;
+    height: 1.6rem;
+    background: var(--color-border-strong);
+  }
+
+  .name {
+    font-size: var(--text-md);
+    font-weight: 600;
+  }
+
+  .nav-desktop {
+    display: none;
+    margin-inline: auto;
+  }
+
+  .nav-desktop ul {
+    display: flex;
+    gap: var(--space-1);
+  }
+
+  .nav-desktop a,
+  .nav-mobile a {
+    display: block;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    text-decoration: none;
+  }
+
+  .nav-desktop a:hover,
+  .nav-mobile a:hover,
+  .nav-desktop a[aria-current='page'],
+  .nav-mobile a[aria-current='page'] {
+    color: var(--color-text);
+  }
+
+  .nav-desktop a[aria-current='page'] {
+    box-shadow: inset 0 -2px 0 var(--color-accent);
+    border-radius: 0;
+  }
+
+  .actions {
+    display: none;
+  }
+
+  .nav-mobile {
+    margin-left: auto;
+  }
+
+  .nav-mobile summary {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .nav-mobile summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .nav-mobile[open] summary {
+    border-color: var(--color-accent-border);
+    background: var(--color-accent-soft);
+  }
+
+  .nav-mobile nav {
+    position: absolute;
+    inset-inline: 0;
+    top: 100%;
+    padding: var(--space-3) var(--gutter) var(--space-5);
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-bg-raised);
+  }
+
+  .nav-mobile a {
+    padding-block: var(--space-3);
+    font-size: var(--text-base);
+  }
+
+  @media (width >= 56rem) {
+    .nav-desktop,
+    .actions {
+      display: block;
+    }
+
+    .nav-mobile {
+      display: none;
+    }
+  }
+</style>

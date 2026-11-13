@@ -27,3 +27,4 @@ Incident notes (OBS-13) also live here, titled `NNNN-incident-short-title.md`.
 | --- | --- | --- | --- |
 | 0001 | Adopt engineering standards v2.0.0 | Accepted | 2026-11-12 |
 | 0002 | Stack selection: Astro + TypeScript on Cloudflare Workers static assets | Accepted | 2026-11-12 |
+| 0003 | Public contact email through Cloudflare Email Routing | Accepted | 2026-11-13 |

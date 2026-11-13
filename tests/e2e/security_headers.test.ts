@@ -21,7 +21,13 @@ const REQUIRED_CSP_DIRECTIVES = [
   "frame-ancestors 'none'",
 ];
 
-for (const path of ['/', '/robots.txt', '/this-page-does-not-exist']) {
+for (const path of [
+  '/',
+  '/resume/',
+  '/robots.txt',
+  '/favicon.svg',
+  '/this-page-does-not-exist',
+]) {
   test(`${path} sends the security headers`, async ({request}) => {
     const response = await request.get(path);
     const headers = response.headers();

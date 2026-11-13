@@ -1,0 +1,121 @@
+---
+/**
+ * Skill groups: icon, title, one-line summary, and tags. `list` stacks
+ * them as rows in one panel (home page, as in the mock-up); `grid` shows
+ * them as separate cards (Skills page).
+ */
+import type {SkillGroup} from '../../lib/content';
+import IconTile from '../ui/IconTile.astro';
+import Tag from '../ui/Tag.astro';
+
+interface Props {
+  /** Groups in display order. */
+  groups: SkillGroup[];
+  /** Layout. */
+  variant?: 'list' | 'grid';
+  /** Heading level for group titles. */
+  headingLevel?: 'h2' | 'h3';
+}
+
+const {groups, variant = 'list', headingLevel = 'h3'} = Astro.props;
+const Heading = headingLevel;
+---
+
+<ul class:list={['groups', `groups-${variant}`]} role="list">
+  {groups.map(({data}) => (
+    <li class="group">
+      <IconTile name={data.icon} />
+      <div class="text">
+        <Heading class="title">{data.title}</Heading>
+        <p class="summary">{data.summary}</p>
+      </div>
+      <ul class="tags" role="list" aria-label={`${data.title} skills`}>
+        {data.tags.map(tag => (
+          <li>
+            <Tag>{tag}</Tag>
+          </li>
+        ))}
+      </ul>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .groups {
+    display: grid;
+    margin: 0;
+  }
+
+  .groups-list {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-card);
+  }
+
+  .groups-list .group + .group {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .groups-grid {
+    gap: var(--space-4);
+  }
+
+  .groups-grid .group {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-card);
+  }
+
+  .group {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-3) var(--space-4);
+    padding: var(--space-4) var(--space-5);
+  }
+
+  .title {
+    font-size: var(--text-base);
+    font-weight: 600;
+  }
+
+  .summary {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    grid-column: 1 / -1;
+    gap: var(--space-2);
+  }
+
+  @media (width >= 48rem) {
+    .groups-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .groups-grid .tags {
+      grid-column: 2;
+    }
+  }
+
+  @media (width >= 40rem) {
+    .groups-list .tags {
+      grid-column: 2;
+    }
+  }
+
+  @media (width >= 80rem) {
+    .groups-list .group {
+      grid-template-columns: auto minmax(0, 1fr) minmax(0, 1.05fr);
+      align-items: center;
+    }
+
+    .groups-list .tags {
+      grid-column: 3;
+    }
+  }
+</style>

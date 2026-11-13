@@ -1,4 +1,12 @@
 {
   "extends": ["stylelint-config-standard", "stylelint-config-html/astro"],
-  "ignoreFiles": ["dist/**", ".astro/**", "node_modules/**"]
+  "ignoreFiles": ["dist/**", ".astro/**", "node_modules/**"],
+  "rules": {
+    "import-notation": "string",
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {"ignorePseudoClasses": ["global"]}
+    ],
+    "no-descending-specificity": null
+  }
 }

@@ -1,0 +1,35 @@
+---
+/** Experience page: every employer and role, most recent first. */
+import ExperienceTimeline from '../components/experience/ExperienceTimeline.astro';
+import PageHeader from '../components/site/PageHeader.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import {getExperience} from '../lib/content';
+
+const experience = await getExperience();
+---
+
+<BaseLayout
+  title="Experience"
+  description="Garrison Hutcherson's work history: 15 years of remote technical support and client success, from telecom and AppleCare to SaaS and payments."
+>
+  <PageHeader
+    eyebrow="Experience"
+    title="15 years of remote support"
+    intro="From billing support to Tier 2 SaaS, AppleCare, non-profit finance, and payments. Every role has been remote, and every one has been about getting customers unstuck."
+  />
+  <div class="container body">
+    <div class="narrow">
+      <ExperienceTimeline entries={experience} variant="full" />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .body {
+    padding-bottom: var(--space-8);
+  }
+
+  .narrow {
+    max-width: 60rem;
+  }
+</style>

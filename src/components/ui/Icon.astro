@@ -1,0 +1,71 @@
+---
+/**
+ * Renders a Lucide icon by name as inline SVG at build time (no client JS).
+ * Decorative by default; pass `label` to make it meaningful to screen readers.
+ */
+import Briefcase from '@lucide/astro/icons/briefcase';
+import Code from '@lucide/astro/icons/code';
+import CreditCard from '@lucide/astro/icons/credit-card';
+import Headphones from '@lucide/astro/icons/headphones';
+import Layers from '@lucide/astro/icons/layers';
+import Lightbulb from '@lucide/astro/icons/lightbulb';
+import MessageCircle from '@lucide/astro/icons/message-circle';
+import Monitor from '@lucide/astro/icons/monitor';
+import TrendingUp from '@lucide/astro/icons/trending-up';
+import Users from '@lucide/astro/icons/users';
+import Wrench from '@lucide/astro/icons/wrench';
+import ArrowRight from '@lucide/astro/icons/arrow-right';
+import ExternalLink from '@lucide/astro/icons/external-link';
+import FileText from '@lucide/astro/icons/file-text';
+import Mail from '@lucide/astro/icons/mail';
+import Menu from '@lucide/astro/icons/menu';
+import Send from '@lucide/astro/icons/send';
+import Star from '@lucide/astro/icons/star';
+import Printer from '@lucide/astro/icons/printer';
+
+const ICONS = {
+  briefcase: Briefcase,
+  code: Code,
+  'credit-card': CreditCard,
+  headphones: Headphones,
+  layers: Layers,
+  lightbulb: Lightbulb,
+  'message-circle': MessageCircle,
+  monitor: Monitor,
+  'trending-up': TrendingUp,
+  users: Users,
+  wrench: Wrench,
+  'arrow-right': ArrowRight,
+  'external-link': ExternalLink,
+  'file-text': FileText,
+  mail: Mail,
+  menu: Menu,
+  send: Send,
+  star: Star,
+  printer: Printer,
+} as const;
+
+/** Every icon name this component can render. */
+export type IconName = keyof typeof ICONS;
+
+interface Props {
+  /** Which icon to draw. */
+  name: IconName;
+  /** Size in pixels (square). */
+  size?: number;
+  /** Accessible name; omit for decorative icons. */
+  label?: string;
+  /** Extra class names for layout. */
+  class?: string;
+}
+
+const {name, size = 20, label, class: className} = Astro.props;
+const Component = ICONS[name];
+// Only set attributes that apply, so the SVG never gets empty attributes.
+const attrs: Record<string, string> = label
+  ? {'aria-label': label, role: 'img'}
+  : {'aria-hidden': 'true'};
+if (className) attrs['class'] = className;
+---
+
+<Component size={size} stroke-width={1.75} focusable="false" {...attrs} />

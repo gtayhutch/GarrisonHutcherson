@@ -1,0 +1,73 @@
+- id: client-success
+  order: 1
+  title: Customer & Client Success
+  icon: users
+  summary: White-glove support for high-value clients, built on rapport, patience, and follow-through.
+  tags:
+    - Client Success
+    - White-Glove Support
+    - Training & Onboarding
+    - De-escalation
+    - Account Ownership
+- id: technical-support
+  order: 2
+  title: Technical Support & Troubleshooting
+  icon: wrench
+  summary: Reproducing issues, reading logs, and turning bugs into clear, actionable escalations.
+  tags:
+    - Troubleshooting
+    - Log Review
+    - Bug Reproduction
+    - Escalation Reports
+    - Tier 2 Support
+    - Mobile Device Management
+- id: payments-finance
+  order: 3
+  title: Payments & Financial Software
+  icon: credit-card
+  summary: Payment processing, financial reporting, and compliance in non-profit and SaaS platforms.
+  tags:
+    - Card & EFT Processing
+    - PCI Compliance
+    - Financial Reports
+    - Reconciliation
+- id: saas-tools
+  order: 4
+  title: SaaS & Tools
+  icon: layers
+  summary: Hands-on with the CRMs, ticketing systems, and collaboration tools support teams run on.
+  tags:
+    - Salesforce
+    - HubSpot
+    - Jira
+    - Zendesk
+    - Freshdesk
+    - Intercom
+    - Slack
+    - Microsoft Teams
+    - Zoom
+- id: web-technical
+  order: 5
+  title: Web & Technical
+  icon: code
+  summary: Comfortable reading and adjusting code for debugging and styling, and working on servers over SSH.
+  tags:
+    - WordPress
+    - Joomla
+    - Drupal
+    - HTML
+    - CSS
+    - JavaScript
+    - PHP
+    - Linux (SSH)
+- id: communication
+  order: 6
+  title: Communication & Documentation
+  icon: message-circle
+  summary: Explaining complex technical problems clearly to any audience, in writing and live.
+  tags:
+    - Written Communication
+    - Knowledge Bases
+    - Bug Reports
+    - Training Sessions
+    - Remote Collaboration

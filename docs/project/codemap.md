@@ -1,6 +1,6 @@
 ---
 id: project/codemap
-version: 1.0.0
+version: 1.1.0
 load_when: Start of any coding task. Read this instead of crawling the repository.
 ---
 
@@ -11,44 +11,41 @@ the same commit as any structural change (DOC-06). Keep it under 150 lines; if
 a feature needs more detail, put it in the module header of that feature's
 public interface (DOC-03).
 
-**State:** scaffolded (2026-11-13). Rows marked "planned" arrive with the
-design PR; change them to "exists" as each path is created.
-
 ## Top level
 
-| Path | Responsibility | State |
-| --- | --- | --- |
-| `src/pages/` | Static routes only; thin (ACF-01). Now: `index.astro` (placeholder), `404.astro` | exists |
-| `src/layouts/` | Page shells. Now: `BaseLayout.astro` (`<head>`, canonical URL, `<main>`) | exists |
-| `src/components/<section>/` | One folder per page section (feature slice) | planned |
-| `src/components/ui/` | Shared presentational components | planned |
-| `src/content/` + `src/content.config.ts` | Content entries and their schemas (ACF-03) | planned |
-| `src/lib/` | `config.ts` (site identity, `pageTitle`) exists; `content.ts` (typed content access) planned | partly |
-| `src/styles/` | `tokens.css` (design tokens), `global.css` (reset, base) | planned |
-| `src/assets/` | Images processed by `astro:assets` | planned |
-| `public/` | `_headers`, `robots.txt`, `favicon.svg` exist; `fonts/` planned | partly |
-| `tests/e2e/` | Playwright specs: `pages.test.ts` (smoke, axe, no-script, 404), `security_headers.test.ts`; `routes.ts` lists every page | exists |
-| `astro.config.mjs`, `wrangler.jsonc`, `playwright.config.ts` | Build, hosting, and test config | exists |
-| `eslint.config.js`, `prettier.config.mjs`, `.stylelintrc.json`, `.markdownlint-cli2.jsonc` | Lint and format config (STY-01) | exists |
-| `.github/workflows/ci.yml`, `.github/dependabot.yml` | CI `verify` on PRs; weekly dependency PRs into `test` | exists |
-| `docs/` | Standards, profile, and project docs | exists |
-| `.claude/rules/`, `.agents/rules/` | Path-scoped agent rules | exists |
+| Path | Responsibility |
+| --- | --- |
+| `src/pages/` | Static routes only, thin (ACF-01): `index`, `about`, `experience`, `skills`, `projects`, `contact`, `resume`, `404` |
+| `src/layouts/BaseLayout.astro` | `<head>` metadata, font preload, skip link, header, `<main>`, contact band, footer |
+| `src/components/<section>/` | Page sections (feature slices), listed below |
+| `src/components/ui/` | Shared presentational components: `Button`, `Icon`, `IconTile`, `Tag`, `SectionHeading`, `GitHubIcon` |
+| `src/content/` + `src/content.config.ts` | Content entries and their schemas (ACF-03); see `data-model.md` |
+| `src/lib/` | `config.ts` (identity, contact, nav), `content.ts` (typed content access) |
+| `src/styles/` | `tokens.css` (design tokens), `global.css` (font import, reset, base, print) |
+| `public/` | `_headers`, `robots.txt`, `favicon.svg` |
+| `tests/e2e/` | Playwright: `pages.test.ts` (smoke, axe, no-script, 404), `site.test.ts` (nav, order, contact, mobile menu, print), `security_headers.test.ts`; `routes.ts` lists every page |
+| `astro.config.mjs`, `wrangler.jsonc`, `playwright.config.ts` | Build, hosting, and test config |
+| `eslint.config.js`, `prettier.config.mjs`, `.stylelintrc.json`, `.markdownlint-cli2.jsonc` | Lint and format config (STY-01) |
+| `.github/workflows/ci.yml`, `.github/dependabot.yml` | CI `verify` on PRs; weekly dependency PRs into `test` |
+| `.claude/launch.json` | Local preview servers for the Claude desktop browser pane (`astro dev`, `wrangler dev`) |
+| `docs/` | Standards, profile, and project docs |
+| `.claude/rules/`, `.agents/rules/` | Path-scoped agent rules |
 
 ## Features
 
-Page sections are defined with the site's scope (`overview.md`); add one row
-each when created.
-
-| Feature | Path | Responsibility | Public interface | Patterns |
-| --- | --- | --- | --- | --- |
-| — | — | — | — | — |
+| Feature | Path | Responsibility | Public interface |
+| --- | --- | --- | --- |
+| site | `src/components/site/` | Header with no-JS mobile menu, contact band, footer, inner-page header | `SiteHeader`, `ContactBand`, `SiteFooter`, `PageHeader` |
+| home | `src/components/home/` | Hero with SVG mountain scene, key strengths | `Hero`, `HeroScene`, `Strengths` |
+| experience | `src/components/experience/` | Employer timeline, `compact` (home) or `full` (Experience page) | `ExperienceTimeline` |
+| skills | `src/components/skills/` | Skill groups, `list` (home) or `grid` (Skills page) | `SkillGroups` |
 
 ## Shared modules
 
 | Module | Responsibility | Notes |
 | --- | --- | --- |
-| config | `src/lib/config.ts`: `SITE` metadata and `pageTitle()` (ARCH-07) | The only place for site identity values |
-| content | `src/lib/content.ts`: typed reads over `astro:content` (ARCH-06) | Components never call `getCollection` directly |
+| config | `src/lib/config.ts`: `SITE`, `CONTACT`, `NAV`, `RESUME_PATH`, `pageTitle()` (ARCH-07) | The only place for identity and contact values; public data only |
+| content | `src/lib/content.ts`: `getExperience`, `getSkillGroups`, `getStrengths`, `getProjects`, `getPage` (ARCH-06) | Components never call `getCollection` directly |
 | errors / logger | n/a: no runtime server code | The build fails on errors |
 | authz | n/a: all content is public | |
 

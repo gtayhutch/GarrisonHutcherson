@@ -1,0 +1,29 @@
+---
+/** Skills page: every skill group as a card. */
+import PageHeader from '../components/site/PageHeader.astro';
+import SkillGroups from '../components/skills/SkillGroups.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import {getSkillGroups} from '../lib/content';
+
+const groups = await getSkillGroups();
+---
+
+<BaseLayout
+  title="Skills"
+  description="Garrison Hutcherson's skills: client success, technical troubleshooting, payments and financial software, SaaS tools, web, and communication."
+>
+  <PageHeader
+    eyebrow="Skills"
+    title="What I bring to a support team"
+    intro="The people skills of client success, the technical depth to reproduce and escalate real bugs, and hands-on time with the tools support teams use every day."
+  />
+  <div class="container body">
+    <SkillGroups groups={groups} variant="grid" headingLevel="h2" />
+  </div>
+</BaseLayout>
+
+<style>
+  .body {
+    padding-bottom: var(--space-8);
+  }
+</style>
