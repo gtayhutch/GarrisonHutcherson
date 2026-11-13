@@ -111,7 +111,7 @@ Defined as `package.json` scripts.
 
 | Task | Command |
 | --- | --- |
-| `format-check` / `lint` / `typecheck` | `pnpm format:check` (`prettier --check .`) · `pnpm lint` (ESLint, Stylelint, markdownlint) · `pnpm typecheck` (`astro check`) |
+| `format-check` / `lint` / `typecheck` | `pnpm format:check` (`prettier --check .`) · `pnpm lint` (`astro sync`, then ESLint, Stylelint, markdownlint; ESLint needs the generated `astro:content` types, which a fresh CI checkout doesn't have) · `pnpm typecheck` (`astro check`) |
 | `test` / `test-policies` / `test-e2e` | n/a (OVR-002) · n/a · `pnpm test:e2e` (`playwright test`) |
 | `build` / `verify` | `pnpm build` (`astro build`) · `pnpm verify` (format:check → lint → typecheck → build → test:e2e) |
 | Local run | `pnpm dev` (`astro dev`) · `pnpm preview` (`wrangler dev`, serves `dist/` with `_headers` applied) |
