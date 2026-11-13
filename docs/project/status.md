@@ -1,6 +1,6 @@
 ---
 id: project/status
-version: 0.3.0
+version: 0.4.0
 load_when: Start of every coding session (with codemap.md), and end of every session to leave a handoff.
 ---
 
@@ -9,36 +9,37 @@ load_when: Start of every coding session (with codemap.md), and end of every ses
 Short-lived state for continuity between sessions and agents. Keep it under
 40 lines; history belongs in git and ADRs, not here.
 
-**Last updated:** 2026-11-12 by Claude Code
+**Last updated:** 2026-11-13 by Claude Code
 
 ## Current focus
 
-- New-project setup (`docs/checklists/new-project-setup.md`). §0 (stack) is
-  done: Astro + TypeScript on Cloudflare Workers static assets (ADR 0002).
+- New-project setup (`docs/checklists/new-project-setup.md`). §0 (stack) and
+  §1 (repository, local part) are done.
 
 ## In progress
 
-- Nothing on a branch yet. The folder is not a git repository.
+- Nothing on a feature branch. Local repo exists with branches `test`
+  (default), `staging`, and `production` at the same commit; no remote yet.
 
 ## Next up
 
-1. Define the site's scope and sections with the owner (`overview.md`).
-2. §1 Repository: `git init`, delete the unused `docs/stacks/nextjs-firebase/`,
-   create branches `test`/`staging`/`production`, `.gitignore`,
-   `.editorconfig`, and fill the remaining `{{…}}` placeholders.
-3. §2 Scaffold per `docs/stacks/astro-cloudflare/setup.md`.
-4. §5 Docs: ADR 0001 is written; `codemap.md`, `data-model.md`,
-   `security-decisions.md`, and `glossary.md` remain.
+1. Define the site's scope and sections with the owner (`overview.md`), then
+   the content collections (`data-model.md`).
+2. 👤 Create the GitHub repository, push the three branches, make `test` the
+   default (new-project-setup §1 and §4).
+3. §2 Scaffold per `docs/stacks/astro-cloudflare/setup.md` on `feat/scaffold`.
+4. §6 `.claude/settings.json` deny rules for deploys and pushes to
+   `staging`/`production`.
 
 ## Blockers and open questions
 
-- None. Local Node.js upgraded to 26.13.1 LTS on 2026-11-13; pnpm runs
-  through a globally installed Corepack.
+- None.
 
 ## Handoff notes
 
-- Overrides OVR-001 (one Cloudflare account), OVR-002 (no unit layer yet), and
-  OVR-003 (static CSP without a nonce) are active until 2027-11-12.
-- The `astro-cloudflare` profile is Draft and was written before scaffolding.
-  Check its config snippets (`_headers`, `wrangler.jsonc`, Workers Builds
-  settings) against current Astro and Wrangler docs during setup.
+- Overrides OVR-001..003 are active until 2027-11-12.
+- The `astro-cloudflare` profile is Draft. Check its config snippets against
+  current Astro and Wrangler docs while scaffolding.
+- `codemap.md` lists the planned layout as "planned"; update it as paths are
+  created.
+- Local Node.js is 26.13.1 LTS; pnpm runs through a global Corepack install.

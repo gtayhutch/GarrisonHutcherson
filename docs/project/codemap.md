@@ -1,6 +1,6 @@
 ---
 id: project/codemap
-version: 0.2.0
+version: 1.0.0
 load_when: Start of any coding task. Read this instead of crawling the repository.
 ---
 
@@ -11,44 +11,50 @@ the same commit as any structural change (DOC-06). Keep it under 150 lines; if
 a feature needs more detail, put it in the module header of that feature's
 public interface (DOC-03).
 
-Paths below are examples; use the layout from the stack profile.
+**State:** not scaffolded yet. The rows below are the planned layout from
+`docs/stacks/astro-cloudflare/README.md`. Change "planned" to the real state
+as each path is created.
 
 ## Top level
 
-| Path | Responsibility |
-| --- | --- |
-| {{`src/app/`}} | {{Routes or screens only; thin}} |
-| {{`src/features/`}} | Vertical feature slices (see below) |
-| {{`src/components/ui/`}} | Shared presentational components |
-| {{`src/lib/`}} | Config, errors, logger, client initialization |
-| {{`src/lib/server/`}} | Server-only: privileged clients, session, authorization helpers |
-| {{`jobs/` or `functions/`}} | Event handlers, queue consumers, scheduled jobs |
-| {{`tests/e2e/`, `tests/policies/`}} | End-to-end and access-policy tests |
-| `scripts/` | Seed data, migrations, one-off tooling |
+| Path | Responsibility | State |
+| --- | --- | --- |
+| `src/pages/` | Static routes only; thin (ACF-01) | planned |
+| `src/layouts/` | Page shells: `<head>`, meta, nav, footer | planned |
+| `src/components/<section>/` | One folder per page section (feature slice) | planned |
+| `src/components/ui/` | Shared presentational components | planned |
+| `src/content/` + `src/content.config.ts` | Content entries and their schemas (ACF-03) | planned |
+| `src/lib/` | `config.ts`, `content.ts` (typed content access), helpers | planned |
+| `src/styles/` | `tokens.css` (design tokens), `global.css` (reset, base) | planned |
+| `src/assets/` | Images processed by `astro:assets` | planned |
+| `public/` | `_headers`, `robots.txt`, `fonts/`, favicon | planned |
+| `tests/e2e/` | Playwright specs: pages, axe, headers, no-script | planned |
+| `astro.config.ts`, `wrangler.jsonc`, `playwright.config.ts` | Build, hosting, and test config | planned |
+| `docs/` | Standards, profile, and project docs | exists |
+| `.claude/rules/`, `.agents/rules/` | Path-scoped agent rules | exists |
 
 ## Features
 
+Page sections are defined with the site's scope (`overview.md`); add one row
+each when created.
+
 | Feature | Path | Responsibility | Public interface | Patterns |
 | --- | --- | --- | --- | --- |
-| {{auth}} | {{`src/features/auth/`}} | {{Sign-in, session exchange, sign-out}} | {{`signIn`, `signOut`}} | {{Facade}} |
+| — | — | — | — | — |
 
 ## Shared modules
 
 | Module | Responsibility | Notes |
 | --- | --- | --- |
-| {{config}} | Validated configuration (ARCH-07) | Only place that reads environment variables |
-| {{errors}} | Application errors, `ActionResult` (OBS-02) | |
-| {{logger}} | Structured logger (OBS-06) | |
-| {{authz}} | Data-access-layer authorization (SEC-AZ-01) | Mirrors any database policies |
+| config | `src/lib/config.ts`: site metadata and build-time settings (ARCH-07) | The only place that reads `astro:env` |
+| content | `src/lib/content.ts`: typed reads over `astro:content` (ARCH-06) | Components never call `getCollection` directly |
+| errors / logger | n/a: no runtime server code | The build fails on errors |
+| authz | n/a: all content is public | |
 
 ## Background jobs
 
-| Job | Trigger | Responsibility | Idempotency key |
-| --- | --- | --- | --- |
-| {{onUserDeleted}} | {{account deleted}} | {{Deletes user data (SEC-DATA-08)}} | {{user ID}} |
+None (static site).
 
 ## Scripts
 
-| Script | Purpose |
-| --- | --- |
-| {{`scripts/seed`}} | Synthetic data for the local and staging environments (ENV-07) |
+None yet.
