@@ -1,0 +1,25 @@
+// Cloudflare Workers static assets (ADR 0002, ACF-01, ACF-10, ACF-11).
+// Production is the top level; staging is `env.staging` (Worker
+// `garrisonhutcherson-staging`). No `main`: no Worker code runs.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "garrisonhutcherson",
+  "compatibility_date": "2026-11-10",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash",
+  },
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [{"pattern": "garrisonhutcherson.com", "custom_domain": true}],
+  "env": {
+    "staging": {
+      "workers_dev": false,
+      "preview_urls": false,
+      "routes": [
+        {"pattern": "staging.garrisonhutcherson.com", "custom_domain": true},
+      ],
+    },
+  },
+}

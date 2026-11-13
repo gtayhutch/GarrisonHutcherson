@@ -1,0 +1,113 @@
+---
+/** Projects page: one card per entry in src/content/projects/. */
+import {render} from 'astro:content';
+
+import PageHeader from '../components/site/PageHeader.astro';
+import Icon from '../components/ui/Icon.astro';
+import Tag from '../components/ui/Tag.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import {getProjects} from '../lib/content';
+
+const projects = await Promise.all(
+  (await getProjects()).map(async project => ({
+    project,
+    Content: (await render(project)).Content,
+  })),
+);
+---
+
+<BaseLayout title="Projects" description="Projects by Garrison Hutcherson.">
+  <PageHeader
+    eyebrow="Projects"
+    title="Things I've built"
+    intro="Work outside the support queue. More to come."
+  />
+  <div class="container body">
+    <ul class="projects" role="list">
+      {projects.map(({project, Content}) => (
+        <li class="card">
+          <h2 class="title">{project.data.title}</h2>
+          <p class="summary">{project.data.summary}</p>
+          <div class="prose details">
+            <Content />
+          </div>
+          {project.data.tags.length > 0 && (
+            <ul class="tags" role="list" aria-label="Built with">
+              {project.data.tags.map(tag => (
+                <li>
+                  <Tag>{tag}</Tag>
+                </li>
+              ))}
+            </ul>
+          )}
+          <p class="links">
+            {project.data.url && (
+              <a href={project.data.url}>
+                Visit site <Icon name="external-link" size={14} />
+              </a>
+            )}
+            {project.data.repo && (
+              <a href={project.data.repo}>
+                Source code <Icon name="external-link" size={14} />
+              </a>
+            )}
+          </p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</BaseLayout>
+
+<style>
+  .body {
+    padding-bottom: var(--space-8);
+  }
+
+  .projects {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0;
+  }
+
+  .card {
+    display: grid;
+    gap: var(--space-4);
+    max-width: 52rem;
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-card);
+  }
+
+  .title {
+    font-size: var(--text-lg);
+  }
+
+  .summary {
+    color: var(--color-text);
+  }
+
+  .details {
+    font-size: var(--text-base);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+  }
+
+  .links a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-weight: 500;
+  }
+</style>

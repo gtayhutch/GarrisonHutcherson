@@ -1,0 +1,88 @@
+---
+/**
+ * Document shell for every page: `<head>` metadata, the self-hosted font
+ * (preloaded, ACF-06), skip link, header, `<main>`, contact band, and
+ * footer. Ships no client JavaScript (ACF-02).
+ */
+import outfitLatin from '@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2?url';
+
+import ContactBand from '../components/site/ContactBand.astro';
+import SiteFooter from '../components/site/SiteFooter.astro';
+import SiteHeader from '../components/site/SiteHeader.astro';
+import {SITE, pageTitle} from '../lib/config';
+import '../styles/global.css';
+
+interface Props {
+  /** Page title; omit on the home page. */
+  title?: string;
+  /** Meta description; defaults to the site description. */
+  description?: string;
+  /** Show the "Let's Work Together" band; off for the résumé page. */
+  showContactBand?: boolean;
+}
+
+const {
+  title,
+  description = SITE.description,
+  showContactBand = true,
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, SITE.url);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle(title)}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0b1719" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="preload"
+      href={outfitLatin}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle(title)} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
+    <SiteHeader />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    {showContactBand && <ContactBand />}
+    <SiteFooter />
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    position: absolute;
+    top: var(--space-2);
+    left: var(--space-2);
+    z-index: 100;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-sm);
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+    font-weight: 600;
+    transform: translateY(-200%);
+  }
+
+  .skip-link:focus-visible {
+    transform: none;
+  }
+
+  main:focus {
+    outline: none;
+  }
+</style>

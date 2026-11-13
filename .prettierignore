@@ -1,0 +1,13 @@
+# Generated and vendored output
+dist/
+.astro/
+.wrangler/
+node_modules/
+playwright-report/
+test-results/
+pnpm-lock.yaml
+
+# Markdown outside the site content is checked by markdownlint, not Prettier
+# (Prettier pads tables to full width).
+*.md
+!src/content/**/*.md

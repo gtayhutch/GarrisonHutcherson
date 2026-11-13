@@ -1,0 +1,15 @@
+company: One Inc
+location: Remote
+period: Aug 2025 – Nov 2026
+order: 1
+icon: credit-card
+summary: >-
+  Technical support engineer working client cases end to end, from log review
+  and reproduction to client education or a Jira escalation.
+roles:
+  - title: Technical Support Engineer
+    period: Aug 2025 – Nov 2026
+    highlights:
+      - Owned incoming client cases in Salesforce for clients experiencing issues with One Inc's software.
+      - Reviewed logs and bug reports and reproduced issues in-house to pin down the root cause.
+      - Resolved cases by educating clients on the right workflow, or by writing Jira issues for the development and product teams to investigate.

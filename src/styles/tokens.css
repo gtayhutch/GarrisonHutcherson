@@ -1,0 +1,72 @@
+/*
+ * Design tokens from the owner's mock-up: deep green-slate surfaces, a mint
+ * accent, and rounded cards. Components use these variables only; no raw
+ * colors elsewhere (except the hero illustration).
+ */
+:root {
+  color-scheme: dark;
+
+  /* Surfaces */
+  --color-bg: #0b1719;
+  --color-bg-raised: #0f1f22;
+  --color-surface: #13262a;
+  --color-surface-hover: #183035;
+  --color-border: rgb(178 222 210 / 12%);
+  --color-border-strong: rgb(178 222 210 / 22%);
+
+  /* Text */
+  --color-text: #e9f1ef;
+  --color-text-muted: #a9bcb7;
+  --color-text-subtle: #8aa19b;
+
+  /* Accent */
+  --color-accent: #5fd4a0;
+  --color-accent-strong: #7fe3b6;
+  --color-accent-soft: rgb(95 212 160 / 14%);
+  --color-accent-border: rgb(95 212 160 / 40%);
+  --color-on-accent: #072018;
+
+  /* Icon tiles */
+  --color-tile: #1c3b3a;
+  --color-tile-icon: #8fe6c0;
+
+  /* Typography */
+  --font-sans:
+    'Outfit Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    roboto, 'Helvetica Neue', arial, sans-serif;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-md: 1.125rem;
+  --text-lg: 1.375rem;
+  --text-xl: clamp(1.5rem, 1.2rem + 1vw, 1.875rem);
+  --text-2xl: clamp(2rem, 1.4rem + 2.6vw, 3.25rem);
+  --leading-tight: 1.15;
+  --leading-normal: 1.6;
+  --tracking-eyebrow: 0.24em;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  /* Shape and depth */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.875rem;
+  --radius-pill: 999px;
+  --shadow-card:
+    0 1px 0 rgb(255 255 255 / 3%) inset, 0 8px 24px rgb(0 0 0 / 25%);
+
+  /* Layout */
+  --container: 76rem;
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
+  --header-height: 4rem;
+  --focus-ring: 0 0 0 3px var(--color-bg), 0 0 0 5px var(--color-accent);
+}

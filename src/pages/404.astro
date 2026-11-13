@@ -1,0 +1,23 @@
+---
+/** Not-found page, served by Workers static assets for unknown paths. */
+import PageHeader from '../components/site/PageHeader.astro';
+import Button from '../components/ui/Button.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Page not found" showContactBand={false}>
+  <PageHeader
+    eyebrow="404"
+    title="Page not found"
+    intro="That page doesn't exist, or it has moved."
+  />
+  <div class="container body">
+    <Button href="/">Go to the home page</Button>
+  </div>
+</BaseLayout>
+
+<style>
+  .body {
+    padding-bottom: var(--space-9);
+  }
+</style>

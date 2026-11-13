@@ -1,0 +1,241 @@
+---
+/**
+ * Printable HTML résumé built from the same content as the rest of the
+ * site. On screen it's a paper-style sheet; when printed, the site chrome
+ * is hidden and colors switch to black on white (see the print styles in
+ * src/styles/global.css). No personal phone or address, by design.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import {CONTACT, SITE} from '../lib/config';
+import {getExperience, getPage, getSkillGroups} from '../lib/content';
+
+const home = await getPage('home');
+const experience = await getExperience();
+const skills = await getSkillGroups();
+const website = SITE.url.replace('https://', '');
+const github = CONTACT.github.replace('https://', '');
+---
+
+<BaseLayout
+  title="Résumé"
+  description="Résumé of Garrison Hutcherson, technical support and client success professional."
+  showContactBand={false}
+>
+  <div class="container wrap">
+    <p class="print-hint">
+      Tip: use your browser's Print command (Ctrl+P or ⌘P) to save this page as
+      a PDF.
+    </p>
+    <article class="sheet" aria-labelledby="resume-name">
+      <header class="sheet-head">
+        <h1 id="resume-name">{SITE.name}</h1>
+        <p class="role">{SITE.title}</p>
+        <ul class="contact" role="list">
+          <li>
+            <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+          </li>
+          <li>
+            <a href={SITE.url}>{website}</a>
+          </li>
+          <li>
+            <a href={CONTACT.github}>{github}</a>
+          </li>
+        </ul>
+      </header>
+
+      <section aria-labelledby="resume-summary">
+        <h2 id="resume-summary">Summary</h2>
+        <p>{home.data.intro}</p>
+      </section>
+
+      <section aria-labelledby="resume-skills">
+        <h2 id="resume-skills">Skills</h2>
+        <dl class="skills">
+          {skills.map(({data}) => (
+            <div class="skill-row">
+              <dt>{data.title}</dt>
+              <dd>{data.tags.join(' · ')}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <section aria-labelledby="resume-experience">
+        <h2 id="resume-experience">Experience</h2>
+        {experience.map(({data}) => (
+          <div class="job">
+            <div class="job-head">
+              <h3>
+                {data.company} <span class="location">· {data.location}</span>
+              </h3>
+              <p class="dates">{data.period}</p>
+            </div>
+            {data.roles.map(role => (
+              <div class="role-block">
+                <p class="role-title">
+                  {role.title}
+                  {role.period && role.period !== data.period && (
+                    <span class="role-dates"> · {role.period}</span>
+                  )}
+                </p>
+                {role.highlights.length > 0 && (
+                  <ul>
+                    {role.highlights.map(item => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
+        ))}
+      </section>
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .wrap {
+    max-width: 56rem;
+    padding-block: var(--space-6) var(--space-8);
+  }
+
+  .print-hint {
+    margin-bottom: var(--space-4);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .sheet {
+    display: grid;
+    gap: var(--space-6);
+    padding: clamp(1.25rem, 4vw, 3rem);
+    border-radius: var(--radius-lg);
+    background: #fbfcfb;
+    color: #1d2a2c;
+    box-shadow: 0 20px 50px rgb(0 0 0 / 35%);
+  }
+
+  .sheet a {
+    color: #0f6b4d;
+  }
+
+  h1 {
+    font-size: 2.25rem;
+    color: #0e1c1e;
+  }
+
+  .role {
+    margin-top: var(--space-1);
+    color: #0f6b4d;
+    font-size: var(--text-md);
+    font-weight: 500;
+  }
+
+  .contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-5);
+    margin-top: var(--space-3);
+    font-size: var(--text-sm);
+  }
+
+  h2 {
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 2px solid #cfe5dc;
+    color: #0e1c1e;
+    font-size: var(--text-sm);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .skills {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .skill-row {
+    display: grid;
+    gap: 0 var(--space-4);
+  }
+
+  dt {
+    font-weight: 600;
+  }
+
+  dd {
+    margin: 0;
+    color: #3d4f52;
+  }
+
+  .job + .job {
+    margin-top: var(--space-5);
+  }
+
+  .job-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0 var(--space-4);
+  }
+
+  h3 {
+    font-size: var(--text-md);
+    color: #0e1c1e;
+  }
+
+  .location,
+  .dates,
+  .role-dates {
+    color: #4f6265;
+    font-size: var(--text-sm);
+    font-weight: 400;
+  }
+
+  .role-block {
+    margin-top: var(--space-2);
+  }
+
+  .role-title {
+    font-weight: 600;
+  }
+
+  .role-block ul {
+    display: grid;
+    gap: var(--space-1);
+    margin-top: var(--space-1);
+    padding-left: var(--space-5);
+    color: #33464a;
+    font-size: var(--text-sm);
+  }
+
+  @media (width >= 40rem) {
+    .skill-row {
+      grid-template-columns: 15rem 1fr;
+    }
+  }
+
+  @media print {
+    .wrap {
+      max-width: none;
+      padding: 0;
+    }
+
+    .print-hint {
+      display: none;
+    }
+
+    .sheet {
+      gap: 1.1rem;
+      padding: 0;
+      box-shadow: none;
+      font-size: 10.5pt;
+    }
+
+    .job {
+      break-inside: avoid;
+    }
+  }
+</style>

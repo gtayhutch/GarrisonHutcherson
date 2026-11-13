@@ -1,0 +1,11 @@
+// markdownlint for the README and site content.
+{
+  "config": {
+    "default": true,
+    "MD013": false,
+    "MD033": false,
+    "MD041": false,
+  },
+  "globs": ["README.md", "src/content/**/*.md"],
+  "ignores": ["node_modules/**", "dist/**"],
+}

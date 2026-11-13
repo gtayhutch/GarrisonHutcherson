@@ -1,0 +1,43 @@
+---
+/** About page: long-form intro from src/content/pages/about.md. */
+import {render} from 'astro:content';
+
+import PageHeader from '../components/site/PageHeader.astro';
+import Button from '../components/ui/Button.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import {RESUME_PATH} from '../lib/config';
+import {getPage} from '../lib/content';
+
+const page = await getPage('about');
+const {Content} = await render(page);
+---
+
+<BaseLayout title={page.data.title} description={page.data.description}>
+  <PageHeader eyebrow="About" title="Hi, I'm Garrison" />
+  <div class="container body">
+    <div class="prose">
+      <Content />
+    </div>
+    <div class="ctas">
+      <Button href="/experience/" icon="briefcase">
+        See my experience
+      </Button>
+      <Button href={RESUME_PATH} variant="secondary" icon="file-text">
+        View Résumé
+      </Button>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .body {
+    padding-bottom: var(--space-8);
+  }
+
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+</style>

@@ -1,0 +1,154 @@
+---
+/**
+ * Decorative mountain-and-forest illustration for the home hero, drawn as
+ * inline SVG at build time (no image download, sharp at any size). Pine
+ * positions come from a fixed-seed generator so every build is identical.
+ * Colors are illustration-only and intentionally not design tokens.
+ */
+
+interface Pine {
+  x: number;
+  y: number;
+  scale: number;
+}
+
+/** Deterministic pseudo-random numbers in [0, 1) from a fixed seed. */
+function seeded(seed: number): () => number {
+  let state = seed;
+  return () => {
+    state = (state * 1664525 + 1013904223) % 4294967296;
+    return state / 4294967296;
+  };
+}
+
+function pineRow(
+  count: number,
+  y: (x: number) => number,
+  scale: [number, number],
+  seed: number,
+): Pine[] {
+  const random = seeded(seed);
+  const step = 1240 / count;
+  return Array.from({length: count}, (_, i) => {
+    const x = -20 + i * step + random() * step * 0.8;
+    return {
+      x: Math.round(x),
+      y: Math.round(y(x) + random() * 10),
+      scale: Number((scale[0] + random() * (scale[1] - scale[0])).toFixed(2)),
+    };
+  });
+}
+
+const backPines = pineRow(
+  70,
+  x => 470 - Math.sin(x / 160) * 18,
+  [0.45, 0.7],
+  7,
+);
+const frontPines = pineRow(
+  28,
+  x => 560 - Math.sin(x / 120 + 1) * 22,
+  [0.9, 1.5],
+  21,
+);
+---
+
+<svg
+  class="hero-scene"
+  viewBox="0 0 1200 600"
+  preserveAspectRatio="xMidYMid slice"
+  aria-hidden="true"
+  focusable="false"
+>
+  <defs>
+    <linearGradient id="hero-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1d3a45"></stop>
+      <stop offset="0.45" stop-color="#5b6f7a"></stop>
+      <stop offset="0.72" stop-color="#d79b7a"></stop>
+      <stop offset="1" stop-color="#f2c08f"></stop>
+    </linearGradient>
+    <radialGradient id="hero-sun" cx="0.68" cy="0.62" r="0.45">
+      <stop offset="0" stop-color="#ffe2b8" stop-opacity="0.85"></stop>
+      <stop offset="0.4" stop-color="#ffc58f" stop-opacity="0.35"></stop>
+      <stop offset="1" stop-color="#ffc58f" stop-opacity="0"></stop>
+    </radialGradient>
+    <linearGradient id="hero-far" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9aa3b5"></stop>
+      <stop offset="1" stop-color="#5f7183"></stop>
+    </linearGradient>
+    <linearGradient id="hero-mid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4c6670"></stop>
+      <stop offset="1" stop-color="#2c4a50"></stop>
+    </linearGradient>
+    <linearGradient id="hero-mist" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d9e4e6" stop-opacity="0"></stop>
+      <stop offset="0.6" stop-color="#d9e4e6" stop-opacity="0.35"></stop>
+      <stop offset="1" stop-color="#d9e4e6" stop-opacity="0"></stop>
+    </linearGradient>
+    <symbol id="hero-pine" viewBox="-22 -64 44 80" overflow="visible">
+      <path d="M0-64 13-34H6l12 20H9l13 24H-22l13-24h-9l12-20h-7Z M-3 10h6v10h-6Z"></path>
+    </symbol>
+  </defs>
+
+  <rect width="1200" height="600" fill="url(#hero-sky)"></rect>
+  <rect width="1200" height="600" fill="url(#hero-sun)"></rect>
+
+  <!-- Far range with snow caps -->
+  <path
+    fill="url(#hero-far)"
+    d="M0 360 90 300l60 30 110-120 70 70 60-40 120-130 80 90 50-30 130 110 90-60 100 70 80-40 160 100v190H0Z"
+  ></path>
+  <path
+    fill="#f4e6e0"
+    opacity="0.8"
+    d="m520 110-34 37 16-4 10 12 14-16 12 10 12-8Zm-262 103-28 31 14-3 10 9 10-12 9 7Zm688 61-40 26 18-2 12 8 16-10 14 4Z"
+  ></path>
+
+  <!-- Middle ridges -->
+  <path
+    fill="url(#hero-mid)"
+    d="M0 420 120 350l90 40 140-90 110 80 90-30 150 70 120-80 140 90 100-40 140 60v150H0Z"
+  ></path>
+  <rect y="360" width="1200" height="120" fill="url(#hero-mist)"></rect>
+
+  <!-- Forested hills -->
+  <path
+    fill="#1f3c3c"
+    d="M0 470c120-30 210-20 330 0s220 10 330-20 260-10 360 20 140 10 180 0v150H0Z"
+  ></path>
+  <g fill="#173230">
+    {backPines.map(p => (
+      <use
+        href="#hero-pine"
+        x={p.x - 22 * p.scale}
+        y={p.y - 64 * p.scale}
+        width={44 * p.scale}
+        height={80 * p.scale}
+      />
+    ))}
+  </g>
+
+  <!-- Foreground -->
+  <path
+    fill="#0f2222"
+    d="M0 560c160-25 300-15 450 5s300 5 450-25 220 0 300 10v50H0Z"
+  ></path>
+  <g fill="#0c1b1c">
+    {frontPines.map(p => (
+      <use
+        href="#hero-pine"
+        x={p.x - 22 * p.scale}
+        y={p.y - 64 * p.scale}
+        width={44 * p.scale}
+        height={80 * p.scale}
+      />
+    ))}
+  </g>
+</svg>
+
+<style>
+  .hero-scene {
+    width: 100%;
+    height: 100%;
+  }
+</style>

@@ -1,0 +1,73 @@
+---
+/**
+ * A section title with a leading icon and an optional "see more" link, as
+ * in the mock-up's Experience and Skills headers.
+ */
+import Icon, {type IconName} from './Icon.astro';
+
+interface Props {
+  /** Heading text. */
+  title: string;
+  /** Leading icon. */
+  icon: IconName;
+  /** Heading level; defaults to h2. */
+  level?: 'h2' | 'h3';
+  /** Optional link shown on the right. */
+  link?: {href: string; label: string};
+  /** `id` for the heading, for `aria-labelledby`. */
+  id?: string;
+}
+
+const {title, icon, level = 'h2', link, id} = Astro.props;
+const Heading = level;
+---
+
+<div class="section-heading">
+  <Heading class="title" id={id}>
+    <Icon name={icon} size={28} class="title-icon" />
+    {title}
+  </Heading>
+  {link && (
+    <a class="more" href={link.href}>
+      {link.label}
+      <Icon name="arrow-right" size={14} />
+    </a>
+  )}
+</div>
+
+<style>
+  .section-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3) var(--space-5);
+    margin-bottom: var(--space-5);
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--text-xl);
+  }
+
+  .title :global(.title-icon) {
+    color: var(--color-accent);
+  }
+
+  .more {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .more:hover {
+    text-decoration: underline;
+  }
+</style>

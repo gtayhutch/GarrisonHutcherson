@@ -1,0 +1,70 @@
+---
+/** Home page: hero, experience and skills previews, and key strengths. */
+import ExperienceTimeline from '../components/experience/ExperienceTimeline.astro';
+import Hero from '../components/home/Hero.astro';
+import Strengths from '../components/home/Strengths.astro';
+import SkillGroups from '../components/skills/SkillGroups.astro';
+import SectionHeading from '../components/ui/SectionHeading.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import {
+  getExperience,
+  getPage,
+  getSkillGroups,
+  getStrengths,
+} from '../lib/content';
+
+const page = await getPage('home');
+const experience = await getExperience(3);
+const skills = await getSkillGroups(4);
+const strengths = await getStrengths();
+---
+
+<BaseLayout description={page.data.description}>
+  <Hero page={page} />
+
+  <div class="container sections">
+    <div class="split">
+      <section aria-labelledby="experience-title">
+        <SectionHeading
+          id="experience-title"
+          title="Experience"
+          icon="briefcase"
+          link={{href: '/experience/', label: 'View full history'}}
+        />
+        <ExperienceTimeline entries={experience} />
+      </section>
+
+      <section aria-labelledby="skills-title">
+        <SectionHeading
+          id="skills-title"
+          title="Skills"
+          icon="layers"
+          link={{href: '/skills/', label: 'My full skill set'}}
+        />
+        <SkillGroups groups={skills} />
+      </section>
+    </div>
+
+    <Strengths strengths={strengths} />
+  </div>
+</BaseLayout>
+
+<style>
+  .sections {
+    display: grid;
+    gap: var(--space-8);
+    padding-block: var(--space-7) var(--space-8);
+  }
+
+  .split {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  @media (width >= 72rem) {
+    .split {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      gap: var(--space-7);
+    }
+  }
+</style>
