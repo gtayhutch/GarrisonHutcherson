@@ -18,7 +18,7 @@ never read other profiles.
 
 | Profile | Stack | Status |
 | --- | --- | --- |
-| `nextjs-firebase/` | Next.js (App Router) · TypeScript · Firebase (Auth, Firestore, Storage, Cloud Functions, App Hosting) | Maintained |
+| `nextjs-firebase/` | Next.js (App Router) · TypeScript · Firebase (Auth, Firestore, Storage, Cloud Functions, App Hosting) | Maintained (template repo only; removed from this project) |
 | `astro-cloudflare/` | Astro (static) · TypeScript · Cloudflare Workers static assets | Draft (created in GarrisonHutcherson.com; to upstream to the template repo) |
 
 A stack that isn't listed gets a new profile, created from

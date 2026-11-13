@@ -93,7 +93,7 @@ docs/
   stacks/                      Stack profiles (a project uses only its own)
     README.md                  Profile catalog and the profile contract
     _profile-template/         Skeleton for a new profile
-    nextjs-firebase/           Next.js App Router + TypeScript + Firebase
+    astro-cloudflare/          Astro (static) + TypeScript + Cloudflare Workers (this project)
   checklists/
     definition-of-done.md  pr-review.md  security-review.md
     release.md  new-project-setup.md
