@@ -6,11 +6,14 @@
  * src/styles/global.css). The phone number appears here and nowhere else
  * on the site, by the owner's choice; no street address, by design.
  */
+import {render} from 'astro:content';
+
 import BaseLayout from '../layouts/BaseLayout.astro';
 import {CONTACT, SITE} from '../lib/config';
 import {getExperience, getPage, getSkillGroups} from '../lib/content';
 
-const home = await getPage('home');
+const page = await getPage('resume');
+const {Content: Summary} = await render(page);
 const experience = await getExperience();
 const skills = await getSkillGroups();
 const website = SITE.url.replace('https://', '');
@@ -19,8 +22,8 @@ const linkedin = CONTACT.linkedin.replace('https://www.', '');
 ---
 
 <BaseLayout
-  title="Résumé"
-  description="Résumé of Garrison Hutcherson, technical support and client success professional."
+  title={page.data.title}
+  description={page.data.description}
   showContactBand={false}
 >
   <div class="container wrap">
@@ -33,6 +36,7 @@ const linkedin = CONTACT.linkedin.replace('https://www.', '');
         <h1 id="resume-name">{SITE.name}</h1>
         <p class="role">{SITE.title}</p>
         <ul class="contact" role="list">
+          <li>{CONTACT.location}</li>
           <li>
             <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
           </li>
@@ -53,7 +57,9 @@ const linkedin = CONTACT.linkedin.replace('https://www.', '');
 
       <section aria-labelledby="resume-summary">
         <h2 id="resume-summary">Summary</h2>
-        <p>{home.data.intro}</p>
+        <div class="summary">
+          <Summary />
+        </div>
       </section>
 
       <section aria-labelledby="resume-skills">

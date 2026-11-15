@@ -1,15 +1,17 @@
 company: One Inc
 location: Remote
-period: Aug 2025 – Nov 2026
+period: Aug 2025 – Present
 order: 1
 icon: credit-card
 summary: >-
-  Technical support engineer working client cases end to end, from log review
-  and reproduction to client education or a Jira escalation.
+  Support engineer for payments software: investigating issues in Elastic and
+  Grafana logs, reproducing API problems, and documenting bugs for engineering.
 roles:
-  - title: Technical Support Engineer
-    period: Aug 2025 – Nov 2026
+  - title: Support Engineer
+    period: Aug 2025 – Present
     highlights:
-      - Owned incoming client cases in Salesforce for clients experiencing issues with One Inc's software.
-      - Reviewed logs and bug reports and reproduced issues in-house to pin down the root cause.
-      - Resolved cases by educating clients on the right workflow, or by writing Jira issues for the development and product teams to investigate.
+      - Investigate client support issues by reviewing application and system logs in Elastic and Grafana, then document findings in engineering tickets.
+      - Meet with clients to understand and reproduce support issues, and follow through with engineering until bugs are documented and ticketed.
+      - Test and reproduce API issues in Postman to isolate root causes and give engineering clear, verifiable reproduction steps.
+      - Coordinate with upstream banking partners, including Fiserv, to confirm payment settlement status and resolve client payment questions.
+      - Maintain and expand the client-facing knowledge base so documentation stays accurate and current.

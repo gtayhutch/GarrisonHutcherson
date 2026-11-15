@@ -10,13 +10,14 @@ export const SITE = {
   name: 'Garrison Hutcherson',
   /** Monogram shown in the header logo. */
   initials: 'GH',
-  /** Short professional title for the résumé header. */
-  title: 'Technical Support & Client Success Professional',
+  /** Professional title for the résumé header. */
+  title:
+    'Remote Support Engineer · 10+ Years Technical & Software Support (SaaS, Payments)',
   /** Canonical production origin; matches `site` in astro.config.mjs. */
   url: 'https://garrisonhutcherson.com',
   /** Default meta description for pages that don't set their own. */
   description:
-    'Garrison Hutcherson: technical support and client success professional with 15 years of remote experience.',
+    'Garrison Hutcherson: remote support engineer with 10+ years of technical and software support in SaaS and payments.',
 } as const;
 
 /**
@@ -28,6 +29,8 @@ export const CONTACT = {
   email: 'garrison@garrisonhutcherson.com',
   github: 'https://github.com/gtayhutch',
   linkedin: 'https://www.linkedin.com/in/gtayhutch',
+  /** City and state only, shown on the résumé page. */
+  location: 'Anderson, SC',
   /** Résumé page only. `href` is the E.164 `tel:` link. */
   phone: {display: '864-749-9707', href: 'tel:+18647499707'},
 } as const;

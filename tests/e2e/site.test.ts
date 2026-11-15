@@ -130,3 +130,24 @@ test('printing the résumé hides the site header and footer', async ({page}) =>
   await expect(page.locator('.site-footer')).toBeHidden();
   await expect(page.getByRole('heading', {level: 1})).toBeVisible();
 });
+
+for (const path of ['/', '/about/']) {
+  test(`${path} shows the headshot with alt text`, async ({page}) => {
+    await page.goto(path);
+
+    const portrait = page.getByRole('img', {
+      name: 'Portrait of Garrison Hutcherson',
+    });
+
+    await expect(portrait).toBeVisible();
+    expect(
+      await portrait.evaluate(img => (img as HTMLImageElement).naturalWidth),
+    ).toBeGreaterThan(0);
+  });
+}
+
+test('the résumé header shows the city and state', async ({page}) => {
+  await page.goto('/resume/');
+
+  await expect(page.getByText('Anderson, SC', {exact: true})).toBeVisible();
+});
