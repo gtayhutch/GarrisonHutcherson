@@ -19,7 +19,7 @@ export const ROUTES: readonly Route[] = [
     heading: /Customer-Focused Support &\s*Client Success Professional/,
   },
   {path: '/about/', heading: "Hi, I'm Garrison"},
-  {path: '/experience/', heading: '15 years of remote support'},
+  {path: '/experience/', heading: '10+ years of remote support'},
   {path: '/skills/', heading: 'What I bring to a support team'},
   {path: '/projects/', heading: "Things I've built"},
   {path: '/contact/', heading: "Let's work together"},
@@ -28,3 +28,9 @@ export const ROUTES: readonly Route[] = [
 
 /** The only email address the site may publish (ADR 0003). */
 export const PUBLIC_EMAIL = 'garrison@garrisonhutcherson.com';
+
+/** The only page allowed to show a phone number (the owner's choice). */
+export const RESUME_ROUTE = '/resume/';
+
+/** The `tel:` link the résumé page must use. */
+export const PUBLIC_PHONE_HREF = 'tel:+18647499707';

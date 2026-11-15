@@ -1,11 +1,12 @@
 ---
 /**
- * Contact page: the public email and GitHub link. No form, so the site
- * still accepts no visitor input (security-decisions.md §5).
+ * Contact page: the public email, LinkedIn, and GitHub links. No form, so
+ * the site still accepts no visitor input.
  */
 import PageHeader from '../components/site/PageHeader.astro';
 import GitHubIcon from '../components/ui/GitHubIcon.astro';
 import Icon from '../components/ui/Icon.astro';
+import LinkedInIcon from '../components/ui/LinkedInIcon.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import {CONTACT, RESUME_PATH} from '../lib/config';
 ---
@@ -30,6 +31,19 @@ import {CONTACT, RESUME_PATH} from '../lib/config';
           <span>
             <span class="label">Email</span>
             <span class="value">{CONTACT.email}</span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="channel" href={CONTACT.linkedin}>
+          <span class="channel-icon">
+            <LinkedInIcon size={24} />
+          </span>
+          <span>
+            <span class="label">LinkedIn</span>
+            <span class="value">
+              {CONTACT.linkedin.replace('https://www.', '')}
+            </span>
           </span>
         </a>
       </li>

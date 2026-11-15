@@ -1,9 +1,13 @@
 ---
-/** About page: long-form intro from src/content/pages/about.md. */
+/**
+ * About page: headshot beside the long-form intro from
+ * src/content/pages/about.md (photo first on phones).
+ */
 import {render} from 'astro:content';
 
 import PageHeader from '../components/site/PageHeader.astro';
 import Button from '../components/ui/Button.astro';
+import Portrait from '../components/ui/Portrait.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import {RESUME_PATH} from '../lib/config';
 import {getPage} from '../lib/content';
@@ -15,16 +19,23 @@ const {Content} = await render(page);
 <BaseLayout title={page.data.title} description={page.data.description}>
   <PageHeader eyebrow="About" title="Hi, I'm Garrison" />
   <div class="container body">
-    <div class="prose">
-      <Content />
-    </div>
-    <div class="ctas">
-      <Button href="/experience/" icon="briefcase">
-        See my experience
-      </Button>
-      <Button href={RESUME_PATH} variant="secondary" icon="file-text">
-        View Résumé
-      </Button>
+    <div class="layout">
+      <div class="photo">
+        <Portrait variant="card" width={320} eager />
+      </div>
+      <div>
+        <div class="prose">
+          <Content />
+        </div>
+        <div class="ctas">
+          <Button href="/experience/" icon="briefcase">
+            See my experience
+          </Button>
+          <Button href={RESUME_PATH} variant="secondary" icon="file-text">
+            View Résumé
+          </Button>
+        </div>
+      </div>
     </div>
   </div>
 </BaseLayout>
@@ -34,10 +45,31 @@ const {Content} = await render(page);
     padding-bottom: var(--space-8);
   }
 
+  .layout {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .photo {
+    width: min(100%, 15rem);
+  }
+
   .ctas {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-3);
     margin-top: var(--space-6);
+  }
+
+  @media (width >= 56rem) {
+    .layout {
+      grid-template-columns: 20rem minmax(0, 1fr);
+      gap: var(--space-8);
+      align-items: start;
+    }
+
+    .photo {
+      width: 100%;
+    }
   }
 </style>

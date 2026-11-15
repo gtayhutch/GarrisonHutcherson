@@ -1,0 +1,68 @@
+---
+/**
+ * The owner's headshot, optimized by astro:assets into AVIF and WebP at a few
+ * widths (ACF-04). `round` is a circle with an accent ring (home hero);
+ * `card` is a rounded square (About page). Above-the-fold uses should pass
+ * `eager`.
+ */
+import {Picture} from 'astro:assets';
+
+import headshot from '../../assets/headshot.jpg';
+import {SITE} from '../../lib/config';
+
+interface Props {
+  /** Visual treatment. */
+  variant?: 'round' | 'card';
+  /** Rendered width in CSS pixels at the largest breakpoint. */
+  width: number;
+  /** Load immediately (above the fold) instead of lazily. */
+  eager?: boolean;
+}
+
+const {variant = 'round', width, eager = false} = Astro.props;
+const widths = [width, width * 2].filter(w => w <= headshot.width);
+---
+
+<div class:list={['portrait', `portrait-${variant}`]}>
+  <Picture
+    src={headshot}
+    alt={`Portrait of ${SITE.name}`}
+    formats={['avif', 'webp']}
+    widths={widths}
+    sizes={`${String(width)}px`}
+    width={width}
+    height={width}
+    loading={eager ? 'eager' : 'lazy'}
+    decoding="async"
+  />
+</div>
+
+<style>
+  .portrait {
+    flex: none;
+    overflow: hidden;
+    background: var(--color-surface);
+  }
+
+  .portrait :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+  }
+
+  .portrait-round {
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 3px var(--color-bg),
+      0 0 0 6px var(--color-accent-border),
+      0 18px 40px rgb(0 0 0 / 45%);
+  }
+
+  .portrait-card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+  }
+</style>
