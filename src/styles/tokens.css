@@ -1,34 +1,48 @@
 /*
- * Design tokens from the owner's mock-up: deep green-slate surfaces, a mint
- * accent, and rounded cards. Components use these variables only; no raw
- * colors elsewhere (except the hero illustration).
+ * Design tokens. "Aurora" palette (owner's choice): Mint #bae5c0, Mauve
+ * #e3c7e0, Green #86ae94, Dark Blue #272f40. Mint is the accent (11:1 on the
+ * page background; buttons use dark text on mint), mauve marks eyebrows and
+ * glows, green is secondary text. Components use these variables only; no
+ * raw colors elsewhere (except the hero illustration and the printed résumé).
  */
 :root {
   color-scheme: dark;
 
+  /* Palette */
+  --palette-mint: #bae5c0;
+  --palette-mauve: #e3c7e0;
+  --palette-green: #86ae94;
+  --palette-dark-blue: #272f40;
+
   /* Surfaces */
-  --color-bg: #0b1719;
-  --color-bg-raised: #0f1f22;
-  --color-surface: #13262a;
-  --color-surface-hover: #183035;
-  --color-border: rgb(178 222 210 / 12%);
-  --color-border-strong: rgb(178 222 210 / 22%);
+  --color-bg: #1b2130;
+  --color-bg-raised: #212838;
+  --color-surface: var(--palette-dark-blue);
+  --color-surface-hover: #2e374b;
+  --color-border: rgb(186 229 192 / 13%);
+  --color-border-strong: rgb(186 229 192 / 24%);
+  --color-header: rgb(27 33 48 / 90%);
+  --color-scrim: 27 33 48;
+  --color-glow: 186 229 192;
+  --color-glow-alt: 227 199 224;
 
   /* Text */
-  --color-text: #e9f1ef;
-  --color-text-muted: #a9bcb7;
-  --color-text-subtle: #8aa19b;
+  --color-text: #eef4f0;
+  --color-text-muted: #c4d0ca;
+  --color-text-subtle: var(--palette-green);
+  --color-eyebrow: var(--palette-mauve);
 
   /* Accent */
-  --color-accent: #5fd4a0;
-  --color-accent-strong: #7fe3b6;
-  --color-accent-soft: rgb(95 212 160 / 14%);
-  --color-accent-border: rgb(95 212 160 / 40%);
-  --color-on-accent: #072018;
+  --color-accent: var(--palette-mint);
+  --color-accent-strong: #d4f2d8;
+  --color-accent-soft: rgb(186 229 192 / 14%);
+  --color-accent-border: rgb(186 229 192 / 42%);
+  --color-on-accent: #1b2130;
 
   /* Icon tiles */
-  --color-tile: #1c3b3a;
-  --color-tile-icon: #8fe6c0;
+  --color-tile: #34405a;
+  --color-tile-end: var(--palette-dark-blue);
+  --color-tile-icon: var(--palette-mint);
 
   /* Typography */
   --font-sans:

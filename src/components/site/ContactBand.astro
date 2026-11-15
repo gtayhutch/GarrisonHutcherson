@@ -47,10 +47,10 @@ import LinkedInIcon from '../ui/LinkedInIcon.astro';
     background:
       radial-gradient(
         60rem 18rem at 85% 120%,
-        rgb(95 212 160 / 16%),
+        rgb(var(--color-glow) / 16%),
         transparent 70%
       ),
-      linear-gradient(180deg, #10302c, #0d2421);
+      linear-gradient(180deg, var(--palette-dark-blue), var(--color-bg));
   }
 
   .inner {
@@ -65,7 +65,7 @@ import LinkedInIcon from '../ui/LinkedInIcon.astro';
     align-items: center;
     gap: var(--space-2);
     margin-bottom: var(--space-2);
-    color: var(--color-accent);
+    color: var(--color-eyebrow);
     font-size: var(--text-xs);
     font-weight: 600;
     letter-spacing: var(--tracking-eyebrow);
@@ -118,7 +118,7 @@ import LinkedInIcon from '../ui/LinkedInIcon.astro';
   .email:hover,
   .icon-link:hover {
     border-color: var(--color-accent);
-    background: rgb(95 212 160 / 22%);
+    background: rgb(var(--color-glow) / 22%);
     color: var(--color-text);
   }
 

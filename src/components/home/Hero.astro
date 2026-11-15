@@ -73,8 +73,8 @@ const {eyebrow = [], headline, headlineAccent, intro} = Astro.props.page.data;
     inset: 0;
     background: linear-gradient(
       180deg,
-      rgb(11 23 25 / 35%) 0%,
-      rgb(11 23 25 / 55%) 60%,
+      rgb(var(--color-scrim) / 30%) 0%,
+      rgb(var(--color-scrim) / 50%) 60%,
       var(--color-bg) 100%
     );
   }
@@ -137,8 +137,8 @@ const {eyebrow = [], headline, headlineAccent, intro} = Astro.props.page.data;
       background:
         linear-gradient(
           90deg,
-          rgb(11 23 25 / 80%) 0%,
-          rgb(11 23 25 / 45%) 45%,
+          rgb(var(--color-scrim) / 80%) 0%,
+          rgb(var(--color-scrim) / 45%) 45%,
           transparent 75%
         ),
         linear-gradient(180deg, transparent 75%, var(--color-bg) 100%);

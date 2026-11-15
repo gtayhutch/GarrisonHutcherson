@@ -4,7 +4,7 @@
  * time and animated with CSS only (no JavaScript, ACF-02):
  * - three star layers drifting left at different speeds (parallax),
  * - a few twinkling stars,
- * - a slowly breathing nebula and a ringed planet,
+ * - a slowly breathing mint/mauve aurora nebula and a ringed planet,
  * - shooting stars that streak across every 10-25 seconds.
  * Star positions come from a fixed-seed generator so every build is
  * identical. Visitors who prefer reduced motion get a still scene (the
@@ -65,30 +65,30 @@ const layers = [
 >
   <defs>
     <linearGradient id="space-sky" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#03080d"></stop>
-      <stop offset="0.6" stop-color="#071216"></stop>
-      <stop offset="1" stop-color="#0b1719"></stop>
+      <stop offset="0" stop-color="#0d111b"></stop>
+      <stop offset="0.6" stop-color="#151a27"></stop>
+      <stop offset="1" stop-color="#1b2130"></stop>
     </linearGradient>
-    <radialGradient id="space-nebula-mint" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#5fd4a0" stop-opacity="0.32"></stop>
-      <stop offset="1" stop-color="#5fd4a0" stop-opacity="0"></stop>
+    <radialGradient id="space-nebula-pink" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#bae5c0" stop-opacity="0.3"></stop>
+      <stop offset="1" stop-color="#86ae94" stop-opacity="0"></stop>
     </radialGradient>
-    <radialGradient id="space-nebula-teal" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#2f8fa3" stop-opacity="0.3"></stop>
-      <stop offset="1" stop-color="#2f8fa3" stop-opacity="0"></stop>
+    <radialGradient id="space-nebula-navy" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#3a5a8c" stop-opacity="0.36"></stop>
+      <stop offset="1" stop-color="#272f40" stop-opacity="0"></stop>
     </radialGradient>
     <radialGradient id="space-nebula-violet" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#6b5bd6" stop-opacity="0.22"></stop>
-      <stop offset="1" stop-color="#6b5bd6" stop-opacity="0"></stop>
+      <stop offset="0" stop-color="#c77fc0" stop-opacity="0.34"></stop>
+      <stop offset="1" stop-color="#e3c7e0" stop-opacity="0"></stop>
     </radialGradient>
     <radialGradient id="space-planet" cx="0.35" cy="0.3" r="0.75">
-      <stop offset="0" stop-color="#2d5b5e"></stop>
-      <stop offset="0.55" stop-color="#143235"></stop>
-      <stop offset="1" stop-color="#081618"></stop>
+      <stop offset="0" stop-color="#4b6b6a"></stop>
+      <stop offset="0.55" stop-color="#2a3a48"></stop>
+      <stop offset="1" stop-color="#151b28"></stop>
     </radialGradient>
     <radialGradient id="space-glow" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0.7" stop-color="#5fd4a0" stop-opacity="0.25"></stop>
-      <stop offset="1" stop-color="#5fd4a0" stop-opacity="0"></stop>
+      <stop offset="0.7" stop-color="#bae5c0" stop-opacity="0.32"></stop>
+      <stop offset="1" stop-color="#bae5c0" stop-opacity="0"></stop>
     </radialGradient>
     <linearGradient
       id="space-trail"
@@ -99,7 +99,7 @@ const layers = [
       y2="0"
     >
       <stop offset="0" stop-color="#ffffff" stop-opacity="0"></stop>
-      <stop offset="0.8" stop-color="#d9fff0" stop-opacity="0.6"></stop>
+      <stop offset="0.8" stop-color="#d4f2d8" stop-opacity="0.65"></stop>
       <stop offset="1" stop-color="#ffffff" stop-opacity="1"></stop>
     </linearGradient>
   </defs>
@@ -113,14 +113,14 @@ const layers = [
       cy="210"
       rx="420"
       ry="220"
-      fill="url(#space-nebula-teal)"
+      fill="url(#space-nebula-navy)"
     ></ellipse>
     <ellipse
       cx="980"
       cy="330"
       rx="300"
       ry="170"
-      fill="url(#space-nebula-mint)"
+      fill="url(#space-nebula-pink)"
     ></ellipse>
     <ellipse
       cx="640"
@@ -158,7 +158,7 @@ const layers = [
       class="ring-back"
       d="M790 600c40-70 300-120 520-90"
       fill="none"
-      stroke="#5fd4a0"
+      stroke="#bae5c0"
       stroke-opacity="0.3"
       stroke-width="3"
     ></path>
@@ -167,7 +167,7 @@ const layers = [
       class="ring-front"
       d="M760 640c120-30 420-110 600-150"
       fill="none"
-      stroke="#7fe3b6"
+      stroke="#e3c7e0"
       stroke-opacity="0.7"
       stroke-width="2.5"
     ></path>
@@ -197,7 +197,7 @@ const layers = [
   }
 
   .stars {
-    fill: #e9f6f1;
+    fill: #f2f7f4;
     animation: drift linear infinite;
   }
 

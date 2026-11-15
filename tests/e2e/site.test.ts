@@ -198,3 +198,35 @@ test.describe('home hero space scene', () => {
     }
   });
 });
+
+test('favicons and the web manifest are served', async ({page, request}) => {
+  await page.goto('/');
+  const hrefs = await page
+    .locator('link[rel="icon"], link[rel="apple-touch-icon"]')
+    .evaluateAll(links => links.map(link => link.getAttribute('href')));
+  const manifest = await request.get('/site.webmanifest');
+  const icons = ((await manifest.json()) as {icons: {src: string}[]}).icons;
+
+  expect(manifest.status()).toBe(200);
+  for (const href of [...hrefs, ...icons.map(icon => icon.src)]) {
+    const response = await request.get(String(href));
+    expect(response.status(), String(href)).toBe(200);
+    expect(response.headers()['content-type'], String(href)).toMatch(
+      /^image\//,
+    );
+  }
+});
+
+test('HTML pages send exactly one UTF-8 Content-Type header', async ({
+  request,
+}) => {
+  for (const path of ['/', '/about/', '/resume/']) {
+    const response = await request.get(path);
+    const types = response
+      .headersArray()
+      .filter(header => header.name.toLowerCase() === 'content-type');
+
+    expect(types, path).toHaveLength(1);
+    expect(types[0]?.value, path).toBe('text/html; charset=utf-8');
+  }
+});
