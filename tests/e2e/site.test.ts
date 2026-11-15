@@ -150,3 +150,21 @@ test('the résumé header shows the city and state', async ({page}) => {
 
   await expect(page.getByText('Anderson, SC', {exact: true})).toBeVisible();
 });
+
+test('the header logo loads and the home link is named for the site', async ({
+  page,
+}) => {
+  await page.goto('/about/');
+  const home = page.getByRole('link', {
+    name: 'Garrison Hutcherson',
+    exact: true,
+  });
+
+  await expect(home).toHaveAttribute('href', '/');
+  const logo = home.locator('img');
+  await expect(logo).toBeVisible();
+  await expect(logo).toHaveAttribute('alt', '');
+  expect(
+    await logo.evaluate(img => (img as HTMLImageElement).naturalWidth),
+  ).toBeGreaterThan(0);
+});
