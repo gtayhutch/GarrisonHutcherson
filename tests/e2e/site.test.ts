@@ -168,3 +168,33 @@ test('the header logo loads and the home link is named for the site', async ({
     await logo.evaluate(img => (img as HTMLImageElement).naturalWidth),
   ).toBeGreaterThan(0);
 });
+
+test.describe('home hero space scene', () => {
+  test('animates drifting stars, twinkles, and shooting stars', async ({
+    page,
+  }) => {
+    await page.emulateMedia({reducedMotion: 'no-preference'});
+    await page.goto('/');
+
+    const names = await page.evaluate(() =>
+      document.getAnimations().map(a => (a as CSSAnimation).animationName),
+    );
+
+    expect(names.filter(n => n === 'drift')).toHaveLength(3);
+    expect(names.some(n => n === 'twinkle')).toBe(true);
+    expect(names.filter(n => n.startsWith('shoot'))).toHaveLength(3);
+  });
+
+  test('is still and shows no shooting stars when reduced motion is preferred', async ({
+    page,
+  }) => {
+    await page.emulateMedia({reducedMotion: 'reduce'});
+    await page.goto('/');
+
+    await expect(page.locator('.space-scene')).toBeVisible();
+    expect(await page.evaluate(() => document.getAnimations().length)).toBe(0);
+    for (const star of await page.locator('.shooting').all()) {
+      await expect(star).toHaveCSS('opacity', '0');
+    }
+  });
+});
