@@ -1,9 +1,9 @@
 ---
 /**
  * Home hero: headshot, eyebrow, headline with accent, intro, and the two
- * calls to action, over the SVG mountain scene (right side on wide screens,
- * a faded backdrop on narrow ones). The headshot sits above the text on
- * phones and to the right of it, over the scene, on wide screens.
+ * calls to action, over the animated space scene, which fills the hero and
+ * is darkened behind the text for contrast. The headshot sits above the
+ * text on phones and to the right of it on wide screens.
  */
 import type {Page} from '../../lib/content';
 import {RESUME_PATH} from '../../lib/config';
@@ -64,8 +64,19 @@ const {eyebrow = [], headline, headlineAccent, intro} = Astro.props.page.data;
     position: absolute;
     inset: 0;
     z-index: -1;
-    opacity: 0.35;
-    mask-image: linear-gradient(180deg, #000 0%, transparent 95%);
+  }
+
+  /* Darken behind the text so it keeps strong contrast over the stars. */
+  .scene::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgb(11 23 25 / 35%) 0%,
+      rgb(11 23 25 / 55%) 60%,
+      var(--color-bg) 100%
+    );
   }
 
   .content {
@@ -122,16 +133,15 @@ const {eyebrow = [], headline, headlineAccent, intro} = Astro.props.page.data;
   }
 
   @media (width >= 60rem) {
-    .scene {
-      left: 40%;
-      opacity: 1;
-      mask-image: linear-gradient(
-        100deg,
-        transparent 0%,
-        #000 30%,
-        #000 85%,
-        transparent 100%
-      );
+    .scene::after {
+      background:
+        linear-gradient(
+          90deg,
+          rgb(11 23 25 / 80%) 0%,
+          rgb(11 23 25 / 45%) 45%,
+          transparent 75%
+        ),
+        linear-gradient(180deg, transparent 75%, var(--color-bg) 100%);
     }
 
     .content {
