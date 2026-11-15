@@ -7,3 +7,10 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   Cross-Origin-Opener-Policy: same-origin
+
+# HTML pages: declare the charset in the header too (SEC-WEB-03). Pages are
+# "/" and "/<page>/"; assets never end in "/", so they keep their own types.
+/
+  Content-Type: text/html; charset=utf-8
+/:page/
+  Content-Type: text/html; charset=utf-8
