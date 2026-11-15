@@ -21,11 +21,15 @@ export const SITE = {
 
 /**
  * Public contact details. The email is a Cloudflare Email Routing address
- * (ADR 0003); never put personal addresses or phone numbers here.
+ * (ADR 0003). The phone number is published on the résumé page only, by the
+ * owner's choice; never add a street address or a personal email.
  */
 export const CONTACT = {
   email: 'garrison@garrisonhutcherson.com',
   github: 'https://github.com/gtayhutch',
+  linkedin: 'https://www.linkedin.com/in/gtayhutch',
+  /** Résumé page only. `href` is the E.164 `tel:` link. */
+  phone: {display: '864-749-9707', href: 'tel:+18647499707'},
 } as const;
 
 /** A link in the main navigation. */
