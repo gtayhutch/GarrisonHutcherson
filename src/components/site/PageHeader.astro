@@ -26,7 +26,7 @@ const {eyebrow, title, intro} = Astro.props;
     background:
       radial-gradient(
         50rem 20rem at 90% -20%,
-        rgb(251 37 118 / 12%),
+        rgb(var(--color-glow-alt) / 12%),
         transparent 70%
       ),
       var(--color-bg);
@@ -34,7 +34,7 @@ const {eyebrow, title, intro} = Astro.props;
 
   .eyebrow {
     margin-bottom: var(--space-3);
-    color: var(--color-accent);
+    color: var(--color-eyebrow);
     font-size: var(--text-xs);
     font-weight: 600;
     letter-spacing: var(--tracking-eyebrow);

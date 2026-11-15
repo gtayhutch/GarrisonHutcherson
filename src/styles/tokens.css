@@ -1,44 +1,48 @@
 /*
- * Design tokens. Palette (owner's choice, colorhunt.co/palette/
- * 0000001500503f0071fb2576): #000000 black, #150050 navy-violet, #3f0071
- * purple, #fb2576 hot pink. Pink is the accent (5.6:1 on black; buttons use
- * black text on pink). Components use these variables only; no raw colors
- * elsewhere (except the hero illustration and the printed résumé).
+ * Design tokens. "Aurora" palette (owner's choice): Mint #bae5c0, Mauve
+ * #e3c7e0, Green #86ae94, Dark Blue #272f40. Mint is the accent (11:1 on the
+ * page background; buttons use dark text on mint), mauve marks eyebrows and
+ * glows, green is secondary text. Components use these variables only; no
+ * raw colors elsewhere (except the hero illustration and the printed résumé).
  */
 :root {
   color-scheme: dark;
 
   /* Palette */
-  --palette-black: #000;
-  --palette-navy: #150050;
-  --palette-purple: #3f0071;
-  --palette-pink: #fb2576;
+  --palette-mint: #bae5c0;
+  --palette-mauve: #e3c7e0;
+  --palette-green: #86ae94;
+  --palette-dark-blue: #272f40;
 
   /* Surfaces */
-  --color-bg: var(--palette-black);
-  --color-bg-raised: #07001a;
-  --color-surface: #0c0230;
-  --color-surface-hover: var(--palette-navy);
-  --color-border: rgb(176 150 255 / 14%);
-  --color-border-strong: rgb(176 150 255 / 26%);
-  --color-header: rgb(0 0 0 / 88%);
-  --color-scrim: 0 0 0;
+  --color-bg: #1b2130;
+  --color-bg-raised: #212838;
+  --color-surface: var(--palette-dark-blue);
+  --color-surface-hover: #2e374b;
+  --color-border: rgb(186 229 192 / 13%);
+  --color-border-strong: rgb(186 229 192 / 24%);
+  --color-header: rgb(27 33 48 / 90%);
+  --color-scrim: 27 33 48;
+  --color-glow: 186 229 192;
+  --color-glow-alt: 227 199 224;
 
   /* Text */
-  --color-text: #f6f2ff;
-  --color-text-muted: #c6bce3;
-  --color-text-subtle: #a497cc;
+  --color-text: #eef4f0;
+  --color-text-muted: #c4d0ca;
+  --color-text-subtle: var(--palette-green);
+  --color-eyebrow: var(--palette-mauve);
 
   /* Accent */
-  --color-accent: var(--palette-pink);
-  --color-accent-strong: #ff5596;
-  --color-accent-soft: rgb(251 37 118 / 14%);
-  --color-accent-border: rgb(251 37 118 / 45%);
-  --color-on-accent: #000;
+  --color-accent: var(--palette-mint);
+  --color-accent-strong: #d4f2d8;
+  --color-accent-soft: rgb(186 229 192 / 14%);
+  --color-accent-border: rgb(186 229 192 / 42%);
+  --color-on-accent: #1b2130;
 
   /* Icon tiles */
-  --color-tile: var(--palette-purple);
-  --color-tile-icon: #ff7aac;
+  --color-tile: #34405a;
+  --color-tile-end: var(--palette-dark-blue);
+  --color-tile-icon: var(--palette-mint);
 
   /* Typography */
   --font-sans:
