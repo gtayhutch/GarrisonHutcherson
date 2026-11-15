@@ -35,6 +35,16 @@ export const CONTACT = {
   phone: {display: '864-749-9707', href: 'tel:+18647499707'},
 } as const;
 
+/**
+ * Cloudflare Web Analytics beacon (cookieless). The token is public by
+ * design: it only identifies the site to the analytics service. Both
+ * origins are allowed by the CSP in public/_headers.
+ */
+export const WEB_ANALYTICS = {
+  scriptSrc: 'https://static.cloudflareinsights.com/beacon.min.js',
+  token: '0e9074a91c6f4a0ba8e67ad4bd5af89a',
+} as const;
+
 /** A link in the main navigation. */
 export interface NavItem {
   /** Visible link text. */
