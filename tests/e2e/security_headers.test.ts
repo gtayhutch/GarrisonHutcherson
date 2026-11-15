@@ -25,7 +25,7 @@ for (const path of [
   '/',
   '/resume/',
   '/robots.txt',
-  '/favicon.svg',
+  '/favicon.ico',
   '/this-page-does-not-exist',
 ]) {
   test(`${path} sends the security headers`, async ({request}) => {

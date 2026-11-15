@@ -1,34 +1,44 @@
 /*
- * Design tokens from the owner's mock-up: deep green-slate surfaces, a mint
- * accent, and rounded cards. Components use these variables only; no raw
- * colors elsewhere (except the hero illustration).
+ * Design tokens. Palette (owner's choice, colorhunt.co/palette/
+ * 0000001500503f0071fb2576): #000000 black, #150050 navy-violet, #3f0071
+ * purple, #fb2576 hot pink. Pink is the accent (5.6:1 on black; buttons use
+ * black text on pink). Components use these variables only; no raw colors
+ * elsewhere (except the hero illustration and the printed résumé).
  */
 :root {
   color-scheme: dark;
 
+  /* Palette */
+  --palette-black: #000;
+  --palette-navy: #150050;
+  --palette-purple: #3f0071;
+  --palette-pink: #fb2576;
+
   /* Surfaces */
-  --color-bg: #0b1719;
-  --color-bg-raised: #0f1f22;
-  --color-surface: #13262a;
-  --color-surface-hover: #183035;
-  --color-border: rgb(178 222 210 / 12%);
-  --color-border-strong: rgb(178 222 210 / 22%);
+  --color-bg: var(--palette-black);
+  --color-bg-raised: #07001a;
+  --color-surface: #0c0230;
+  --color-surface-hover: var(--palette-navy);
+  --color-border: rgb(176 150 255 / 14%);
+  --color-border-strong: rgb(176 150 255 / 26%);
+  --color-header: rgb(0 0 0 / 88%);
+  --color-scrim: 0 0 0;
 
   /* Text */
-  --color-text: #e9f1ef;
-  --color-text-muted: #a9bcb7;
-  --color-text-subtle: #8aa19b;
+  --color-text: #f6f2ff;
+  --color-text-muted: #c6bce3;
+  --color-text-subtle: #a497cc;
 
   /* Accent */
-  --color-accent: #5fd4a0;
-  --color-accent-strong: #7fe3b6;
-  --color-accent-soft: rgb(95 212 160 / 14%);
-  --color-accent-border: rgb(95 212 160 / 40%);
-  --color-on-accent: #072018;
+  --color-accent: var(--palette-pink);
+  --color-accent-strong: #ff5596;
+  --color-accent-soft: rgb(251 37 118 / 14%);
+  --color-accent-border: rgb(251 37 118 / 45%);
+  --color-on-accent: #000;
 
   /* Icon tiles */
-  --color-tile: #1c3b3a;
-  --color-tile-icon: #8fe6c0;
+  --color-tile: var(--palette-purple);
+  --color-tile-icon: #ff7aac;
 
   /* Typography */
   --font-sans:
