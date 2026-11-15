@@ -4,7 +4,7 @@
  */
 import {expect, test} from '@playwright/test';
 
-import {PUBLIC_EMAIL, ROUTES} from './routes';
+import {PUBLIC_EMAIL, PUBLIC_PHONE_HREF, RESUME_ROUTE, ROUTES} from './routes';
 
 test('main navigation reaches every section and marks the current page', async ({
   page,
@@ -44,9 +44,7 @@ test('home page previews three employers and four skill groups', async ({
 });
 
 for (const route of ROUTES) {
-  test(`${route.path} publishes only the site email and no phone links`, async ({
-    page,
-  }) => {
+  test(`${route.path} publishes only the site email`, async ({page}) => {
     await page.goto(route.path);
 
     const mailtoLinks = await page
@@ -56,9 +54,34 @@ for (const route of ROUTES) {
     for (const href of mailtoLinks) {
       expect(href).toBe(`mailto:${PUBLIC_EMAIL}`);
     }
-    await expect(page.locator('a[href^="tel:"]')).toHaveCount(0);
+  });
+
+  const phoneLinks = route.path === RESUME_ROUTE ? 1 : 0;
+  test(`${route.path} has ${String(phoneLinks)} phone link(s)`, async ({
+    page,
+  }) => {
+    await page.goto(route.path);
+
+    const tel = page.locator('a[href^="tel:"]');
+
+    await expect(tel).toHaveCount(phoneLinks);
+    if (phoneLinks > 0) {
+      await expect(tel).toHaveAttribute('href', PUBLIC_PHONE_HREF);
+    }
   });
 }
+
+test('the contact band links to LinkedIn and GitHub', async ({page}) => {
+  await page.goto('/');
+  const band = page.getByRole('region', {name: "Let's Work Together"});
+
+  await expect(
+    band.getByRole('link', {name: 'LinkedIn profile'}),
+  ).toHaveAttribute('href', 'https://www.linkedin.com/in/gtayhutch');
+  await expect(
+    band.getByRole('link', {name: 'GitHub profile'}),
+  ).toHaveAttribute('href', 'https://github.com/gtayhutch');
+});
 
 test('external links use HTTPS', async ({page}) => {
   for (const route of ROUTES) {
@@ -106,4 +129,25 @@ test('printing the résumé hides the site header and footer', async ({page}) =>
   await expect(page.locator('.site-header')).toBeHidden();
   await expect(page.locator('.site-footer')).toBeHidden();
   await expect(page.getByRole('heading', {level: 1})).toBeVisible();
+});
+
+for (const path of ['/', '/about/']) {
+  test(`${path} shows the headshot with alt text`, async ({page}) => {
+    await page.goto(path);
+
+    const portrait = page.getByRole('img', {
+      name: 'Portrait of Garrison Hutcherson',
+    });
+
+    await expect(portrait).toBeVisible();
+    expect(
+      await portrait.evaluate(img => (img as HTMLImageElement).naturalWidth),
+    ).toBeGreaterThan(0);
+  });
+}
+
+test('the résumé header shows the city and state', async ({page}) => {
+  await page.goto('/resume/');
+
+  await expect(page.getByText('Anderson, SC', {exact: true})).toBeVisible();
 });

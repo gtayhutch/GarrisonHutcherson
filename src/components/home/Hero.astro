@@ -1,12 +1,14 @@
 ---
 /**
- * Home hero: eyebrow, headline with accent, intro, and the two calls to
- * action, over the SVG mountain scene (right side on wide screens, a
- * faded backdrop on narrow ones).
+ * Home hero: headshot, eyebrow, headline with accent, intro, and the two
+ * calls to action, over the SVG mountain scene (right side on wide screens,
+ * a faded backdrop on narrow ones). The headshot sits above the text on
+ * phones and to the right of it, over the scene, on wide screens.
  */
 import type {Page} from '../../lib/content';
 import {RESUME_PATH} from '../../lib/config';
 import Button from '../ui/Button.astro';
+import Portrait from '../ui/Portrait.astro';
 import HeroScene from './HeroScene.astro';
 
 interface Props {
@@ -22,25 +24,30 @@ const {eyebrow = [], headline, headlineAccent, intro} = Astro.props.page.data;
     <HeroScene />
   </div>
   <div class="container content">
-    {eyebrow.length > 0 && (
-      <ul class="eyebrow" role="list">
-        {eyebrow.map(item => (
-          <li>{item}</li>
-        ))}
-      </ul>
-    )}
-    <h1 id="hero-title">
-      {headline}
-      {headlineAccent && <span class="accent">{headlineAccent}</span>}
-    </h1>
-    {intro && <p class="intro">{intro}</p>}
-    <div class="ctas">
-      <Button href={RESUME_PATH} icon="file-text">
-        View Résumé
-      </Button>
-      <Button href="/contact/" variant="secondary" icon="send">
-        Get in Touch
-      </Button>
+    <div class="photo">
+      <Portrait width={260} eager />
+    </div>
+    <div class="text">
+      {eyebrow.length > 0 && (
+        <ul class="eyebrow" role="list">
+          {eyebrow.map(item => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      )}
+      <h1 id="hero-title">
+        {headline}
+        {headlineAccent && <span class="accent">{headlineAccent}</span>}
+      </h1>
+      {intro && <p class="intro">{intro}</p>}
+      <div class="ctas">
+        <Button href={RESUME_PATH} icon="file-text">
+          View Résumé
+        </Button>
+        <Button href="/contact/" variant="secondary" icon="send">
+          Get in Touch
+        </Button>
+      </div>
     </div>
   </div>
 </section>
@@ -62,7 +69,13 @@ const {eyebrow = [], headline, headlineAccent, intro} = Astro.props.page.data;
   }
 
   .content {
-    padding-block: var(--space-8) var(--space-8);
+    display: grid;
+    gap: var(--space-5);
+    padding-block: var(--space-7) var(--space-8);
+  }
+
+  .photo {
+    width: 7rem;
   }
 
   .eyebrow {
@@ -122,11 +135,21 @@ const {eyebrow = [], headline, headlineAccent, intro} = Astro.props.page.data;
     }
 
     .content {
+      grid-template-columns: minmax(0, 44rem) 1fr;
+      align-items: center;
       padding-block: var(--space-9);
     }
 
-    .content > * {
-      max-width: 44rem;
+    .photo {
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: center;
+      width: clamp(12rem, 18vw, 16.25rem);
+    }
+
+    .text {
+      grid-column: 1;
+      grid-row: 1;
     }
   }
 </style>

@@ -1,11 +1,12 @@
 ---
 /**
  * The "Let's Work Together" band at the bottom of every page, with the
- * public email and GitHub link from CONTACT.
+ * public email, LinkedIn, and GitHub links from CONTACT.
  */
 import {CONTACT} from '../../lib/config';
 import GitHubIcon from '../ui/GitHubIcon.astro';
 import Icon from '../ui/Icon.astro';
+import LinkedInIcon from '../ui/LinkedInIcon.astro';
 ---
 
 <section class="contact-band" aria-labelledby="contact-band-title">
@@ -25,6 +26,13 @@ import Icon from '../ui/Icon.astro';
       <a class="email" href={`mailto:${CONTACT.email}`}>
         <Icon name="mail" size={18} />
         {CONTACT.email}
+      </a>
+      <a
+        class="icon-link"
+        href={CONTACT.linkedin}
+        aria-label="LinkedIn profile"
+      >
+        <LinkedInIcon />
       </a>
       <a class="icon-link" href={CONTACT.github} aria-label="GitHub profile">
         <GitHubIcon />
