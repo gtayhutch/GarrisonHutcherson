@@ -28,3 +28,9 @@ export const ROUTES: readonly Route[] = [
 
 /** The only email address the site may publish (ADR 0003). */
 export const PUBLIC_EMAIL = 'garrison@garrisonhutcherson.com';
+
+/** The only page allowed to show a phone number (the owner's choice). */
+export const RESUME_ROUTE = '/resume/';
+
+/** The `tel:` link the résumé page must use. */
+export const PUBLIC_PHONE_HREF = 'tel:+18647499707';

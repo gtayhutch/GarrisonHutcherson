@@ -3,7 +3,8 @@
  * Printable HTML résumé built from the same content as the rest of the
  * site. On screen it's a paper-style sheet; when printed, the site chrome
  * is hidden and colors switch to black on white (see the print styles in
- * src/styles/global.css). No personal phone or address, by design.
+ * src/styles/global.css). The phone number appears here and nowhere else
+ * on the site, by the owner's choice; no street address, by design.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import {CONTACT, SITE} from '../lib/config';
@@ -14,6 +15,7 @@ const experience = await getExperience();
 const skills = await getSkillGroups();
 const website = SITE.url.replace('https://', '');
 const github = CONTACT.github.replace('https://', '');
+const linkedin = CONTACT.linkedin.replace('https://www.', '');
 ---
 
 <BaseLayout
@@ -35,7 +37,13 @@ const github = CONTACT.github.replace('https://', '');
             <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
           </li>
           <li>
+            <a href={CONTACT.phone.href}>{CONTACT.phone.display}</a>
+          </li>
+          <li>
             <a href={SITE.url}>{website}</a>
+          </li>
+          <li>
+            <a href={CONTACT.linkedin}>{linkedin}</a>
           </li>
           <li>
             <a href={CONTACT.github}>{github}</a>
