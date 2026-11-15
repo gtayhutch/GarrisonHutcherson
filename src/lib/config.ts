@@ -8,8 +8,6 @@
 export const SITE = {
   /** Display name shown in the header and page titles. */
   name: 'Garrison Hutcherson',
-  /** Monogram shown in the header logo. */
-  initials: 'GH',
   /** Professional title for the résumé header. */
   title:
     'Remote Support Engineer · 10+ Years Technical & Software Support (SaaS, Payments)',
