@@ -2,8 +2,7 @@
  * @fileoverview Site-wide behavior: navigation, content order, contact
  * details, the no-JS mobile menu, and the printable résumé.
  */
-import {expect, test} from '@playwright/test';
-
+import {expect, test} from './fixtures';
 import {PUBLIC_EMAIL, PUBLIC_PHONE_HREF, RESUME_ROUTE, ROUTES} from './routes';
 
 test('main navigation reaches every section and marks the current page', async ({
