@@ -19,7 +19,7 @@ export const ROUTES: readonly Route[] = [
     heading: /Customer-Focused Support &\s*Client Success Professional/,
   },
   {path: '/about/', heading: "Hi, I'm Garrison"},
-  {path: '/experience/', heading: '15 years of remote support'},
+  {path: '/experience/', heading: '10+ years of remote support'},
   {path: '/skills/', heading: 'What I bring to a support team'},
   {path: '/projects/', heading: "Things I've built"},
   {path: '/contact/', heading: "Let's work together"},

@@ -2,12 +2,12 @@
   order: 1
   title: Customer-First Mindset
   icon: users
-  body: Fifteen years of remote support taught me that every case is a person trying to get their work done. I build rapport, stay calm in tense moments, and follow through until it's fixed.
+  body: More than ten years of remote support taught me that every case is a person trying to get their work done. I build rapport, stay calm in tense moments, and follow through until it's fixed.
 - id: bugs-to-fixes
   order: 2
   title: Turn Bugs Into Fixes
   icon: wrench
-  body: I reproduce issues, read the logs, and hand engineering a clear, well-documented report, so problems get fixed instead of bounced around.
+  body: I dig through logs, reproduce issues (APIs included), and hand engineering a clear, well-documented report, so problems get fixed instead of bounced around.
 - id: explain-simply
   order: 3
   title: Explain the Complex Simply

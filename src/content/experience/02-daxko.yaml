@@ -5,16 +5,17 @@ order: 2
 icon: layers
 summary: >-
   Tier 2 client success for non-profit finance and fundraising software,
-  including payments, reconciliation, and PCI compliance.
+  including payment processing, reconciliation, and PCI compliance.
 roles:
   - title: Client Success Advocate (Tier 2)
     team: Non-Profit Division, Finance Team
     period: Sep 2022 – Aug 2025
     highlights:
-      - Supported Daxko Operations (Finance and Fundraising) and Daxko Accounting by phone, live chat, tickets, and Zoom.
-      - Reviewed financial reports such as aged receivables, balance sheets, and income statements to find discrepancies between reporting and the books.
-      - Reproduced and escalated software bugs to Payment Services and engineering with detailed reports, screenshots, and screen recordings.
-      - Helped clients resolve credit card and EFT payment-processing errors, and acted as a liaison with payment processors when needed.
-      - Guided clients through annual PCI compliance requirements and scanning.
-      - Ran Zoom training refreshers and walkthroughs, and communicated with everyone from frontline staff to C-level executives.
-      - Took part in a rotating emergency-phone schedule to keep 24/7 support coverage.
+      - Provided software support for Daxko Operations (Finance and Fundraising) and Daxko Accounting over phone, live chat, email and tickets, and Zoom.
+      - Investigated discrepancies between reports (Aged Receivables, Balance Sheet, Income Statement) and financials, including journal entries, data exports, and fundraising records.
+      - Identified and reproduced software errors, then wrote detailed escalation reports for Payment Services, software engineers, and other teams, with reproduction steps and screenshots or screen recordings.
+      - Troubleshot credit card and EFT payment-processing errors and, when needed, liaised with payment processors to reach a resolution.
+      - Worked with database administrators to find erroneous entries through testing and detailed written reports.
+      - Helped clients complete annual PCI compliance requirements and scanning.
+      - Led Zoom training refreshers and detailed software walkthroughs with clients.
+      - Covered a rotating emergency-phone schedule so clients had 24/7 support access.
