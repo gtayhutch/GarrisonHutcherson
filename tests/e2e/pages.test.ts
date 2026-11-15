@@ -1,11 +1,10 @@
 /**
- * @fileoverview Smoke, accessibility (TEST-11), and zero-JS (ACF-02) checks
- * for every route in ROUTES.
+ * @fileoverview Smoke, accessibility (TEST-11), and script (ACF-02) checks
+ * for every route in ROUTES. The only allowed script is the analytics beacon.
  */
 import AxeBuilder from '@axe-core/playwright';
-import {expect, test} from '@playwright/test';
-
-import {ROUTES} from './routes';
+import {expect, test} from './fixtures';
+import {ANALYTICS_BEACON_SRC, ANALYTICS_TOKEN, ROUTES} from './routes';
 
 for (const route of ROUTES) {
   test.describe(`page ${route.path}`, () => {
@@ -35,10 +34,18 @@ for (const route of ROUTES) {
       expect(results.violations).toEqual([]);
     });
 
-    test('ships no client-side scripts', async ({page}) => {
+    test('ships no scripts except the analytics beacon', async ({page}) => {
       await page.goto(route.path);
 
-      await expect(page.locator('script')).toHaveCount(0);
+      const scripts = page.locator('script');
+
+      await expect(scripts).toHaveCount(1);
+      await expect(scripts).toHaveAttribute('src', ANALYTICS_BEACON_SRC);
+      await expect(scripts).toHaveAttribute('type', 'module');
+      await expect(scripts).toHaveAttribute(
+        'data-cf-beacon',
+        JSON.stringify({token: ANALYTICS_TOKEN}),
+      );
     });
   });
 }

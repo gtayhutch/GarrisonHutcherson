@@ -34,3 +34,8 @@ export const RESUME_ROUTE = '/resume/';
 
 /** The `tel:` link the résumé page must use. */
 export const PUBLIC_PHONE_HREF = 'tel:+18647499707';
+
+/** Cloudflare Web Analytics beacon the layout must load, and its site token. */
+export const ANALYTICS_BEACON_SRC =
+  'https://static.cloudflareinsights.com/beacon.min.js';
+export const ANALYTICS_TOKEN = '0e9074a91c6f4a0ba8e67ad4bd5af89a';

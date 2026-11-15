@@ -2,14 +2,16 @@
 /**
  * Document shell for every page: `<head>` metadata, the self-hosted font
  * (preloaded, ACF-06), skip link, header, `<main>`, contact band, and
- * footer. Ships no client JavaScript (ACF-02).
+ * footer. The only client script is the Cloudflare Web Analytics beacon,
+ * included when PUBLIC_WEB_ANALYTICS is on (production builds).
  */
 import outfitLatin from '@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2?url';
+import {PUBLIC_WEB_ANALYTICS} from 'astro:env/server';
 
 import ContactBand from '../components/site/ContactBand.astro';
 import SiteFooter from '../components/site/SiteFooter.astro';
 import SiteHeader from '../components/site/SiteHeader.astro';
-import {SITE, pageTitle} from '../lib/config';
+import {SITE, WEB_ANALYTICS, pageTitle} from '../lib/config';
 import '../styles/global.css';
 
 interface Props {
@@ -27,6 +29,7 @@ const {
   showContactBand = true,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, SITE.url);
+const beaconConfig = JSON.stringify({token: WEB_ANALYTICS.token});
 ---
 
 <!doctype html>
@@ -61,6 +64,13 @@ const canonical = new URL(Astro.url.pathname, SITE.url);
     </main>
     {showContactBand && <ContactBand />}
     <SiteFooter />
+    {PUBLIC_WEB_ANALYTICS && (
+      <script
+        type="module"
+        src={WEB_ANALYTICS.scriptSrc}
+        data-cf-beacon={beaconConfig}
+      />
+    )}
   </body>
 </html>
 
