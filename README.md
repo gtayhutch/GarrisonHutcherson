@@ -19,11 +19,19 @@ pnpm verify                      # everything CI runs: format, lint, types, buil
 ## Stack
 
 - [Astro](https://astro.build) with static output, TypeScript, and
-  hand-written CSS. The site ships no client-side JavaScript.
+  hand-written CSS. The site ships no JavaScript of its own; the only script
+  is the cookieless Cloudflare Web Analytics beacon, which staging builds
+  leave out (`PUBLIC_WEB_ANALYTICS=false`).
+- Colors live in `src/styles/tokens.css`; the hero's space scene is an SVG
+  animated with CSS only and stays still for visitors who prefer reduced
+  motion.
+- Images (headshot, logo) are optimized at build time by `astro:assets`;
+  the favicon set and web manifest live in `public/`.
 - Content lives in Markdown and YAML collections under `src/content/`,
   validated by the schemas in `src/content.config.ts`.
 - Hosted on Cloudflare Workers static assets (`wrangler.jsonc`), with
-  security headers in `public/_headers`.
+  security headers and the HTML charset in `public/_headers`. Cloudflare
+  Workers Builds deploys the `staging` and `production` branches.
 - Playwright end-to-end tests, including axe accessibility checks, in
   `tests/e2e/`.
 
