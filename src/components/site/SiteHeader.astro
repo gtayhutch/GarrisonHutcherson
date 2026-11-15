@@ -1,14 +1,20 @@
 ---
 /**
- * Site header: monogram and name, main navigation, and the résumé button.
+ * Site header: logo and name, main navigation, and the résumé button.
  * On narrow screens the navigation folds into a native `<details>`
  * disclosure, so the menu works without JavaScript (ACF-02, FE-06).
  */
+import {Picture} from 'astro:assets';
+
+import logo from '../../assets/logo.png';
 import {NAV, RESUME_PATH, SITE} from '../../lib/config';
 import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
 
 const current = Astro.url.pathname;
+// Logo display size in CSS pixels; the source is 480×253.
+const LOGO_HEIGHT = 36;
+const LOGO_WIDTH = Math.round((LOGO_HEIGHT * logo.width) / logo.height);
 
 function isCurrent(href: string): boolean {
   return current === href || current === href.replace(/\/$/, '');
@@ -18,9 +24,18 @@ function isCurrent(href: string): boolean {
 <header class="site-header">
   <div class="container bar">
     <a class="brand" href="/">
-      <span class="monogram" aria-hidden="true">
-        {SITE.initials}
-      </span>
+      <Picture
+        class="logo"
+        src={logo}
+        alt=""
+        formats={['avif', 'webp']}
+        widths={[LOGO_WIDTH, LOGO_WIDTH * 2, LOGO_WIDTH * 3]}
+        sizes={`${String(LOGO_WIDTH)}px`}
+        width={LOGO_WIDTH}
+        height={LOGO_HEIGHT}
+        loading="eager"
+        decoding="async"
+      />
       <span class="divider" aria-hidden="true"></span>
       <span class="name">{SITE.name}</span>
     </a>
@@ -94,11 +109,10 @@ function isCurrent(href: string): boolean {
     text-decoration: none;
   }
 
-  .monogram {
-    color: var(--color-accent);
-    font-size: 1.6rem;
-    font-weight: 700;
-    letter-spacing: -0.06em;
+  .brand :global(.logo) {
+    display: block;
+    width: auto;
+    height: 2.25rem;
   }
 
   .divider {
