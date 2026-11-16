@@ -56,6 +56,7 @@ export const NAV: readonly NavItem[] = [
   {label: 'About', href: '/about/'},
   {label: 'Experience', href: '/experience/'},
   {label: 'Skills', href: '/skills/'},
+  {label: 'Case Studies', href: '/case-studies/'},
   {label: 'Projects', href: '/projects/'},
   {label: 'Contact', href: '/contact/'},
 ];

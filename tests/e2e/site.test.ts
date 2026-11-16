@@ -30,6 +30,19 @@ test('experience lists employers newest first', async ({page}) => {
   await expect(companies.last()).toHaveText('Cloud 10 Corporation');
 });
 
+test('case studies are reachable from the main navigation', async ({page}) => {
+  await page.goto('/');
+  await page
+    .getByRole('navigation', {name: 'Main', exact: true})
+    .getByRole('link', {name: 'Case Studies'})
+    .click();
+
+  await expect(page).toHaveURL(/\/case-studies\/$/);
+  await expect(
+    page.getByRole('main').getByRole('heading', {level: 2}),
+  ).toHaveCount(2);
+});
+
 test('home page previews three employers and four skill groups', async ({
   page,
 }) => {
@@ -107,7 +120,10 @@ test.describe('on a phone', () => {
     await page.locator('details summary').click();
 
     await expect(menu).toBeVisible();
-    await expect(menu.getByRole('link')).toHaveCount(6);
+    await expect(menu.getByRole('link')).toHaveCount(7);
+    await expect(
+      menu.getByRole('link', {name: 'Case Studies'}),
+    ).toHaveAttribute('href', '/case-studies/');
   });
 
   test('pages do not scroll sideways', async ({page}) => {
