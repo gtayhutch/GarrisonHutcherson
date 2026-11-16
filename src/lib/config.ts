@@ -8,6 +8,8 @@
 export const SITE = {
   /** Display name shown in the header and page titles. */
   name: 'Garrison Hutcherson',
+  /** Concise professional role for the homepage title and profile metadata. */
+  role: 'Support Engineer',
   /** Professional title for the résumé header. */
   title:
     'Remote Support Engineer · 10+ Years Technical & Software Support (SaaS, Payments)',
@@ -68,8 +70,10 @@ export const RESUME_PATH = '/resume/';
  * Builds the `<title>` text for a page.
  *
  * @param pageTitle Title of the current page, or undefined for the home page.
- * @returns "Page · Site name", or just the site name for the home page.
+ * @returns The page and site names, or the site name and role for the homepage.
  */
 export function pageTitle(pageTitle?: string): string {
-  return pageTitle ? `${pageTitle} · ${SITE.name}` : SITE.name;
+  return pageTitle
+    ? `${pageTitle} · ${SITE.name}`
+    : `${SITE.name} · ${SITE.role}`;
 }

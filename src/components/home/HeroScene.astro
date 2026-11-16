@@ -12,42 +12,7 @@
  * hidden unless animating). Colors are illustration-only, not tokens.
  */
 
-interface Star {
-  x: number;
-  y: number;
-  r: number;
-  twinkle: number;
-}
-
-/** Width of one star tile; each layer repeats it once for seamless drift. */
-const TILE = 1200;
-
-/** Deterministic pseudo-random numbers in [0, 1) from a fixed seed. */
-function seeded(seed: number): () => number {
-  let state = seed;
-  return () => {
-    state = (state * 1664525 + 1013904223) % 4294967296;
-    return state / 4294967296;
-  };
-}
-
-function starLayer(
-  count: number,
-  radius: [number, number],
-  twinkleShare: number,
-  seed: number,
-): Star[] {
-  const random = seeded(seed);
-  return Array.from({length: count}, () => {
-    const twinkle = random() < twinkleShare ? 1 + Math.floor(random() * 4) : 0;
-    return {
-      x: Math.round(random() * TILE),
-      y: Math.round(random() * 600),
-      r: Number((radius[0] + random() * (radius[1] - radius[0])).toFixed(2)),
-      twinkle,
-    };
-  });
-}
+import {STAR_TILE_WIDTH, starLayer} from '../site/starfield';
 
 const layers = [
   {name: 'far', stars: starLayer(110, [0.5, 0.9], 0.15, 3)},
@@ -134,7 +99,7 @@ const layers = [
   <!-- Drifting star layers: each holds two copies of one tile -->
   {layers.map(layer => (
     <g class={`stars stars-${layer.name}`}>
-      {[0, TILE].map(offset => (
+      {[0, STAR_TILE_WIDTH].map(offset => (
         <g transform={`translate(${String(offset)} 0)`}>
           {layer.stars.map(star => (
             <circle
