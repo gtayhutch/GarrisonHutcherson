@@ -1,8 +1,8 @@
 ---
 title: Home
-description: Garrison Hutcherson is a remote support engineer with 10+ years of technical and software support across SaaS, payments, and consumer tech.
-eyebrow: [Support, Client Success, SaaS]
-headline: Customer-Focused Support &
-headlineAccent: Client Success Professional
-intro: A remote support engineer with 10+ years of technical and software support, helping people get the most out of their software, from AppleCare and SaaS platforms to payments and non-profit finance.
+description: Garrison Hutcherson is a support engineer experienced in SaaS troubleshooting, API issues, payments, and engineering escalations.
+eyebrow: [Customer Communication, Log Analysis, Escalations]
+headline: Support Engineer
+headlineAccent: APIs, Payments & Escalations
+intro: I investigate complex SaaS and payment issues, using logs and API testing to reproduce problems, partner with engineering, and help customers understand the path to resolution.
 ---
