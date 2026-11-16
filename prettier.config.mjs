@@ -1,4 +1,4 @@
-// Prettier with Google's gts settings (STY-01; values from gts/.prettierrc.json)
+// Prettier with Google's gts settings (STY-01; values copied from gts).
 // plus the Astro plugin for .astro files.
 export default {
   bracketSpacing: false,
