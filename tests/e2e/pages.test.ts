@@ -1,6 +1,6 @@
 /**
  * @fileoverview Smoke, accessibility (TEST-11), and script (ACF-02) checks
- * for every route in ROUTES. The only allowed script is the analytics beacon.
+ * for every route in ROUTES. The only executable script is the analytics beacon.
  */
 import AxeBuilder from '@axe-core/playwright';
 import {expect, test} from './fixtures';
@@ -34,10 +34,12 @@ for (const route of ROUTES) {
       expect(results.violations).toEqual([]);
     });
 
-    test('ships no scripts except the analytics beacon', async ({page}) => {
+    test('ships no executable scripts except the analytics beacon', async ({
+      page,
+    }) => {
       await page.goto(route.path);
 
-      const scripts = page.locator('script');
+      const scripts = page.locator('script:not([type="application/ld+json"])');
 
       await expect(scripts).toHaveCount(1);
       await expect(scripts).toHaveAttribute('src', ANALYTICS_BEACON_SRC);
@@ -49,6 +51,41 @@ for (const route of ROUTES) {
     });
   });
 }
+
+test('home and about identify Garrison Hutcherson in search metadata', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await expect(page).toHaveTitle('Garrison Hutcherson · Support Engineer');
+  await expect(page.locator('meta[property="og:site_name"]')).toHaveAttribute(
+    'content',
+    'Garrison Hutcherson',
+  );
+  const structuredData = page.locator('script[type="application/ld+json"]');
+  expect(JSON.parse((await structuredData.textContent()) ?? '')).toMatchObject({
+    '@type': 'WebSite',
+    name: 'Garrison Hutcherson',
+    url: 'https://garrisonhutcherson.com/',
+  });
+
+  await page.goto('/about/');
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    'href',
+    'https://garrisonhutcherson.com/about/',
+  );
+  expect(JSON.parse((await structuredData.textContent()) ?? '')).toMatchObject({
+    '@type': 'ProfilePage',
+    url: 'https://garrisonhutcherson.com/about/',
+    mainEntity: {
+      '@type': 'Person',
+      name: 'Garrison Hutcherson',
+      sameAs: [
+        'https://www.linkedin.com/in/gtayhutch',
+        'https://github.com/gtayhutch',
+      ],
+    },
+  });
+});
 
 test('unknown paths return the 404 page', async ({page}) => {
   const response = await page.goto('/this-page-does-not-exist');

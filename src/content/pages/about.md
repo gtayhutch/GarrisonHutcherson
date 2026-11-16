@@ -21,6 +21,11 @@ so clients and support teams have accurate information. Earlier in my career,
 I was promoted to Senior Advisor in the AppleCare program after consistently
 exceeding performance standards.
 
+As a Tier 2 Technical Specialist at teleNetwork, I led training sessions for
+Tier 1 staff and guided customers through escalated cases by screen sharing.
+I also collaborated with the Settlements and Payments Configuration Team on
+process changes and updated client-facing knowledge bases to reflect them.
+
 What I enjoy most is the moment a frustrated customer realizes the problem is
 solved and understands why. I like digging into logs to reproduce a tricky
 bug just as much as walking someone through a fix on a Zoom call.

@@ -1,0 +1,159 @@
+---
+/** Decorative star tile and occasional meteors for the About background. */
+import {STAR_TILE_WIDTH, starLayer} from '../site/starfield';
+
+const field = starLayer(210, [0.45, 1.15], 0, 37);
+const bright = starLayer(24, [1, 1.65], 0.7, 19);
+const meteors = [
+  {className: 'meteor-high', x: '46%', y: '3rem'},
+  {className: 'meteor-middle', x: '33%', y: '52%'},
+  {className: 'meteor-low', x: '77%', y: '82%'},
+];
+---
+
+<svg class="about-space" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern
+      id="about-star-tile"
+      width={STAR_TILE_WIDTH}
+      height="600"
+      patternUnits="userSpaceOnUse"
+    >
+      <g class="star-field">
+        {field.map(({x, y, r}) => (
+          <circle cx={x} cy={y} r={r} />
+        ))}
+      </g>
+      <g class="star-bright">
+        {bright.map(({x, y, r, twinkle}) => (
+          <circle
+            class:list={{twinkle: twinkle > 0, 'twinkle-late': twinkle > 2}}
+            cx={x}
+            cy={y}
+            r={r}
+          />
+        ))}
+      </g>
+    </pattern>
+    <linearGradient
+      id="about-meteor-trail"
+      gradientUnits="userSpaceOnUse"
+      x2="114"
+      y2="0"
+    >
+      <stop stop-color="var(--color-accent)" />
+      <stop offset="1" stop-color="var(--color-accent)" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+
+  <rect width="100%" height="100%" fill="url(#about-star-tile)" />
+  {meteors.map(({className, x, y}) => (
+    <svg class="meteor-position" x={x} y={y} width="1" height="1">
+      <g class:list={['meteor', className]}>
+        <path
+          d="M0 0h114"
+          stroke="url(#about-meteor-trail)"
+          stroke-width="1.5"
+        />
+        <circle r="1.8" fill="var(--color-accent-strong)" />
+      </g>
+    </svg>
+  ))}
+</svg>
+
+<style>
+  .about-space {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background:
+      radial-gradient(
+        ellipse at 14% 14%,
+        rgb(var(--color-glow-alt) / 10%),
+        transparent 38%
+      ),
+      radial-gradient(
+        ellipse at 8% 67%,
+        rgb(var(--color-glow) / 9%),
+        transparent 36%
+      ),
+      var(--color-bg);
+    pointer-events: none;
+  }
+
+  .star-field {
+    fill: var(--color-text-muted);
+    opacity: 0.35;
+  }
+
+  .star-bright {
+    fill: var(--color-accent);
+    opacity: 0.74;
+  }
+
+  .twinkle {
+    animation: about-twinkle 5s ease-in-out infinite alternate;
+  }
+
+  .twinkle-late {
+    animation-delay: -2s;
+  }
+
+  .meteor-position {
+    overflow: visible;
+  }
+
+  .meteor {
+    opacity: 0;
+    animation: about-shoot linear infinite;
+  }
+
+  .meteor-high {
+    animation-duration: 12s;
+    animation-delay: 2.1s;
+  }
+
+  .meteor-middle {
+    animation-duration: 19s;
+    animation-delay: 5.6s;
+  }
+
+  .meteor-low {
+    animation-duration: 23s;
+    animation-delay: 9s;
+  }
+
+  @keyframes about-twinkle {
+    from {
+      opacity: 0.32;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes about-shoot {
+    0% {
+      opacity: 0;
+      transform: rotate(-27deg);
+    }
+
+    1% {
+      opacity: 0.9;
+    }
+
+    6%,
+    100% {
+      opacity: 0;
+      transform: translate(-270px, 138px) rotate(-27deg);
+    }
+  }
+
+  @media print {
+    .about-space {
+      display: none;
+    }
+  }
+</style>

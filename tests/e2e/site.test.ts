@@ -30,7 +30,9 @@ test('experience lists employers newest first', async ({page}) => {
   await expect(companies.last()).toHaveText('Cloud 10 Corporation');
 });
 
-test('case studies are reachable from the main navigation', async ({page}) => {
+test('case studies are reachable from the main navigation and have separate cards', async ({
+  page,
+}) => {
   await page.goto('/');
   await page
     .getByRole('navigation', {name: 'Main', exact: true})
@@ -38,9 +40,60 @@ test('case studies are reachable from the main navigation', async ({page}) => {
     .click();
 
   await expect(page).toHaveURL(/\/case-studies\/$/);
+  const main = page.getByRole('main');
+  await expect(main.getByRole('article')).toHaveCount(2);
   await expect(
-    page.getByRole('main').getByRole('heading', {level: 2}),
-  ).toHaveCount(2);
+    main.getByRole('article', {
+      name: 'Payment failures and an acknowledgement endpoint',
+    }),
+  ).toContainText('resume payments quickly');
+  await expect(
+    main.getByRole('article', {name: 'Notifications missing for two users'}),
+  ).toContainText('normal response code');
+});
+
+test.describe('narrow no-JavaScript viewport', () => {
+  test.use({
+    javaScriptEnabled: false,
+    viewport: {width: 320, height: 720},
+  });
+
+  test('case study cards fit without horizontal scrolling', async ({page}) => {
+    await page.goto('/case-studies/');
+    const cards = page.getByRole('main').getByRole('article');
+    await expect(cards).toHaveCount(2);
+    await expect(cards.first().getByText('Outcome:')).toBeVisible();
+    await expect(cards.last().getByText('Next step:')).toBeVisible();
+    expect(
+      await page.evaluate(() => document.documentElement.scrollWidth),
+    ).toBe(320);
+  });
+});
+
+test('skills link to the SQL work sample', async ({page}) => {
+  await page.goto('/skills/');
+  await page
+    .getByRole('link', {name: 'SQL and settlement reconciliation sample'})
+    .click();
+
+  await expect(page).toHaveURL(/\/projects\/#settlement-reconciliation$/);
+  await expect(
+    page.locator('#settlement-reconciliation').getByRole('heading', {
+      name: 'Reconciling payments against settlements with SQL',
+    }),
+  ).toBeVisible();
+});
+
+test('the résumé links to a downloadable PDF', async ({page, request}) => {
+  await page.goto('/resume/');
+  const download = page.getByRole('link', {name: 'Download résumé (PDF)'});
+  const href = await download.getAttribute('href');
+  expect(href).toBe('/garrison-hutcherson-resume.pdf');
+  await expect(download).toHaveAttribute('download', '');
+  const response = await request.get('/garrison-hutcherson-resume.pdf');
+  expect(response.ok()).toBe(true);
+  expect(response.headers()['content-type']).toContain('application/pdf');
+  expect((await response.body()).subarray(0, 5).toString()).toBe('%PDF-');
 });
 
 test('home page previews three employers and four skill groups', async ({
@@ -212,6 +265,85 @@ test.describe('home hero space scene', () => {
     for (const star of await page.locator('.shooting').all()) {
       await expect(star).toHaveCSS('opacity', '0');
     }
+  });
+});
+
+test('the About globe turns once and reveals its Greenville marker', async ({
+  page,
+}) => {
+  await page.goto('/about/');
+  const globe = page.locator('svg.globe');
+  const positions = await globe.evaluate(element => {
+    if (!(element instanceof SVGSVGElement)) throw new Error('Missing globe');
+    const coast = element.querySelector<SVGPathElement>('.coast.turning');
+    if (!coast) throw new Error('Missing coastline');
+    element.pauseAnimations();
+    return [0, 1.5, 3, 6].map(time => {
+      element.setCurrentTime(time);
+      const {x, y} = coast.getPointAtLength(40);
+      return {x, y};
+    });
+  });
+  const [start, midway, settled, later] = positions;
+  expect(start).not.toEqual(midway);
+  expect(midway).not.toEqual(settled);
+  expect(settled).toEqual(later);
+  await expect(globe.locator('.marker')).toHaveCSS('opacity', '1');
+  await expect(globe.getByText('Greenville, SC')).toBeVisible();
+});
+
+test('the About starfield twinkles and shows a passing meteor', async ({
+  page,
+}) => {
+  await page.goto('/about/');
+  const sky = page.locator('svg.about-space');
+  await expect(sky.locator('.twinkle').first()).toHaveCSS(
+    'animation-name',
+    /about-twinkle/,
+  );
+  const states = await sky.locator('.meteor-high').evaluate(meteor => {
+    const [animation] = meteor.getAnimations();
+    if (!animation) throw new Error('Missing meteor animation');
+    animation.pause();
+    const {delay, duration} = animation.effect?.getComputedTiming() ?? {};
+    if (typeof delay !== 'number' || typeof duration !== 'number') {
+      throw new Error('Missing meteor timing');
+    }
+    return [0, 0.015, 0.07].map(progress => {
+      animation.currentTime = delay + duration * progress;
+      const style = getComputedStyle(meteor);
+      return {opacity: Number(style.opacity), transform: style.transform};
+    });
+  });
+  expect(states[0]?.opacity).toBe(0);
+  expect(states[1]?.opacity).toBeGreaterThan(0);
+  expect(states[1]?.transform).not.toBe(states[0]?.transform);
+  expect(states[2]?.opacity).toBe(0);
+});
+
+test.describe('About globe with reduced motion and no JavaScript', () => {
+  test.use({
+    reducedMotion: 'reduce',
+    javaScriptEnabled: false,
+    viewport: {width: 320, height: 720},
+  });
+
+  test('shows the settled map and keeps the marker inside the viewport', async ({
+    page,
+  }) => {
+    await page.goto('/about/');
+    const globe = page.locator('svg.globe');
+    await expect(globe.locator('.coast.turning')).toBeHidden();
+    await expect(globe.locator('.coast.settled')).toBeVisible();
+    await expect(globe.locator('.marker')).toHaveCSS('animation-name', 'none');
+    await expect(globe.getByText('Greenville, SC')).toBeInViewport({ratio: 1});
+    const sky = page.locator('svg.about-space');
+    await expect(sky).toBeVisible();
+    await expect(sky.locator('.twinkle').first()).toHaveCSS(
+      'animation-name',
+      'none',
+    );
+    await expect(sky.locator('.meteor-high')).toHaveCSS('opacity', '0');
   });
 });
 

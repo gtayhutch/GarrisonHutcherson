@@ -28,8 +28,9 @@ const linkedin = CONTACT.linkedin.replace('https://www.', '');
 >
   <div class="container wrap">
     <p class="print-hint">
-      Tip: use your browser's Print command (Ctrl+P or ⌘P) to save this page as
-      a PDF.
+      <a href="/garrison-hutcherson-resume.pdf" download>
+        Download résumé (PDF)
+      </a>
     </p>
     <article class="sheet" aria-labelledby="resume-name">
       <header class="sheet-head">
@@ -242,13 +243,23 @@ const linkedin = CONTACT.linkedin.replace('https://www.', '');
     }
 
     .sheet {
-      gap: 1.1rem;
+      display: block;
       padding: 0;
       box-shadow: none;
       font-size: 10.5pt;
     }
 
-    .job {
+    .sheet > * + * {
+      margin-top: 1rem;
+    }
+
+    .job-head,
+    .role-title,
+    h2 {
+      break-after: avoid;
+    }
+
+    .role-block {
       break-inside: avoid;
     }
   }
