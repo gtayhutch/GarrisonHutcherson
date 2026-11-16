@@ -13,7 +13,7 @@ Prerequisites: Node.js 26.x LTS (pinned in `.nvmrc`) and pnpm (pinned in
 ```bash
 pnpm install --frozen-lockfile   # install dependencies
 pnpm dev                         # start the site locally (astro dev)
-pnpm verify                      # everything CI runs: format, lint, types, build, e2e
+pnpm verify                      # everything CI runs: format, lint, types, build, e2e, dependency audit
 ```
 
 ## Stack
