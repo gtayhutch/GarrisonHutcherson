@@ -292,6 +292,35 @@ test('the About globe turns once and reveals its Greenville marker', async ({
   await expect(globe.getByText('Greenville, SC')).toBeVisible();
 });
 
+test('the About starfield twinkles and shows a passing meteor', async ({
+  page,
+}) => {
+  await page.goto('/about/');
+  const sky = page.locator('svg.about-space');
+  await expect(sky.locator('.twinkle').first()).toHaveCSS(
+    'animation-name',
+    /about-twinkle/,
+  );
+  const states = await sky.locator('.meteor-high').evaluate(meteor => {
+    const [animation] = meteor.getAnimations();
+    if (!animation) throw new Error('Missing meteor animation');
+    animation.pause();
+    const {delay, duration} = animation.effect?.getComputedTiming() ?? {};
+    if (typeof delay !== 'number' || typeof duration !== 'number') {
+      throw new Error('Missing meteor timing');
+    }
+    return [0, 0.015, 0.07].map(progress => {
+      animation.currentTime = delay + duration * progress;
+      const style = getComputedStyle(meteor);
+      return {opacity: Number(style.opacity), transform: style.transform};
+    });
+  });
+  expect(states[0]?.opacity).toBe(0);
+  expect(states[1]?.opacity).toBeGreaterThan(0);
+  expect(states[1]?.transform).not.toBe(states[0]?.transform);
+  expect(states[2]?.opacity).toBe(0);
+});
+
 test.describe('About globe with reduced motion and no JavaScript', () => {
   test.use({
     reducedMotion: 'reduce',
@@ -308,6 +337,13 @@ test.describe('About globe with reduced motion and no JavaScript', () => {
     await expect(globe.locator('.coast.settled')).toBeVisible();
     await expect(globe.locator('.marker')).toHaveCSS('animation-name', 'none');
     await expect(globe.getByText('Greenville, SC')).toBeInViewport({ratio: 1});
+    const sky = page.locator('svg.about-space');
+    await expect(sky).toBeVisible();
+    await expect(sky.locator('.twinkle').first()).toHaveCSS(
+      'animation-name',
+      'none',
+    );
+    await expect(sky.locator('.meteor-high')).toHaveCSS('opacity', '0');
   });
 });
 

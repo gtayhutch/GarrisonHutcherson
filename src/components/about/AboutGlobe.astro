@@ -102,23 +102,40 @@ const pin = project(greenville.longitude, greenville.latitude, finalLongitude);
     <clipPath id="about-globe-limb">
       <circle cx={center} cy={center} r={radius} />
     </clipPath>
+    <linearGradient id="about-globe-fade" x2="0" y2="1">
+      <stop offset=".52" stop-color="white" />
+      <stop offset=".96" stop-color="white" stop-opacity="0" />
+    </linearGradient>
+    <mask
+      id="about-globe-shading"
+      maskUnits="userSpaceOnUse"
+      x="0"
+      y="0"
+      width="1000"
+      height="1000"
+    >
+      <rect width="1000" height="1000" fill="url(#about-globe-fade)" />
+    </mask>
   </defs>
-  <circle class="ocean" cx={center} cy={center} r={radius} />
-  <circle class="atmosphere" cx={center} cy={center} r={radius + 6} />
-  <g clip-path="url(#about-globe-limb)">
-    {layers.map(({name, frames, settled}) => (
-      <>
-        <path class:list={[name, 'turning']} d={settled}>
-          <animate
-            attributeName="d"
-            values={frames}
-            dur={duration}
-            fill="freeze"
-          />
-        </path>
-        <path class:list={[name, 'settled']} d={settled} />
-      </>
-    ))}
+  <circle class="globe-disc" cx={center} cy={center} r={radius} />
+  <g mask="url(#about-globe-shading)">
+    <circle class="ocean" cx={center} cy={center} r={radius} />
+    <circle class="atmosphere" cx={center} cy={center} r={radius + 6} />
+    <g clip-path="url(#about-globe-limb)">
+      {layers.map(({name, frames, settled}) => (
+        <>
+          <path class:list={[name, 'turning']} d={settled}>
+            <animate
+              attributeName="d"
+              values={frames}
+              dur={duration}
+              fill="freeze"
+            />
+          </path>
+          <path class:list={[name, 'settled']} d={settled} />
+        </>
+      ))}
+    </g>
   </g>
   <g transform={`translate(${pin.x} ${pin.y})`}>
     <g class="marker">
@@ -145,8 +162,11 @@ const pin = project(greenville.longitude, greenville.latitude, finalLongitude);
     inset-inline-start: calc(80% - var(--globe-size) * 0.404);
     width: var(--globe-size);
     max-width: none;
-    mask-image: linear-gradient(to bottom, black 52%, transparent 96%);
     pointer-events: none;
+  }
+
+  .globe-disc {
+    fill: var(--color-bg);
   }
 
   .ocean {

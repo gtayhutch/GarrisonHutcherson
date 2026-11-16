@@ -6,6 +6,7 @@
 import {render} from 'astro:content';
 
 import AboutGlobe from '../components/about/AboutGlobe.astro';
+import AboutSpace from '../components/about/AboutSpace.astro';
 import PageHeader from '../components/site/PageHeader.astro';
 import Button from '../components/ui/Button.astro';
 import Portrait from '../components/ui/Portrait.astro';
@@ -19,6 +20,7 @@ const {Content} = await render(page);
 
 <BaseLayout title={page.data.title} description={page.data.description}>
   <div class="scene">
+    <AboutSpace />
     <AboutGlobe />
     <div class="heading">
       <PageHeader eyebrow="About" title={`About ${SITE.name}`} />
