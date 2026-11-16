@@ -1,13 +1,13 @@
 ---
 /** Decorative locator globe. Orthographic path frames are calculated at build time. */
-// Simplified Americas coastline from Natural Earth 1:110m (public domain).
+// Simplified coastline from Natural Earth 1:50m (public domain).
 import coastlines from './coastlines.json';
 
 const center = 500;
 const radius = 470;
 const toRadians = Math.PI / 180;
 const tilt = 24 * toRadians;
-const initialLongitude = -131;
+const initialLongitude = -172;
 const finalLongitude = -68;
 const greenville = {longitude: -82.394, latitude: 34.853};
 const duration = '3s';
@@ -32,13 +32,24 @@ function project(longitude: number, latitude: number, view: number) {
   };
 }
 
-const parallels = [-38, -14, 10, 34, 58, 78].map(latitude =>
-  Array.from({length: 27}, (_, index) => [-180 + index * 7, latitude]),
-);
-const meridians = [-180, -156, -132, -108, -84, -60, -36, -12, 12].map(
-  longitude =>
-    Array.from({length: 25}, (_, index) => [longitude, -80 + index * 7]),
-);
+const parallels = [-38, -14, 10, 34, 58, 78].map(latitude => {
+  const west = latitude > 0 ? -255 : -228;
+  const steps = Math.ceil((12 - west) / 7);
+  return Array.from({length: steps + 1}, (_, index) => [
+    west + index * 7,
+    latitude,
+  ]);
+});
+const meridians = [
+  -252, -228, -204, -180, -156, -132, -108, -84, -60, -36, -12, 12,
+].map(longitude => {
+  const south = longitude < -228 ? 4 : -80;
+  const steps = Math.floor((88 - south) / 7);
+  return Array.from({length: steps + 1}, (_, index) => [
+    longitude,
+    south + index * 7,
+  ]);
+});
 
 function pathAt(lines: number[][][], view: number) {
   return lines
