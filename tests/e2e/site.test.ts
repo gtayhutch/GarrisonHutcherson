@@ -43,6 +43,32 @@ test('case studies are reachable from the main navigation', async ({page}) => {
   ).toHaveCount(2);
 });
 
+test('skills link to the SQL work sample', async ({page}) => {
+  await page.goto('/skills/');
+  await page
+    .getByRole('link', {name: 'SQL and settlement reconciliation sample'})
+    .click();
+
+  await expect(page).toHaveURL(/\/projects\/#settlement-reconciliation$/);
+  await expect(
+    page.locator('#settlement-reconciliation').getByRole('heading', {
+      name: 'Reconciling payments against settlements with SQL',
+    }),
+  ).toBeVisible();
+});
+
+test('the résumé links to a downloadable PDF', async ({page, request}) => {
+  await page.goto('/resume/');
+  const download = page.getByRole('link', {name: 'Download résumé (PDF)'});
+  const href = await download.getAttribute('href');
+  expect(href).toBe('/garrison-hutcherson-resume.pdf');
+  await expect(download).toHaveAttribute('download', '');
+  const response = await request.get('/garrison-hutcherson-resume.pdf');
+  expect(response.ok()).toBe(true);
+  expect(response.headers()['content-type']).toContain('application/pdf');
+  expect((await response.body()).subarray(0, 5).toString()).toBe('%PDF-');
+});
+
 test('home page previews three employers and four skill groups', async ({
   page,
 }) => {
