@@ -1,15 +1,15 @@
-- id: customer-first
+- id: customer-communication
   order: 1
-  title: Customer-First Mindset
+  title: Customer Communication
   icon: users
-  body: More than ten years of remote support taught me that every case is a person trying to get their work done. I build rapport, stay calm in tense moments, and follow through until it's fixed.
-- id: bugs-to-fixes
+  body: I handle high case volumes while maintaining SLA standards and high client satisfaction, keeping customers informed and explaining technical issues clearly.
+- id: log-analysis
   order: 2
-  title: Turn Bugs Into Fixes
+  title: Log Analysis
   icon: wrench
-  body: I dig through logs, reproduce issues (APIs included), and hand engineering a clear, well-documented report, so problems get fixed instead of bounced around.
-- id: explain-simply
+  body: I investigate application and system logs in Elastic and Grafana, and use Postman to reproduce API issues and narrow down the source of a problem.
+- id: engineering-escalations
   order: 3
-  title: Explain the Complex Simply
+  title: Engineering Escalations
   icon: lightbulb
-  body: From training sessions to knowledge-base articles, I translate technical detail into steps anyone can follow, whether they're at the front desk or in the C-suite.
+  body: I turn investigations into clear, verifiable reports for engineering. I also identify outdated documentation and proactively update it.

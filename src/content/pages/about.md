@@ -15,9 +15,16 @@ I'm a Support Engineer at One Inc, a payments software company, where I dig
 through Elastic and Grafana logs, reproduce API issues in Postman, meet with
 clients, and turn real bugs into clear tickets for engineering.
 
+I handle high volumes of cases while maintaining SLA standards and high client
+satisfaction. I also look for outdated documentation and proactively update it
+so clients and support teams have accurate information. Earlier in my career,
+I was promoted to Senior Advisor in the AppleCare program after consistently
+exceeding performance standards.
+
 What I enjoy most is the moment a frustrated customer realizes the problem is
 solved and understands why. I like digging into logs to reproduce a tricky
 bug just as much as walking someone through a fix on a Zoom call.
 
-I'm always glad to talk about roles in technical support, client success, or
-support engineering at companies that care about their customers.
+I'm interested in senior technical support and support engineering roles,
+including API and integration support and escalations, at companies that care
+about their customers.
