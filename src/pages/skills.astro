@@ -18,6 +18,29 @@ const groups = await getSkillGroups();
     intro="The people skills of client success, the technical depth to reproduce and escalate real bugs, and hands-on time with the tools support teams use every day."
   />
   <div class="container body">
+    <section class="evidence" aria-labelledby="skills-evidence">
+      <h2 id="skills-evidence">See these skills in practice</h2>
+      <ul>
+        <li>
+          <a href="/case-studies/">
+            Customer communication and log analysis in support cases
+          </a>
+        </li>
+        <li>
+          <a href="/projects/#webhook-troubleshooting">
+            API troubleshooting and engineering escalation sample
+          </a>
+        </li>
+        <li>
+          <a href="/projects/#settlement-reconciliation">
+            SQL and settlement reconciliation sample
+          </a>
+        </li>
+        <li>
+          <a href="/projects/#support-writing">Technical writing samples</a>
+        </li>
+      </ul>
+    </section>
     <SkillGroups groups={groups} variant="grid" headingLevel="h2" />
   </div>
 </BaseLayout>
@@ -25,5 +48,13 @@ const groups = await getSkillGroups();
 <style>
   .body {
     padding-bottom: var(--space-8);
+  }
+
+  .evidence {
+    margin-bottom: var(--space-6);
+  }
+
+  .evidence ul {
+    margin-top: var(--space-3);
   }
 </style>

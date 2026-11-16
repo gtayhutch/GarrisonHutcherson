@@ -9,6 +9,10 @@ export default defineConfig({
   build: {
     inlineStylesheets: 'never',
   },
+  markdown: {
+    // The default highlighter emits inline styles blocked by the site CSP.
+    syntaxHighlight: false,
+  },
   devToolbar: {
     enabled: false,
   },

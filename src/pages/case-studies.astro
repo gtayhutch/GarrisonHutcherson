@@ -1,12 +1,24 @@
 ---
 /** Support case studies, with client details omitted. */
 import {render} from 'astro:content';
+
 import PageHeader from '../components/site/PageHeader.astro';
+import IconTile from '../components/ui/IconTile.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import {getPage} from '../lib/content';
 
 const page = await getPage('case-studies');
-const {Content} = await render(page);
+const cases = [
+  {id: 'payment-acknowledgement', icon: 'credit-card'},
+  {id: 'missing-notifications', icon: 'mail'},
+] as const;
+const studies = await Promise.all(
+  cases.map(async ({id, icon}) => {
+    const entry = await getPage(`case-${id}`);
+    const {Content} = await render(entry);
+    return {id, icon, title: entry.data.title, Content};
+  }),
+);
 ---
 
 <BaseLayout title={page.data.title} description={page.data.description}>
@@ -16,8 +28,18 @@ const {Content} = await render(page);
     intro="Examples of investigating issues and communicating findings to clients. Client details are omitted."
   />
   <div class="container body">
-    <div class="prose">
-      <Content />
+    <div class="studies">
+      {studies.map(({id, icon, title, Content}) => (
+        <article class="card" aria-labelledby={id}>
+          <header class="card-header">
+            <IconTile name={icon} size="sm" />
+            <h2 id={id}>{title}</h2>
+          </header>
+          <div class="prose">
+            <Content />
+          </div>
+        </article>
+      ))}
     </div>
   </div>
 </BaseLayout>
@@ -25,5 +47,31 @@ const {Content} = await render(page);
 <style>
   .body {
     padding-bottom: var(--space-8);
+  }
+
+  .studies {
+    display: grid;
+    gap: var(--space-4);
+    max-width: 52rem;
+  }
+
+  .card {
+    display: grid;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .card-header h2 {
+    font-size: var(--text-lg);
   }
 </style>
