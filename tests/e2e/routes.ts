@@ -16,9 +16,9 @@ export interface Route {
 export const ROUTES: readonly Route[] = [
   {
     path: '/',
-    heading: /Support Engineer\s*APIs, Payments & Escalations/,
+    heading: /Garrison Hutcherson\s*Support Engineer/,
   },
-  {path: '/about/', heading: "Hi, I'm Garrison"},
+  {path: '/about/', heading: 'About Garrison Hutcherson'},
   {path: '/experience/', heading: '10+ years of remote support'},
   {path: '/skills/', heading: 'What I bring to a support team'},
   {path: '/case-studies/', heading: 'Support case studies'},

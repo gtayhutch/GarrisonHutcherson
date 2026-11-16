@@ -30,7 +30,9 @@ test('experience lists employers newest first', async ({page}) => {
   await expect(companies.last()).toHaveText('Cloud 10 Corporation');
 });
 
-test('case studies are reachable from the main navigation', async ({page}) => {
+test('case studies are reachable from the main navigation and have separate cards', async ({
+  page,
+}) => {
   await page.goto('/');
   await page
     .getByRole('navigation', {name: 'Main', exact: true})
@@ -38,9 +40,34 @@ test('case studies are reachable from the main navigation', async ({page}) => {
     .click();
 
   await expect(page).toHaveURL(/\/case-studies\/$/);
+  const main = page.getByRole('main');
+  await expect(main.getByRole('article')).toHaveCount(2);
   await expect(
-    page.getByRole('main').getByRole('heading', {level: 2}),
-  ).toHaveCount(2);
+    main.getByRole('article', {
+      name: 'Payment failures and an acknowledgement endpoint',
+    }),
+  ).toContainText('resume payments quickly');
+  await expect(
+    main.getByRole('article', {name: 'Notifications missing for two users'}),
+  ).toContainText('normal response code');
+});
+
+test.describe('narrow no-JavaScript viewport', () => {
+  test.use({
+    javaScriptEnabled: false,
+    viewport: {width: 320, height: 720},
+  });
+
+  test('case study cards fit without horizontal scrolling', async ({page}) => {
+    await page.goto('/case-studies/');
+    const cards = page.getByRole('main').getByRole('article');
+    await expect(cards).toHaveCount(2);
+    await expect(cards.first().getByText('Outcome:')).toBeVisible();
+    await expect(cards.last().getByText('Next step:')).toBeVisible();
+    expect(
+      await page.evaluate(() => document.documentElement.scrollWidth),
+    ).toBe(320);
+  });
 });
 
 test('skills link to the SQL work sample', async ({page}) => {

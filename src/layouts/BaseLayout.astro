@@ -11,7 +11,7 @@ import {PUBLIC_WEB_ANALYTICS} from 'astro:env/server';
 import ContactBand from '../components/site/ContactBand.astro';
 import SiteFooter from '../components/site/SiteFooter.astro';
 import SiteHeader from '../components/site/SiteHeader.astro';
-import {SITE, WEB_ANALYTICS, pageTitle} from '../lib/config';
+import {CONTACT, SITE, WEB_ANALYTICS, pageTitle} from '../lib/config';
 import '../styles/global.css';
 
 interface Props {
@@ -31,6 +31,29 @@ const {
 const canonical = new URL(Astro.url.pathname, SITE.url);
 const socialImage = new URL('/social-card.jpg', SITE.url);
 const beaconConfig = JSON.stringify({token: WEB_ANALYTICS.token});
+const structuredData =
+  canonical.pathname === '/'
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: SITE.name,
+        url: canonical.href,
+      }
+    : canonical.pathname === '/about/'
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'ProfilePage',
+          url: canonical.href,
+          mainEntity: {
+            '@type': 'Person',
+            '@id': new URL('/#garrison-hutcherson', SITE.url).href,
+            name: SITE.name,
+            jobTitle: SITE.role,
+            url: new URL('/', SITE.url).href,
+            sameAs: [CONTACT.linkedin, CONTACT.github],
+          },
+        }
+      : undefined;
 ---
 
 <!doctype html>
@@ -54,6 +77,7 @@ const beaconConfig = JSON.stringify({token: WEB_ANALYTICS.token});
       crossorigin
     />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
     <meta property="og:title" content={pageTitle(title)} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -65,6 +89,12 @@ const beaconConfig = JSON.stringify({token: WEB_ANALYTICS.token});
       content="Garrison Hutcherson’s GH logo with a mint orbit"
     />
     <meta name="twitter:card" content="summary_large_image" />
+    {structuredData && (
+      <script
+        type="application/ld+json"
+        set:html={JSON.stringify(structuredData).replaceAll('<', '\\u003c')}
+      />
+    )}
   </head>
   <body>
     <a class="skip-link" href="#main">

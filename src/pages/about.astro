@@ -9,7 +9,7 @@ import PageHeader from '../components/site/PageHeader.astro';
 import Button from '../components/ui/Button.astro';
 import Portrait from '../components/ui/Portrait.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import {RESUME_PATH} from '../lib/config';
+import {RESUME_PATH, SITE} from '../lib/config';
 import {getPage} from '../lib/content';
 
 const page = await getPage('about');
@@ -17,7 +17,7 @@ const {Content} = await render(page);
 ---
 
 <BaseLayout title={page.data.title} description={page.data.description}>
-  <PageHeader eyebrow="About" title="Hi, I'm Garrison" />
+  <PageHeader eyebrow="About" title={`About ${SITE.name}`} />
   <div class="container body">
     <div class="layout">
       <div class="photo">
