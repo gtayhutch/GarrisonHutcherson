@@ -8,6 +8,7 @@ tags: [Astro, TypeScript, CSS, Cloudflare Workers, Playwright, GitHub Actions]
 ---
 
 I built this site to show my experience in one place and to sharpen the
-technical side of my support work. It ships no client-side JavaScript, is
-checked for accessibility on every page, and every change runs through
-formatting, linting, type checks, and browser tests before it can merge.
+technical side of my support work. Its only client-side JavaScript is the
+cookieless Cloudflare Web Analytics beacon. Every public page is checked for
+accessibility, and every change runs through formatting, linting, type checks,
+browser tests, and a production-dependency security audit before it can merge.
