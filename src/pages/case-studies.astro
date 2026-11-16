@@ -1,0 +1,29 @@
+---
+/** Support case studies, with client details omitted. */
+import {render} from 'astro:content';
+import PageHeader from '../components/site/PageHeader.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import {getPage} from '../lib/content';
+
+const page = await getPage('case-studies');
+const {Content} = await render(page);
+---
+
+<BaseLayout title={page.data.title} description={page.data.description}>
+  <PageHeader
+    eyebrow="Case Studies"
+    title="Support case studies"
+    intro="Examples of investigating issues and communicating findings to clients. Client details are omitted."
+  />
+  <div class="container body">
+    <div class="prose">
+      <Content />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .body {
+    padding-bottom: var(--space-8);
+  }
+</style>
