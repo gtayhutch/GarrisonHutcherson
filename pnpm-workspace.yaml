@@ -1,3 +1,7 @@
 allowBuilds:
   esbuild: true
   workerd: true
+overrides:
+  # Remove these when upstream packages accept patched releases.
+  'minimatch@>=7.0.0 <11.0.1': '11.0.1'
+  'katex@>=0.11.0 <0.18.2': '0.18.2'
