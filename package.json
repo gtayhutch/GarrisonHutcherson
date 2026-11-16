@@ -35,7 +35,6 @@
     "eslint": "^10.14.0",
     "eslint-plugin-astro": "^3.2.1",
     "globals": "^17.14.0",
-    "gts": "^7.0.0",
     "markdownlint-cli2": "^0.24.1",
     "postcss-html": "^2.0.0",
     "prettier": "^3.10.1",
