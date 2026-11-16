@@ -1,0 +1,251 @@
+---
+/** Decorative locator globe. Orthographic path frames are calculated at build time. */
+// Simplified Americas coastline from Natural Earth 1:110m (public domain).
+import coastlines from './coastlines.json';
+
+const center = 500;
+const radius = 470;
+const toRadians = Math.PI / 180;
+const tilt = 24 * toRadians;
+const initialLongitude = -131;
+const finalLongitude = -68;
+const greenville = {longitude: -82.394, latitude: 34.853};
+const duration = '3s';
+
+function project(longitude: number, latitude: number, view: number) {
+  const angle = (longitude - view) * toRadians;
+  const phi = latitude * toRadians;
+  const cosPhi = Math.cos(phi);
+  const x = cosPhi * Math.sin(angle);
+  const y =
+    Math.cos(tilt) * Math.sin(phi) - Math.sin(tilt) * cosPhi * Math.cos(angle);
+  const depth =
+    Math.sin(tilt) * Math.sin(phi) + Math.cos(tilt) * cosPhi * Math.cos(angle);
+
+  // Extend hidden points past the limb so the SVG clip can trim each line.
+  // Keeping every vertex in the path allows interpolation between frames.
+  const distance = Math.hypot(x, y);
+  const scale = depth < 0 ? (2 - distance) / distance : 1;
+  return {
+    x: Math.round(center + radius * scale * x),
+    y: Math.round(center - radius * scale * y),
+  };
+}
+
+const parallels = [-38, -14, 10, 34, 58, 78].map(latitude =>
+  Array.from({length: 27}, (_, index) => [-180 + index * 7, latitude]),
+);
+const meridians = [-180, -156, -132, -108, -84, -60, -36, -12, 12].map(
+  longitude =>
+    Array.from({length: 25}, (_, index) => [longitude, -80 + index * 7]),
+);
+
+function pathAt(lines: number[][][], view: number) {
+  return lines
+    .map(line => {
+      let previous: ReturnType<typeof project> | undefined;
+      return line
+        .map(([longitude, latitude]) => {
+          if (longitude === undefined || latitude === undefined) {
+            throw new Error(
+              'Globe coordinates require longitude and latitude.',
+            );
+          }
+          const point = project(longitude, latitude, view);
+          const {x, y} = point;
+          const command = previous
+            ? `l${x - previous.x} ${y - previous.y}`
+            : `M${x} ${y}`;
+          previous = point;
+          return command;
+        })
+        .join('');
+    })
+    .join('');
+}
+
+const views = Array.from({length: 11}, (_, index) => {
+  const t = index / 10;
+  return (
+    initialLongitude + (finalLongitude - initialLongitude) * t * t * (3 - 2 * t)
+  );
+});
+const layers = [
+  {name: 'grid', lines: [...parallels, ...meridians]},
+  {name: 'coast', lines: coastlines},
+].map(({name, lines}) => ({
+  name,
+  frames: views.map(view => pathAt(lines, view)).join(';'),
+  settled: pathAt(lines, finalLongitude),
+}));
+const pin = project(greenville.longitude, greenville.latitude, finalLongitude);
+---
+
+<svg class="globe" viewBox="0 0 1000 1000" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="about-ocean" cx="29%" cy="24%" r="72%">
+      <stop class="ocean-light" />
+      <stop class="ocean-mid" offset=".62" />
+      <stop class="ocean-edge" offset="1" />
+    </radialGradient>
+    <clipPath id="about-globe-limb">
+      <circle cx={center} cy={center} r={radius} />
+    </clipPath>
+  </defs>
+  <circle class="ocean" cx={center} cy={center} r={radius} />
+  <circle class="atmosphere" cx={center} cy={center} r={radius + 6} />
+  <g clip-path="url(#about-globe-limb)">
+    {layers.map(({name, frames, settled}) => (
+      <>
+        <path class:list={[name, 'turning']} d={settled}>
+          <animate
+            attributeName="d"
+            values={frames}
+            dur={duration}
+            fill="freeze"
+          />
+        </path>
+        <path class:list={[name, 'settled']} d={settled} />
+      </>
+    ))}
+  </g>
+  <g transform={`translate(${pin.x} ${pin.y})`}>
+    <g class="marker">
+      <circle class="pin-ring" r="12" />
+      <path
+        class="pin"
+        d="M0 0 C-3-7-13-13-13-23 A13 13 0 0 1 13-23 C13-13 3-7 0 0Z"
+      />
+      <circle class="pin-center" cy="-23" r="4" />
+      <rect class="label" x="-60" y="-65" width="120" height="24" rx="12" />
+      <text class="label-text" y="-49" text-anchor="middle">
+        Greenville, SC
+      </text>
+    </g>
+  </g>
+</svg>
+
+<style>
+  .globe {
+    --globe-size: 54rem;
+
+    position: absolute;
+    inset-block-start: calc(20.5rem - var(--globe-size) * 0.406);
+    inset-inline-start: calc(80% - var(--globe-size) * 0.404);
+    width: var(--globe-size);
+    max-width: none;
+    mask-image: linear-gradient(to bottom, black 52%, transparent 96%);
+    pointer-events: none;
+  }
+
+  .ocean {
+    fill: url('#about-ocean');
+    stroke: rgb(var(--color-glow) / 22%);
+    stroke-width: 1.5;
+  }
+
+  .ocean-light {
+    stop-color: var(--color-tile);
+  }
+
+  .ocean-mid {
+    stop-color: var(--color-surface);
+  }
+
+  .ocean-edge {
+    stop-color: var(--color-bg);
+  }
+
+  .atmosphere,
+  .grid,
+  .coast,
+  .pin-ring {
+    fill: none;
+  }
+
+  .atmosphere {
+    stroke: rgb(var(--color-glow-alt) / 9%);
+  }
+
+  .grid {
+    stroke: rgb(var(--color-glow) / 13%);
+    stroke-width: 0.9;
+  }
+
+  .coast {
+    stroke: rgb(var(--color-glow) / 33%);
+    stroke-width: 1.6;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+
+  .settled {
+    display: none;
+  }
+
+  .marker {
+    animation: reveal-marker 0.32s ease-out 2.68s both;
+  }
+
+  .pin-ring {
+    stroke: var(--color-accent-border);
+  }
+
+  .pin,
+  .label-text {
+    fill: var(--color-accent);
+  }
+
+  .pin-center,
+  .label {
+    fill: var(--color-bg);
+  }
+
+  .label {
+    stroke: var(--color-accent-border);
+  }
+
+  .label-text {
+    font-size: 14px;
+    font-weight: 550;
+  }
+
+  @keyframes reveal-marker {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @media (width >= 56rem) {
+    .globe {
+      --globe-size: clamp(64rem, 88vw, 92rem);
+
+      inset-block-start: calc(10rem - var(--globe-size) * 0.406);
+      inset-inline-start: calc(88% - var(--globe-size) * 0.404);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .turning {
+      display: none;
+    }
+
+    .settled {
+      display: initial;
+    }
+
+    .marker {
+      animation: none;
+    }
+  }
+
+  @media print {
+    .globe {
+      display: none;
+    }
+  }
+</style>

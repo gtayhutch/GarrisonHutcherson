@@ -268,6 +268,49 @@ test.describe('home hero space scene', () => {
   });
 });
 
+test('the About globe turns once and reveals its Greenville marker', async ({
+  page,
+}) => {
+  await page.goto('/about/');
+  const globe = page.locator('svg.globe');
+  const positions = await globe.evaluate(element => {
+    if (!(element instanceof SVGSVGElement)) throw new Error('Missing globe');
+    const coast = element.querySelector<SVGPathElement>('.coast.turning');
+    if (!coast) throw new Error('Missing coastline');
+    element.pauseAnimations();
+    return [0, 1.5, 3, 6].map(time => {
+      element.setCurrentTime(time);
+      const {x, y} = coast.getPointAtLength(40);
+      return {x, y};
+    });
+  });
+  const [start, midway, settled, later] = positions;
+  expect(start).not.toEqual(midway);
+  expect(midway).not.toEqual(settled);
+  expect(settled).toEqual(later);
+  await expect(globe.locator('.marker')).toHaveCSS('opacity', '1');
+  await expect(globe.getByText('Greenville, SC')).toBeVisible();
+});
+
+test.describe('About globe with reduced motion and no JavaScript', () => {
+  test.use({
+    reducedMotion: 'reduce',
+    javaScriptEnabled: false,
+    viewport: {width: 320, height: 720},
+  });
+
+  test('shows the settled map and keeps the marker inside the viewport', async ({
+    page,
+  }) => {
+    await page.goto('/about/');
+    const globe = page.locator('svg.globe');
+    await expect(globe.locator('.coast.turning')).toBeHidden();
+    await expect(globe.locator('.coast.settled')).toBeVisible();
+    await expect(globe.locator('.marker')).toHaveCSS('animation-name', 'none');
+    await expect(globe.getByText('Greenville, SC')).toBeInViewport({ratio: 1});
+  });
+});
+
 test('favicons and the web manifest are served', async ({page, request}) => {
   await page.goto('/');
   const hrefs = await page

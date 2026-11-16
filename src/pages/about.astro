@@ -5,6 +5,7 @@
  */
 import {render} from 'astro:content';
 
+import AboutGlobe from '../components/about/AboutGlobe.astro';
 import PageHeader from '../components/site/PageHeader.astro';
 import Button from '../components/ui/Button.astro';
 import Portrait from '../components/ui/Portrait.astro';
@@ -17,23 +18,28 @@ const {Content} = await render(page);
 ---
 
 <BaseLayout title={page.data.title} description={page.data.description}>
-  <PageHeader eyebrow="About" title={`About ${SITE.name}`} />
-  <div class="container body">
-    <div class="layout">
-      <div class="photo">
-        <Portrait variant="card" width={320} eager />
-      </div>
-      <div>
-        <div class="prose">
-          <Content />
+  <div class="scene">
+    <AboutGlobe />
+    <div class="heading">
+      <PageHeader eyebrow="About" title={`About ${SITE.name}`} />
+    </div>
+    <div class="container body">
+      <div class="layout">
+        <div class="photo">
+          <Portrait variant="card" width={320} eager />
         </div>
-        <div class="ctas">
-          <Button href="/experience/" icon="briefcase">
-            See my experience
-          </Button>
-          <Button href={RESUME_PATH} variant="secondary" icon="file-text">
-            View Résumé
-          </Button>
+        <div>
+          <div class="prose">
+            <Content />
+          </div>
+          <div class="ctas">
+            <Button href="/experience/" icon="briefcase">
+              See my experience
+            </Button>
+            <Button href={RESUME_PATH} variant="secondary" icon="file-text">
+              View Résumé
+            </Button>
+          </div>
         </div>
       </div>
     </div>
@@ -41,7 +47,21 @@ const {Content} = await render(page);
 </BaseLayout>
 
 <style>
+  .scene {
+    position: relative;
+    overflow: clip;
+  }
+
+  .heading {
+    position: relative;
+  }
+
+  .heading > :global(.page-header) {
+    background-color: transparent;
+  }
+
   .body {
+    position: relative;
     padding-bottom: var(--space-8);
   }
 
@@ -51,7 +71,7 @@ const {Content} = await render(page);
   }
 
   .photo {
-    width: min(100%, 15rem);
+    width: min(57%, 15rem);
   }
 
   .ctas {
