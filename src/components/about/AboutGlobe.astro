@@ -204,10 +204,14 @@ const pin = project(greenville.longitude, greenville.latitude, finalLongitude);
   }
 
   .coast {
-    stroke: rgb(var(--color-glow) / 33%);
+    stroke: rgb(var(--color-glow) / var(--coast-opacity, 33%));
     stroke-width: 1.6;
     stroke-linejoin: round;
     stroke-linecap: round;
+  }
+
+  :global([data-theme='light']) .globe {
+    --coast-opacity: 24%;
   }
 
   .settled {

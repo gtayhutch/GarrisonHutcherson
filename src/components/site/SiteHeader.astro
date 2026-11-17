@@ -61,6 +61,17 @@ function isCurrent(href: string): boolean {
       </Button>
     </div>
 
+    <button
+      class="theme-toggle"
+      type="button"
+      data-theme-toggle
+      aria-label="Light mode"
+      aria-pressed="false"
+      hidden
+    >
+      <Icon name="sun" size={21} />
+    </button>
+
     <details class="nav-mobile">
       <summary aria-label="Menu">
         <Icon name="menu" size={22} />
@@ -88,7 +99,8 @@ function isCurrent(href: string): boolean {
 
 <style>
   .site-header {
-    position: relative;
+    position: sticky;
+    inset-block-start: 0;
     z-index: 10;
     border-bottom: 1px solid var(--color-border);
     background: var(--color-header);
@@ -113,6 +125,13 @@ function isCurrent(href: string): boolean {
     display: block;
     width: auto;
     height: 2.25rem;
+  }
+
+  :global([data-theme='light']) .brand picture {
+    display: block;
+    padding-inline: var(--space-1);
+    border-radius: var(--radius-sm);
+    background: var(--palette-dark-blue);
   }
 
   .divider {
@@ -166,6 +185,38 @@ function isCurrent(href: string): boolean {
     margin-left: auto;
   }
 
+  .theme-toggle:not([hidden]) {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--glass-surface);
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
+  .theme-toggle[aria-pressed='true'] {
+    border-color: var(--color-accent-border);
+    color: var(--color-accent);
+  }
+
+  @media (width < 56rem) {
+    .bar {
+      gap: var(--space-2);
+    }
+
+    .theme-toggle {
+      margin-inline-start: auto;
+    }
+
+    .theme-toggle:not([hidden]) + .nav-mobile {
+      margin-inline-start: 0;
+    }
+  }
+
   .nav-mobile summary {
     display: grid;
     place-items: center;
@@ -174,6 +225,8 @@ function isCurrent(href: string): boolean {
     border: 1px solid var(--color-border-strong);
     border-radius: var(--radius-md);
     color: var(--color-text);
+    background: var(--glass-surface);
+    box-shadow: var(--glass-shadow);
     cursor: pointer;
     list-style: none;
   }
@@ -193,7 +246,15 @@ function isCurrent(href: string): boolean {
     top: 100%;
     padding: var(--space-3) var(--gutter) var(--space-5);
     border-bottom: 1px solid var(--color-border);
-    background: var(--color-bg-raised);
+    max-height: calc(100dvh - var(--header-height));
+    overflow-y: auto;
+    background: var(--glass-surface);
+    backdrop-filter: var(--glass-filter);
+    box-shadow: var(--glass-shadow);
+  }
+
+  :global([data-theme='light']) .nav-mobile nav {
+    background-color: var(--glass-menu-tint);
   }
 
   .nav-mobile a {

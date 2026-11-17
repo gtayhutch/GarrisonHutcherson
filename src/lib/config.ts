@@ -26,6 +26,8 @@ export const SITE = {
  * owner's choice; never add a street address or a personal email.
  */
 export const CONTACT = {
+  /** Public booking page for a 30-minute meeting. */
+  booking: 'https://cal.com/garrisonhutcherson/30min',
   email: 'garrison@garrisonhutcherson.com',
   github: 'https://github.com/gtayhutch',
   linkedin: 'https://www.linkedin.com/in/gtayhutch',
@@ -58,7 +60,7 @@ export const NAV: readonly NavItem[] = [
   {label: 'About', href: '/about/'},
   {label: 'Experience', href: '/experience/'},
   {label: 'Skills', href: '/skills/'},
-  {label: 'Case Studies', href: '/case-studies/'},
+  {label: 'Support Cases', href: '/case-studies/'},
   {label: 'Projects', href: '/projects/'},
   {label: 'Contact', href: '/contact/'},
 ];

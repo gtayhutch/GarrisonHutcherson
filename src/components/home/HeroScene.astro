@@ -30,26 +30,38 @@ const layers = [
 >
   <defs>
     <linearGradient id="space-sky" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#0d111b"></stop>
-      <stop offset="0.6" stop-color="#151a27"></stop>
-      <stop offset="1" stop-color="#1b2130"></stop>
+      <stop offset="0" stop-color="var(--sky-top, #0d111b)"></stop>
+      <stop offset="0.6" stop-color="var(--sky-mid, #151a27)"></stop>
+      <stop offset="1" stop-color="var(--color-bg)"></stop>
     </linearGradient>
     <radialGradient id="space-nebula-pink" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#bae5c0" stop-opacity="0.3"></stop>
+      <stop
+        offset="0"
+        stop-color="var(--nebula-mint, #bae5c0)"
+        stop-opacity="0.3"
+      ></stop>
       <stop offset="1" stop-color="#86ae94" stop-opacity="0"></stop>
     </radialGradient>
     <radialGradient id="space-nebula-navy" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#3a5a8c" stop-opacity="0.36"></stop>
+      <stop
+        offset="0"
+        stop-color="var(--nebula-blue, #3a5a8c)"
+        stop-opacity="0.36"
+      ></stop>
       <stop offset="1" stop-color="#272f40" stop-opacity="0"></stop>
     </radialGradient>
     <radialGradient id="space-nebula-violet" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#c77fc0" stop-opacity="0.34"></stop>
+      <stop
+        offset="0"
+        stop-color="var(--nebula-violet, #c77fc0)"
+        stop-opacity="0.34"
+      ></stop>
       <stop offset="1" stop-color="#e3c7e0" stop-opacity="0"></stop>
     </radialGradient>
     <radialGradient id="space-planet" cx="0.35" cy="0.3" r="0.75">
-      <stop offset="0" stop-color="#4b6b6a"></stop>
-      <stop offset="0.55" stop-color="#2a3a48"></stop>
-      <stop offset="1" stop-color="#151b28"></stop>
+      <stop offset="0" stop-color="var(--planet-light, #4b6b6a)"></stop>
+      <stop offset="0.55" stop-color="var(--planet-mid, #2a3a48)"></stop>
+      <stop offset="1" stop-color="var(--planet-edge, #151b28)"></stop>
     </radialGradient>
     <radialGradient id="space-glow" cx="0.5" cy="0.5" r="0.5">
       <stop offset="0.7" stop-color="#bae5c0" stop-opacity="0.32"></stop>
@@ -64,8 +76,16 @@ const layers = [
       y2="0"
     >
       <stop offset="0" stop-color="#ffffff" stop-opacity="0"></stop>
-      <stop offset="0.8" stop-color="#d4f2d8" stop-opacity="0.65"></stop>
-      <stop offset="1" stop-color="#ffffff" stop-opacity="1"></stop>
+      <stop
+        offset="0.8"
+        stop-color="var(--star-color, #d4f2d8)"
+        stop-opacity="0.65"
+      ></stop>
+      <stop
+        offset="1"
+        stop-color="var(--star-color, #ffffff)"
+        stop-opacity="1"
+      ></stop>
     </linearGradient>
   </defs>
 
@@ -123,7 +143,7 @@ const layers = [
       class="ring-back"
       d="M790 600c40-70 300-120 520-90"
       fill="none"
-      stroke="#bae5c0"
+      stroke="var(--ring-back, #bae5c0)"
       stroke-opacity="0.3"
       stroke-width="3"
     ></path>
@@ -132,7 +152,7 @@ const layers = [
       class="ring-front"
       d="M760 640c120-30 420-110 600-150"
       fill="none"
-      stroke="#e3c7e0"
+      stroke="var(--ring-front, #e3c7e0)"
       stroke-opacity="0.7"
       stroke-width="2.5"
     ></path>
@@ -150,7 +170,7 @@ const layers = [
         stroke-width="2.5"
         stroke-linecap="round"
       />
-      <circle cx="180" cy="0" r="2.6" fill="#ffffff" />
+      <circle cx="180" cy="0" r="2.6" fill="var(--star-color, #ffffff)" />
     </g>
   ))}
 </svg>
@@ -161,8 +181,22 @@ const layers = [
     height: 100%;
   }
 
+  :global([data-theme='light']) .space-scene {
+    --sky-top: #e1edf7;
+    --sky-mid: #dbeaf1;
+    --nebula-mint: #54c7a5;
+    --nebula-blue: #7faadb;
+    --nebula-violet: #b596da;
+    --planet-light: #edfdf5;
+    --planet-mid: #a9d7cc;
+    --planet-edge: #679eaa;
+    --ring-back: #479f89;
+    --ring-front: #6d709e;
+    --star-color: #65829f;
+  }
+
   .stars {
-    fill: #f2f7f4;
+    fill: var(--star-color, #f2f7f4);
     animation: drift linear infinite;
   }
 

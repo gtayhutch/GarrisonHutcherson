@@ -1,7 +1,8 @@
 ---
-/** Support case studies, with client details omitted. */
+/** Support cases with client details omitted. */
 import {render} from 'astro:content';
 
+import IllustratedSection from '../components/site/IllustratedSection.astro';
 import PageHeader from '../components/site/PageHeader.astro';
 import IconTile from '../components/ui/IconTile.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -22,26 +23,28 @@ const studies = await Promise.all(
 ---
 
 <BaseLayout title={page.data.title} description={page.data.description}>
-  <PageHeader
-    eyebrow="Case Studies"
-    title="Support case studies"
-    intro="Examples of investigating issues and communicating findings to clients. Client details are omitted."
-  />
-  <div class="container body">
-    <div class="studies">
-      {studies.map(({id, icon, title, Content}) => (
-        <article class="card" aria-labelledby={id}>
-          <header class="card-header">
-            <IconTile name={icon} size="sm" />
-            <h2 id={id}>{title}</h2>
-          </header>
-          <div class="prose">
-            <Content />
-          </div>
-        </article>
-      ))}
+  <IllustratedSection scene="support-cases">
+    <PageHeader
+      eyebrow="Support Cases"
+      title="How I troubleshoot support issues"
+      intro="Two examples of how I traced support issues and shared my findings with clients. Client details are omitted."
+    />
+    <div class="container body">
+      <div class="studies">
+        {studies.map(({id, icon, title, Content}) => (
+          <article class="card" aria-labelledby={id}>
+            <header class="card-header">
+              <IconTile name={icon} size="sm" />
+              <h2 id={id}>{title}</h2>
+            </header>
+            <div class="prose">
+              <Content />
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
-  </div>
+  </IllustratedSection>
 </BaseLayout>
 
 <style>
@@ -61,8 +64,9 @@ const studies = await Promise.all(
     padding: var(--space-6);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    background: var(--color-surface);
-    box-shadow: var(--shadow-card);
+    background: var(--glass-surface);
+    backdrop-filter: var(--glass-filter);
+    box-shadow: var(--glass-shadow);
   }
 
   .card-header {
