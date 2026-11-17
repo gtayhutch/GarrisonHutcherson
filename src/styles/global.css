@@ -14,7 +14,7 @@
 
 html {
   text-size-adjust: 100%;
-  scroll-padding-top: var(--space-6);
+  scroll-padding-top: calc(var(--header-height) + var(--space-4));
 }
 
 body {
@@ -25,6 +25,26 @@ body {
   font-size: var(--text-base);
   line-height: var(--leading-normal);
   -webkit-font-smoothing: antialiased;
+}
+
+[data-theme='light'] body {
+  background:
+    radial-gradient(
+      ellipse 55rem 40rem at 1% 43rem,
+      rgb(133 209 184 / 35%),
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 49rem 37rem at 100% 29rem,
+      rgb(177 161 222 / 34%),
+      transparent 76%
+    ),
+    radial-gradient(
+      ellipse 55rem 49rem at 61% 83rem,
+      rgb(146 184 224 / 23%),
+      transparent 72%
+    ),
+    var(--color-bg);
 }
 
 img,
@@ -104,7 +124,8 @@ a:hover {
     color-scheme: light;
   }
 
-  body {
+  body,
+  [data-theme='light'] body {
     background: #fff;
     color: #000;
   }

@@ -1,5 +1,6 @@
 ---
 /** Skills page: every skill group as a card. */
+import IllustratedSection from '../components/site/IllustratedSection.astro';
 import PageHeader from '../components/site/PageHeader.astro';
 import SkillGroups from '../components/skills/SkillGroups.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -12,37 +13,39 @@ const groups = await getSkillGroups();
   title="Skills"
   description="Garrison Hutcherson's skills: client success, technical troubleshooting, payments and financial software, SaaS tools, web, and communication."
 >
-  <PageHeader
-    eyebrow="Skills"
-    title="What I bring to a support team"
-    intro="The people skills of client success, the technical depth to reproduce and escalate real bugs, and hands-on time with the tools support teams use every day."
-  />
-  <div class="container body">
-    <section class="evidence" aria-labelledby="skills-evidence">
-      <h2 id="skills-evidence">See these skills in practice</h2>
-      <ul>
-        <li>
-          <a href="/case-studies/">
-            Customer communication and log analysis in support cases
-          </a>
-        </li>
-        <li>
-          <a href="/projects/#webhook-troubleshooting">
-            API troubleshooting and engineering escalation sample
-          </a>
-        </li>
-        <li>
-          <a href="/projects/#settlement-reconciliation">
-            SQL and settlement reconciliation sample
-          </a>
-        </li>
-        <li>
-          <a href="/projects/#support-writing">Technical writing samples</a>
-        </li>
-      </ul>
-    </section>
-    <SkillGroups groups={groups} variant="grid" headingLevel="h2" />
-  </div>
+  <IllustratedSection scene="skills">
+    <PageHeader
+      eyebrow="Skills"
+      title="What I bring to a support team"
+      intro="The people skills of client success, the technical depth to reproduce and escalate real bugs, and hands-on time with the tools support teams use every day."
+    />
+    <div class="container body">
+      <section class="evidence" aria-labelledby="skills-evidence">
+        <h2 id="skills-evidence">See these skills in practice</h2>
+        <ul>
+          <li>
+            <a href="/case-studies/">
+              Customer communication and log analysis in support cases
+            </a>
+          </li>
+          <li>
+            <a href="/projects/#webhook-troubleshooting">
+              API troubleshooting and engineering escalation sample
+            </a>
+          </li>
+          <li>
+            <a href="/projects/#settlement-reconciliation">
+              SQL and settlement reconciliation sample
+            </a>
+          </li>
+          <li>
+            <a href="/projects/#support-writing">Technical writing samples</a>
+          </li>
+        </ul>
+      </section>
+      <SkillGroups groups={groups} variant="grid" headingLevel="h2" />
+    </div>
+  </IllustratedSection>
 </BaseLayout>
 
 <style>

@@ -21,7 +21,7 @@ export const ROUTES: readonly Route[] = [
   {path: '/about/', heading: 'About Garrison Hutcherson'},
   {path: '/experience/', heading: '10+ years of remote support'},
   {path: '/skills/', heading: 'What I bring to a support team'},
-  {path: '/case-studies/', heading: 'Support case studies'},
+  {path: '/case-studies/', heading: 'How I troubleshoot support issues'},
   {path: '/projects/', heading: 'Projects and work samples'},
   {path: '/contact/', heading: "Let's work together"},
   {path: '/resume/', heading: 'Garrison Hutcherson'},
