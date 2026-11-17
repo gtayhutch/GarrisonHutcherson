@@ -65,4 +65,15 @@ const widths = [width, width * 2].filter(w => w <= headshot.width);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-card);
   }
+
+  :global([data-theme='light']) .portrait-round {
+    box-shadow:
+      0 0 0 3px var(--color-bg),
+      0 0 0 6px var(--color-accent-border),
+      0 18px 40px rgb(43 68 105 / 19%);
+  }
+
+  :global([data-theme='light']) .portrait-card {
+    box-shadow: var(--glass-shadow);
+  }
 </style>

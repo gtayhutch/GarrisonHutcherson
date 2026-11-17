@@ -20,48 +20,65 @@ const projects = await Promise.all(
   title="Projects"
   description="Technical support work samples and projects by Garrison Hutcherson."
 >
-  <PageHeader
-    eyebrow="Projects"
-    title="Projects and work samples"
-    intro="Examples of technical troubleshooting, support documentation, and how I built this site."
-  />
-  <div class="container body">
-    <ul class="projects" role="list">
-      {projects.map(({project, Content}) => (
-        <li class="card" id={project.id}>
-          <h2 class="title">{project.data.title}</h2>
-          <p class="summary">{project.data.summary}</p>
-          <div class="prose details">
-            <Content />
-          </div>
-          {project.data.tags.length > 0 && (
-            <ul class="tags" role="list" aria-label="Topics">
-              {project.data.tags.map(tag => (
-                <li>
-                  <Tag>{tag}</Tag>
-                </li>
-              ))}
-            </ul>
-          )}
-          <p class="links">
-            {project.data.url && (
-              <a href={project.data.url}>
-                Visit site <Icon name="external-link" size={14} />
-              </a>
+  <div class="scene">
+    <PageHeader
+      eyebrow="Projects"
+      title="Projects and work samples"
+      intro="Examples of technical troubleshooting, support documentation, and how I built this site."
+    />
+    <div class="container body">
+      <ul class="projects" role="list">
+        {projects.map(({project, Content}) => (
+          <li class="card" id={project.id}>
+            <h2 class="title">{project.data.title}</h2>
+            <p class="summary">{project.data.summary}</p>
+            <div class="prose details">
+              <Content />
+            </div>
+            {project.data.tags.length > 0 && (
+              <ul class="tags" role="list" aria-label="Topics">
+                {project.data.tags.map(tag => (
+                  <li>
+                    <Tag>{tag}</Tag>
+                  </li>
+                ))}
+              </ul>
             )}
-            {project.data.repo && (
-              <a href={project.data.repo}>
-                Source code <Icon name="external-link" size={14} />
-              </a>
-            )}
-          </p>
-        </li>
-      ))}
-    </ul>
+            <p class="links">
+              {project.data.url && (
+                <a href={project.data.url}>
+                  Visit site <Icon name="external-link" size={14} />
+                </a>
+              )}
+              {project.data.repo && (
+                <a href={project.data.repo}>
+                  Source code <Icon name="external-link" size={14} />
+                </a>
+              )}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </div>
   </div>
 </BaseLayout>
 
 <style>
+  .scene {
+    background: url('../assets/construction.svg') right top / min(85%, 61rem)
+      auto no-repeat;
+  }
+
+  .scene > :global(.page-header) {
+    background-color: transparent;
+  }
+
+  @media (width < 48rem) {
+    .scene {
+      background-size: min(130%, 36rem) auto;
+    }
+  }
+
   .body {
     padding-bottom: var(--space-8);
   }
@@ -80,8 +97,9 @@ const projects = await Promise.all(
     padding: var(--space-6);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    background: var(--color-surface);
-    box-shadow: var(--shadow-card);
+    background: var(--glass-surface);
+    backdrop-filter: var(--glass-filter);
+    box-shadow: var(--glass-shadow);
   }
 
   .title {

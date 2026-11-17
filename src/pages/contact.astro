@@ -1,7 +1,6 @@
 ---
 /**
- * Contact page: the public email, LinkedIn, and GitHub links. No form, so
- * the site still accepts no visitor input.
+ * Contact page: public contact links and a link to the hosted booking page.
  */
 import PageHeader from '../components/site/PageHeader.astro';
 import GitHubIcon from '../components/ui/GitHubIcon.astro';
@@ -16,64 +15,94 @@ import {CONTACT, RESUME_PATH} from '../lib/config';
   description="Get in touch with Garrison Hutcherson about technical support, client success, and support engineering roles."
   showContactBand={false}
 >
-  <PageHeader
-    eyebrow="Contact"
-    title="Let's work together"
-    intro="I'm looking for my next role in technical support, client success, or support engineering. Email is the best way to reach me, and I'll reply as soon as I can."
-  />
-  <div class="container body">
-    <ul class="channels" role="list">
-      <li>
-        <a class="channel" href={`mailto:${CONTACT.email}`}>
-          <span class="channel-icon">
-            <Icon name="mail" size={24} />
-          </span>
-          <span>
-            <span class="label">Email</span>
-            <span class="value">{CONTACT.email}</span>
-          </span>
-        </a>
-      </li>
-      <li>
-        <a class="channel" href={CONTACT.linkedin}>
-          <span class="channel-icon">
-            <LinkedInIcon size={24} />
-          </span>
-          <span>
-            <span class="label">LinkedIn</span>
-            <span class="value">
-              {CONTACT.linkedin.replace('https://www.', '')}
+  <div class="scene">
+    <PageHeader
+      eyebrow="Contact"
+      title="Let's work together"
+      intro="I'm looking for my next role in technical support, client success, or support engineering. Email is the best way to reach me, and I'll reply as soon as I can."
+    />
+    <div class="container body">
+      <ul class="channels" role="list">
+        <li>
+          <a class="channel" href={CONTACT.booking}>
+            <span class="channel-icon">
+              <Icon name="calendar-days" size={24} />
             </span>
-          </span>
-        </a>
-      </li>
-      <li>
-        <a class="channel" href={CONTACT.github}>
-          <span class="channel-icon">
-            <GitHubIcon size={24} />
-          </span>
-          <span>
-            <span class="label">GitHub</span>
-            <span class="value">{CONTACT.github.replace('https://', '')}</span>
-          </span>
-        </a>
-      </li>
-      <li>
-        <a class="channel" href={RESUME_PATH}>
-          <span class="channel-icon">
-            <Icon name="file-text" size={24} />
-          </span>
-          <span>
-            <span class="label">Résumé</span>
-            <span class="value">View or print my résumé</span>
-          </span>
-        </a>
-      </li>
-    </ul>
+            <span>
+              <span class="label">Schedule a meeting</span>
+              <span class="value">Book a 30-minute meeting</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="channel" href={`mailto:${CONTACT.email}`}>
+            <span class="channel-icon">
+              <Icon name="mail" size={24} />
+            </span>
+            <span>
+              <span class="label">Email</span>
+              <span class="value">{CONTACT.email}</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="channel" href={CONTACT.linkedin}>
+            <span class="channel-icon">
+              <LinkedInIcon size={24} />
+            </span>
+            <span>
+              <span class="label">LinkedIn</span>
+              <span class="value">
+                {CONTACT.linkedin.replace('https://www.', '')}
+              </span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="channel" href={CONTACT.github}>
+            <span class="channel-icon">
+              <GitHubIcon size={24} />
+            </span>
+            <span>
+              <span class="label">GitHub</span>
+              <span class="value">
+                {CONTACT.github.replace('https://', '')}
+              </span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="channel" href={RESUME_PATH}>
+            <span class="channel-icon">
+              <Icon name="file-text" size={24} />
+            </span>
+            <span>
+              <span class="label">Résumé</span>
+              <span class="value">View or print my résumé</span>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 </BaseLayout>
 
 <style>
+  .scene {
+    background: url('../assets/mailbox-lawn.svg') right top / min(85%, 61rem)
+      auto no-repeat;
+  }
+
+  .scene > :global(.page-header) {
+    background-color: transparent;
+  }
+
+  @media (width < 48rem) {
+    .scene {
+      background-size: min(130%, 36rem) auto;
+    }
+  }
+
   .body {
     padding-bottom: var(--space-9);
   }
@@ -92,7 +121,8 @@ import {CONTACT, RESUME_PATH} from '../lib/config';
     padding: var(--space-5);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    background: var(--color-surface);
+    background: var(--glass-surface);
+    backdrop-filter: var(--glass-filter);
     color: var(--color-text);
     text-decoration: none;
     transition:
@@ -102,8 +132,12 @@ import {CONTACT, RESUME_PATH} from '../lib/config';
 
   .channel:hover {
     border-color: var(--color-accent-border);
-    background: var(--color-surface-hover);
+    background-color: var(--glass-tint-hover);
     color: var(--color-text);
+  }
+
+  :global([data-theme='light']) .channel {
+    box-shadow: var(--glass-shadow);
   }
 
   .channel-icon {

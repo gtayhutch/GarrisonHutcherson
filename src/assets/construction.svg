@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620">
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0v32" fill="none" stroke="#9abfc7" stroke-opacity=".15"/></pattern>
+    <pattern id="stripe" width="24" height="24" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><rect width="12" height="24" fill="#c4a477"/></pattern>
+    <radialGradient id="fade" cx=".76" cy=".39" r=".63"><stop stop-color="white"/><stop offset="1" stop-color="black"/></radialGradient>
+    <mask id="edge"><rect width="960" height="620" fill="url(#fade)"/></mask>
+  </defs>
+  <g mask="url(#edge)">
+    <rect width="960" height="620" fill="url(#grid)"/>
+    <g stroke="#98b4bf" stroke-width="2" opacity=".33" fill="#33475a">
+      <path d="M579 423V324h43v99m-9 0V277h52v146m154 0V262h59v161m-21 0V310h81v113"/>
+      <path d="M597 342h14m-14 22h14m27-59h13m-13 23h13m192-42h17m-17 28h17m25 26h19m-19 27h19"/>
+    </g>
+    <g fill="none" stroke="#cfb486" stroke-linejoin="round">
+      <path d="M709 423V104h31v319m-31 0 31-38-31-38 31-38-31-38 31-38-31-38 31-38-31-38" stroke-width="3"/>
+      <path d="M602 153h304l-28-31H628zM724 104l-96 18m96-18 154 18m-243 0 24 31 24-31 24 31 24-31 24 31 24-31 24 31 24-31 24 31 24-31m-31 31v112" stroke-width="3"/>
+      <path d="M844 265v13q0 13-11 13t-11-11" stroke-width="3"/>
+    </g>
+    <path d="M505 424h455" stroke="#aac6cb" stroke-opacity=".48" stroke-width="2"/>
+    <path d="M766 417h125v16H766z" fill="url(#stripe)" stroke="#cfb486" stroke-width="2"/>
+    <path d="M780 433l-8 21m104-21 8 21" stroke="#cfb486" stroke-width="3"/>
+    <g fill="#bc9668" stroke="#e0c5a0" stroke-width="2"><path d="m664 421 10-37 10 37z"/><path d="M660 421h28v5h-28z"/></g>
+  </g>
+</svg>

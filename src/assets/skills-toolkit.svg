@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 580">
+  <defs>
+    <pattern id="bench-grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M24 0H0v24" fill="none" stroke="#89a9bd" stroke-opacity=".22"/>
+    </pattern>
+    <radialGradient id="bench-fade" cx=".79" cy=".41" r=".52">
+      <stop offset=".32" stop-color="white"/>
+      <stop offset="1"/>
+    </radialGradient>
+    <mask id="bench-mask">
+      <rect width="960" height="580" fill="url(#bench-fade)"/>
+    </mask>
+    <linearGradient id="module" x2="1" y2="1">
+      <stop stop-color="#7bbaaa" stop-opacity=".31"/>
+      <stop offset="1" stop-color="#8184b7" stop-opacity=".1"/>
+    </linearGradient>
+  </defs>
+  <g mask="url(#bench-mask)">
+    <rect width="960" height="580" fill="url(#bench-grid)"/>
+    <g fill="none" stroke="#85aeb5" stroke-opacity=".55" stroke-width="2">
+      <path d="M482 160h163q24 0 24 24v51m-188 99h155q33 0 33-32m73-84v-56q0-19 19-19h57m-61 151h88q21 0 21 21v23m-148-26v93m-170-83v72"/>
+      <path d="M480 184h82q20 0 20 20v38h57m148 30h74q19 0 19-19v-48m-111 2v-34m-92 170v30h-42q-20 0-20 20v48" stroke-dasharray="4 7"/>
+    </g>
+    <g fill="#9a80bd" fill-opacity=".76">
+      <circle cx="582" cy="242" r="4"/><circle cx="669" cy="182" r="4"/>
+      <circle cx="766" cy="143" r="4"/><circle cx="718" cy="356" r="4"/>
+      <circle cx="866" cy="335" r="4"/><circle cx="548" cy="376" r="4"/>
+    </g>
+    <g fill="url(#module)" stroke="#759ea9" stroke-width="2" stroke-opacity=".78">
+      <rect x="477" y="102" width="133" height="98" rx="17"/>
+      <rect x="628" y="216" width="145" height="112" rx="21"/>
+      <rect x="810" y="102" width="110" height="101" rx="18"/>
+      <rect x="813" y="338" width="108" height="106" rx="19"/>
+      <rect x="653" y="402" width="130" height="89" rx="17"/>
+      <rect x="495" y="256" width="108" height="74" rx="16"/>
+    </g>
+    <g fill="none" stroke="#69a597" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m529 135-17 16 17 16m27-32 17 16-17 16m-7-42-12 51"/>
+      <path d="m846 133 11 11-11 11m22 7h18"/>
+      <path d="M677 257h17l12-13 17 28 11-12h13m-70 27h70"/>
+      <path d="M833 405h12l12-22 12 16 12-24 18 30"/>
+    </g>
+    <g fill="none" stroke="#987bb6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="718" cy="432" rx="22" ry="8"/>
+      <path d="M696 432v25c0 12 44 12 44 0v-25m-44 12c0 12 44 12 44 0m-213-158h44m-44 13h28"/>
+    </g>
+  </g>
+</svg>
