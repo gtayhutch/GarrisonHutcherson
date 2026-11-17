@@ -19,9 +19,9 @@ pnpm verify                      # everything CI runs: format, lint, types, buil
 ## Stack
 
 - [Astro](https://astro.build) with static output, TypeScript, and
-  hand-written CSS. The site ships no JavaScript of its own; the only script
-  is the cookieless Cloudflare Web Analytics beacon, which staging builds
-  leave out (`PUBLIC_WEB_ANALYTICS=false`).
+  hand-written CSS. A small local script applies the saved color theme.
+  Staging leaves out the cookieless Cloudflare Web Analytics beacon
+  (`PUBLIC_WEB_ANALYTICS=false`).
 - Colors live in `src/styles/tokens.css`; the hero's space scene is an SVG
   animated with CSS only and stays still for visitors who prefer reduced
   motion.

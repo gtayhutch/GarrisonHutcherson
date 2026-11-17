@@ -1,0 +1,60 @@
+---
+/** Wraps a page heading and its content in a decorative SVG backdrop. */
+interface Props {
+  /** Scene chosen for the page. */
+  scene: 'skills' | 'experience' | 'support-cases';
+}
+
+const {scene} = Astro.props;
+---
+
+<div class:list={['section', scene]}>
+  <slot />
+</div>
+
+<style>
+  .section {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-position: right top;
+    background-repeat: no-repeat;
+    background-size: min(100%, 65rem) auto;
+    pointer-events: none;
+  }
+
+  .skills::before {
+    background-image: url('../../assets/skills-toolkit.svg');
+  }
+
+  .experience::before {
+    background-image: url('../../assets/career-timeline.svg');
+  }
+
+  .support-cases::before {
+    background-image: url('../../assets/support-briefcase.svg');
+  }
+
+  .section > :global(.page-header) {
+    background-color: transparent;
+  }
+
+  @media (width < 48rem) {
+    .section::before {
+      background-size: 35rem auto;
+      opacity: 0.42;
+    }
+  }
+
+  @media print {
+    .section::before {
+      display: none;
+    }
+  }
+</style>

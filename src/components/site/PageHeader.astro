@@ -32,6 +32,10 @@ const {eyebrow, title, intro} = Astro.props;
       var(--color-bg);
   }
 
+  :global([data-theme='light']) .page-header {
+    background-color: transparent;
+  }
+
   .eyebrow {
     margin-bottom: var(--space-3);
     color: var(--color-eyebrow);

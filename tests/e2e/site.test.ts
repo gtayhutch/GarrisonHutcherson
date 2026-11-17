@@ -30,16 +30,17 @@ test('experience lists employers newest first', async ({page}) => {
   await expect(companies.last()).toHaveText('Cloud 10 Corporation');
 });
 
-test('case studies are reachable from the main navigation and have separate cards', async ({
+test('support cases are reachable from the main navigation and have separate cards', async ({
   page,
 }) => {
   await page.goto('/');
   await page
     .getByRole('navigation', {name: 'Main', exact: true})
-    .getByRole('link', {name: 'Case Studies'})
+    .getByRole('link', {name: 'Support Cases'})
     .click();
 
   await expect(page).toHaveURL(/\/case-studies\/$/);
+  await expect(page).toHaveTitle(/Support Cases/);
   const main = page.getByRole('main');
   await expect(main.getByRole('article')).toHaveCount(2);
   await expect(
@@ -160,6 +161,24 @@ test('external links use HTTPS', async ({page}) => {
   }
 });
 
+for (const width of [375, 1440]) {
+  test(`the header stays visible while scrolling at ${String(width)} px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({width, height: 680});
+    await page.goto('/projects/');
+    await page.evaluate(() => {
+      window.scrollTo(0, 600);
+    });
+    await expect
+      .poll(() => page.evaluate(() => window.scrollY))
+      .toBeGreaterThan(0);
+    const header = page.getByRole('banner');
+    await expect(header).toBeInViewport({ratio: 1});
+    expect((await header.boundingBox())?.y).toBe(0);
+  });
+}
+
 test.describe('on a phone', () => {
   test.use({viewport: {width: 375, height: 812}});
 
@@ -173,9 +192,11 @@ test.describe('on a phone', () => {
     await page.locator('details summary').click();
 
     await expect(menu).toBeVisible();
+    await expect(menu).toHaveCSS('backdrop-filter', /blur/);
+    await expect(menu).toHaveCSS('background-color', 'rgba(39, 47, 64, 0.38)');
     await expect(menu.getByRole('link')).toHaveCount(7);
     await expect(
-      menu.getByRole('link', {name: 'Case Studies'}),
+      menu.getByRole('link', {name: 'Support Cases'}),
     ).toHaveAttribute('href', '/case-studies/');
   });
 
@@ -188,6 +209,13 @@ test.describe('on a phone', () => {
       expect(overflow, route.path).toBeLessThanOrEqual(0);
     }
   });
+});
+
+test('Contact links to the public 30-minute booking page', async ({page}) => {
+  await page.goto('/contact/');
+  await expect(
+    page.getByRole('link', {name: /Schedule a meeting/}),
+  ).toHaveAttribute('href', 'https://cal.com/garrisonhutcherson/30min');
 });
 
 test('printing the résumé hides the site header and footer', async ({page}) => {
@@ -319,6 +347,22 @@ test('the About starfield twinkles and shows a passing meteor', async ({
   expect(states[1]?.opacity).toBeGreaterThan(0);
   expect(states[1]?.transform).not.toBe(states[0]?.transform);
   expect(states[2]?.opacity).toBe(0);
+});
+
+test('the About glass panel sits below the Greenville marker on desktop', async ({
+  page,
+}) => {
+  await page.setViewportSize({width: 1440, height: 900});
+  await page.emulateMedia({reducedMotion: 'reduce'});
+  await page.goto('/about/');
+  const panel = page.locator('.bio-panel');
+  const marker = page.locator('svg.globe .marker');
+  await expect(panel).toHaveCSS('backdrop-filter', /blur/);
+  await expect(marker.getByText('Greenville, SC')).toBeInViewport();
+  const panelBox = await panel.boundingBox();
+  const markerBox = await marker.boundingBox();
+  if (!panelBox || !markerBox) throw new Error('Missing About scene bounds');
+  expect(markerBox.y + markerBox.height).toBeLessThan(panelBox.y);
 });
 
 test.describe('About globe with reduced motion and no JavaScript', () => {

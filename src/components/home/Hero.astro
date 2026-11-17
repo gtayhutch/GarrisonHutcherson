@@ -66,7 +66,11 @@ const {eyebrow = [], headline, headlineAccent, intro} = Astro.props.page.data;
     z-index: -1;
   }
 
-  /* Darken behind the text so it keeps strong contrast over the stars. */
+  :global([data-theme='light']) .scene {
+    mask-image: linear-gradient(black 66%, transparent);
+  }
+
+  /* Soften the artwork behind the text in either palette. */
   .scene::after {
     content: '';
     position: absolute;
@@ -161,5 +165,18 @@ const {eyebrow = [], headline, headlineAccent, intro} = Astro.props.page.data;
       grid-column: 1;
       grid-row: 1;
     }
+
+    :global([data-theme='light']) .scene::after {
+      background: linear-gradient(
+        90deg,
+        rgb(var(--color-scrim) / 63%),
+        rgb(var(--color-scrim) / 26%) 47%,
+        transparent 76%
+      );
+    }
+  }
+
+  :global([data-theme='light']) .hero {
+    border-bottom-color: transparent;
   }
 </style>

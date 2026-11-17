@@ -26,6 +26,17 @@
   --color-glow: 186 229 192;
   --color-glow-alt: 227 199 224;
 
+  /* Glass surfaces */
+  --glass-tint: rgb(39 47 64 / 38%);
+  --glass-tint-hover: rgb(46 55 75 / 48%);
+  --glass-surface:
+    linear-gradient(148deg, rgb(220 240 255 / 9%), transparent 62%) padding-box,
+    var(--glass-tint);
+  --glass-filter: blur(7px) saturate(135%);
+  --glass-shadow:
+    inset 0 1px 0 rgb(238 244 240 / 16%), inset 0 -1px 0 rgb(186 229 192 / 8%),
+    0 10px 28px rgb(0 0 0 / 24%);
+
   /* Text */
   --color-text: #eef4f0;
   --color-text-muted: #c4d0ca;
@@ -83,4 +94,42 @@
   --gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
   --header-height: 4rem;
   --focus-ring: 0 0 0 3px var(--color-bg), 0 0 0 5px var(--color-accent);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --color-bg: #f5f7fa;
+  --color-bg-raised: #edf2f6;
+  --color-surface: #e7edf1;
+  --color-surface-hover: #dce8eb;
+  --color-border: rgb(35 63 78 / 20%);
+  --color-border-strong: rgb(35 63 78 / 38%);
+  --color-header: rgb(248 250 253 / 93%);
+  --color-scrim: 245 247 250;
+  --color-glow: 56 121 105;
+  --color-glow-alt: 121 89 156;
+  --color-text: #172a3b;
+  --color-text-muted: #34485a;
+  --color-text-subtle: #3d5a5c;
+  --color-eyebrow: #5d4878;
+  --color-accent: #155e50;
+  --color-accent-strong: #10483e;
+  --color-accent-soft: rgb(21 94 80 / 11%);
+  --color-accent-border: rgb(21 94 80 / 55%);
+  --color-on-accent: #fff;
+  --color-tile: #cfe9e1;
+  --color-tile-end: #e6edf6;
+  --color-tile-icon: var(--color-accent);
+  --glass-tint: rgb(255 255 255 / 28%);
+  --glass-tint-hover: rgb(255 255 255 / 44%);
+  --glass-menu-tint: rgb(247 250 253 / 76%);
+  --glass-surface:
+    linear-gradient(147deg, rgb(255 255 255 / 64%), transparent 48%) padding-box,
+    var(--glass-tint);
+  --glass-filter: blur(10px) saturate(145%);
+  --glass-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 94%), inset 0 -1px 0 rgb(86 122 141 / 12%),
+    0 12px 32px rgb(43 68 105 / 11%);
+  --leading-normal: 1.68;
 }
